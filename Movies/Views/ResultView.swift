@@ -20,23 +20,27 @@ struct ResultView: View {
                             await viewModel.searchMovie(forSearch: false, imdbID: result.imdbid)
                             viewModel.movieImdbID = result.imdbid
                         }) {
-                            HStack {
+                            HStack(spacing: 20) {
                                 // Potentially getting the image once in viewModel then passing it in.
                                 AsyncImage(url: URL(string: result.poster)) { image in
                                     image
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
+                                        .frame(maxWidth: 100, maxHeight: 150)
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
                                         .padding(5)
                                 } placeholder: {
                                     placeholderImage()
                                 }
-                                Spacer()
                                 
-                                VStack {
-                                    Text(result.title)
-                                    Text(result.year)
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text(result.title.capitalized)
+                                        .font(.title3)
+                                        .fontWeight(.semibold)
                                     Text(result.type)
+                                        .font(.headline)
+                                    Text(result.year)
+                                        .font(.headline)
                                 }
                             }
                         }

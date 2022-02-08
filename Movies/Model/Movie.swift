@@ -37,6 +37,10 @@ struct Movie: Hashable, Codable {
 
 struct Search: Codable {
     var results: [Result]
+    
+    enum CodingKeys: String, CodingKey {
+        case results = "Search"
+    }
 }
 
 struct Result: Hashable, Codable {
