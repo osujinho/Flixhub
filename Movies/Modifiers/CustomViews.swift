@@ -1,8 +1,8 @@
 //
-//  ViewComposition.swift
+//  CustomViews.swift
 //  Movies
 //
-//  Created by Michael Osuji on 2/1/22.
+//  Created by Michael Osuji on 2/15/22.
 //
 
 import SwiftUI
@@ -89,6 +89,7 @@ struct LabelButton: View {
     }
 }
 
+// Custom navigationLink view for the results
 struct NavigationLinkButton: View {
     let label: String
     let bgColor: Color
@@ -113,30 +114,5 @@ struct NavigationLinkButton: View {
                 .opacity(isDisabled ? 0.6 : 1.0)
         }
         .disabled(isDisabled)
-    }
-}
-
-// Modifier for containers
-struct ContainerViewModifier: ViewModifier {
-    let fontColor: Color
-    let borderColor: Color
-    
-    func body(content: Content) -> some View {
-        content
-            .foregroundColor(fontColor)
-            .font(.system(size: 14))
-            .padding(10)
-            .background(Color.black.opacity(0.5).cornerRadius(10))
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke((borderColor), lineWidth: 2)
-            )
-            .padding(.horizontal, 15)
-    }
-}
-
-extension View {
-    func containerViewModifier(fontColor: Color, borderColor: Color) -> some View {
-        self.modifier(ContainerViewModifier(fontColor: fontColor, borderColor: borderColor))
     }
 }

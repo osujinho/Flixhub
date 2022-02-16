@@ -9,9 +9,9 @@ import Foundation
 
 @MainActor class MoviesViewModel: ObservableObject {
     @Published var title: String = ""
-    @Published private(set) var state: State = .notAvailable
+    @Published private(set) var viewState: ViewState = .notAvailable
     @Published var hasError: Bool = false
-    @Published var movieImdbID = ""
+    @Published var errorMessage = ""
     
     private let networkManager: NetworkManager
     private let baseURL = "http://www.omdbapi.com/"
@@ -34,7 +34,7 @@ import Foundation
     
     // Function to seach for movies
     func searchMovie(forSearch: Bool, imdbID: String = "") async {
-        self.state = .loadingSearchResult
+        self.viewState = .loadingSearchResult
         self.hasError = false
         
         forSearch ? buildSearchQuery() : movieDetailQuery(imdbID: imdbID)
@@ -46,14 +46,14 @@ import Foundation
             // load JSON Object
             if forSearch {
                 let results: Search = try await networkManager.makeCall(url: url)
-                self.state = .searchSuccessful(data: results)
+                self.viewState = .searchSuccessful(data: results)
             } else {
                 let detail: Movie = try await networkManager.makeCall(url: url)
-                self.state = .detailSuccessful(data: detail)
+                self.viewState = .detailSuccessful(data: detail)
             }
         } catch {
             // Error in case data could not be loaded
-            self.state = .failure(error: error)
+            self.viewState = .failure(error: error)
             self.hasError = true
         }
     }
@@ -62,13 +62,43 @@ import Foundation
     func buildArray(from sentence: String) -> [String] {
         sentence.components(separatedBy: ", ")
     }
+    
+    // Get director from Crew array
+    func getDirectors(castDetail: CastDetail) -> [Crew] {
+        castDetail.crew.filter { $0.job == "Director" }
+    }
 }
 
-enum State {
+enum ViewState {
     case notAvailable
     case loadingSearchResult
     case loadingMovieDetail
     case searchSuccessful(data: Search)
     case detailSuccessful(data: Movie)
     case failure(error: Error)
+}
+
+// string to date
+func getDate(date: String, forYear: Bool) -> String {
+    let oldDateFormatter = DateFormatter()
+    oldDateFormatter.dateFormat = "yyyy-MM-dd"
+    
+    // Convert string to date
+    guard let oldDate = oldDateFormatter.date(from: date) else { return "0000-00-00" }
+    
+    // convert date back to string in year format
+    let newDateFormater = DateFormatter()
+    newDateFormater.dateFormat = forYear ? "yyyy" : "MMM dd yyyy"
+    
+    return newDateFormater.string(from: oldDate)
+}
+
+// string to time
+func stringToTime(strTime: String) -> String {
+    guard let totalMinutes = Double(strTime) else { return strTime }
+    
+    let hours = Int(floor(totalMinutes / 60))
+    let minutes = Int(totalMinutes) % 60
+    
+    return "\(hours)h \(minutes)mins"
 }

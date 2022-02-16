@@ -12,14 +12,15 @@ struct ResultView: View {
     
     var body: some View {
         ZStack {
-            switch viewModel.state {
+            switch viewModel.viewState {
             case .searchSuccessful(let data):
                 List {
+                    NavigationLink(destination: EmptyView()) {
+                        EmptyView()
+                    }
+                    
                     ForEach(data.results, id: \.self) { result in
-                        NavigationLink(destination: DetailView().task {
-                            await viewModel.searchMovie(forSearch: false, imdbID: result.imdbid)
-                            viewModel.movieImdbID = result.imdbid
-                        }) {
+                        NavigationLink(destination: DetailView().task { await viewModel.searchMovie(forSearch: false, imdbID: result.imdbid) }) {
                             HStack(spacing: 20) {
                                 // Potentially getting the image once in viewModel then passing it in.
                                 AsyncImage(url: URL(string: result.poster)) { image in
@@ -49,11 +50,13 @@ struct ResultView: View {
                 .navigationTitle("Search Result")
             case .loadingSearchResult:
                 ProgressView()
+            case .detailSuccessful(_):
+                DetailView()
             default:
                 EmptyView()
             }
         }
-        .alert("Movie Search Error", isPresented: $viewModel.hasError, presenting: viewModel.state) { detail in
+        .alert("Movie Search Error", isPresented: $viewModel.hasError, presenting: viewModel.viewState) { detail in
             Button("Retry") {
                 Task {
                     await viewModel.searchMovie(forSearch: true)
@@ -66,3 +69,5 @@ struct ResultView: View {
         }
     }
 }
+
+

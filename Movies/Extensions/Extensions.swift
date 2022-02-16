@@ -29,3 +29,5 @@ extension URL {
         self = urlComponents.url!
     }
 }
+
+typealias Func = () -> Void
