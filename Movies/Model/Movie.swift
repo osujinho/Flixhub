@@ -6,59 +6,7 @@
 //
 
 import Foundation
-
-struct Movie: Hashable, Codable {
-    var title: String
-    var rated: String
-    var released: String
-    var runtime: String
-    var genre: String
-    var director: String
-    var actors: String
-    var plot: String
-    var poster: String
-    var rating: String
-    var imdbid: String
-    
-    enum CodingKeys: String, CodingKey {
-        case title = "Title"
-        case released = "Released"
-        case runtime = "Runtime"
-        case genre = "Genre"
-        case actors = "Actors"
-        case director = "Director"
-        case rating = "imdbRating"
-        case rated = "Rated"
-        case plot = "Plot"
-        case poster = "Poster"
-        case imdbid = "imdbID"
-    }
-}
-
-struct Search: Codable {
-    var results: [Result]
-    
-    enum CodingKeys: String, CodingKey {
-        case results = "Search"
-    }
-}
-
-struct Result: Hashable, Codable {
-    var title: String
-    var year: String
-    var imdbid: String
-    var type: String
-    var poster: String
-    
-    enum CodingKeys: String, CodingKey {
-        case title = "Title"
-        case year = "Year"
-        case imdbid = "imdbID"
-        case type = "Type"
-        case poster = "Poster"
-    }
-}
-
+// shows movie for the browse view
 struct TMDBResult: Hashable, Codable {
     let backdrop: String
     let poster: String
@@ -97,6 +45,7 @@ struct Popular: Hashable, Codable {
     let results: [TMDBResult]
 }
 
+// For movie detail once clicked on
 struct TMDBDetail: Hashable, Codable {
     let backdrop: String
     let poster: String
@@ -127,20 +76,18 @@ struct Genre: Hashable, Codable {
     let name: String
 }
 
+// For getting OMDB Api
 struct OMDBDetail: Hashable, Codable {
     let rated: String
-    let year: String
     let rating: String
-    let imdbID: String
     
     enum CodingKeys: String, CodingKey {
         case rated = "Rated"
-        case year = "Year"
         case rating = "imdbRating"
-        case imdbID
     }
 }
 
+// For getting the Actor's details
 struct CastDetail: Hashable, Codable {
     let cast: [Cast]
     let crew: [Crew]
@@ -160,9 +107,70 @@ struct Cast: Hashable, Codable {
     }
 }
 
+struct BrowseActor: Hashable, Codable {
+    let cast: [CastMovies]
+}
+
+struct CastMovies: Hashable, Codable {
+    let poster: String
+    let movieId: Int
+    let title: String
+    let releaseDate: String
+    
+    enum CodingKeys: String, CodingKey {
+        case poster = "poster_path"
+        case movieId = "id"
+        case releaseDate = "release_date"
+        case title
+    }
+}
+
+// For director
 struct Crew: Hashable, Codable {
     let id: Int
     let name: String
     let profile_path: String
     let job: String
+}
+
+struct UrlItem {
+    let key: String
+    let value: String
+}
+
+struct BrowseDirector: Hashable, Codable {
+    let crew: [CrewMovies]
+}
+
+struct CrewMovies: Hashable, Codable {
+    let movieId: Int
+    let title: String
+    let poster: String
+    let job: String
+    let releaseDate: String
+    
+    enum CodingKeys: String, CodingKey {
+        case poster = "poster_path"
+        case movieId = "id"
+        case releaseDate = "release_date"
+        case job
+        case title
+    }
+}
+
+enum ReturnType {
+    case upcoming(movies: Upcoming)
+    case nowPlaying(movies: NowPlaying)
+    case topRated(movies: TopRated)
+    case popular(movies: Popular)
+    case detail(movie: TMDBDetail)
+    case omdb(movie: OMDBDetail)
+    case credits(credit: CastDetail)
+    case search(result: TMDBSearch)
+    case browseActor(results: BrowseActor)
+    case browseDirector(results: BrowseDirector)
+}
+
+enum GetFrom: CaseIterable {
+    case upcoming, nowPlaying, topRated, popular, detail, omdb, credits, search, browseActor, browseDirector
 }

@@ -29,101 +29,108 @@ struct DetailView: View {
     var body: some View {
         VStack {
             // top With Image and info
-            Image(detail.poster)
-                .resizable()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .clipped()
-                .aspectRatio(contentMode: .fill)
-            // Radial gradient Overlay
-                .overlay(
-                    ZStack(alignment: .bottom) {
-                        Image(detail.poster)
-                            .resizable()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .blur(radius: 20)
-                            .padding(-20)
-                            .clipped()
-                            .mask(gradient)
-                        
-                        gradient
-                        
-                        VStack {
-                            // Top part
-                            HStack {
-                                HStack(spacing: 20) {
-                                    Button(
-                                        action: { self.presentationMode.wrappedValue.dismiss()
-                                            
-                                        }, label: {
-                                            Image(systemName: "chevron.left.circle.fill")
-                                                .foregroundColor(.gray)
-                                                .font(.system(size: 30))
-                                        }
-                                    )
-                                    
-                                    Text(fullDetail.rating)
-                                        .circleTextViewModifier()
-                                }
-                                
-                                Spacer()
-                                
-                                HStack(spacing: 20) {
-                                    Text(fullDetail.rated)
-                                        .squareTextViewModifier()
-                                    
-                                    // Heart for Favorite
-                                    Button(
-                                        action: {
-                                            // Todo
-                                        }, label: {
-                                            Image(systemName: "suit.heart.fill")
-                                                .foregroundColor(.gray)
-                                                .font(.system(size: 35))
-                                        }
-                                    )
-                                }
+            AsyncImage(url: URL(string: viewModel.imageBaseUrl.appending(detail.poster))) { image in
+                image
+                    .resizable()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipped()
+                    .aspectRatio(contentMode: .fill)
+                    .overlay(
+                        ZStack(alignment: .bottom) {
+                            AsyncImage(url: URL(string: viewModel.imageBaseUrl.appending(detail.poster))) { image in
+                                image
+                                    .resizable()
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .blur(radius: 20)
+                                    .padding(-20)
+                                    .clipped()
+                                    .mask(gradient)
+                            } placeholder: {
+                                placeholderImage()
                             }
                             
-                            Spacer()
+                            gradient
                             
-                            // Bottom part
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    // runtime and release date (if upcoming)
-                                    Text(detail.title.uppercased())
-                                        .font(.system(size: 30, weight: .bold))
-                                        .foregroundColor(.white)
-                                        //.padding(.bottom, 2)
-                                    
-                                    HStack(spacing: 30) {
-                                        Text(stringToTime(strTime: detail.releaseDate))
-                                            .font(.system(size: 13, weight: .semibold))
-                                            .foregroundColor(.white.opacity(0.7))
-                                        Text(isUpcoming ?
-                                             getDate(date: detail.releaseDate, forYear: false) :
-                                                getDate(date: detail.releaseDate, forYear: true))
-                                            .font(.system(size: 13, weight: .semibold))
-                                            .foregroundColor(.white.opacity(0.7))
+                            VStack {
+                                // Top part
+                                HStack {
+                                    HStack(spacing: 20) {
+                                        Button(
+                                            action: { self.presentationMode.wrappedValue.dismiss()
+                                                
+                                            }, label: {
+                                                Image(systemName: "chevron.left.circle.fill")
+                                                    .foregroundColor(.gray)
+                                                    .font(.system(size: 30))
+                                            }
+                                        )
+                                        
+                                        Text(fullDetail.rating)
+                                            .circleTextViewModifier()
                                     }
-                                    .padding(.bottom, 10)
                                     
-                                    HStack(alignment: .lastTextBaseline) {
-                                        ForEach(detail.genre, id:\.self) { genre in
-                                            Text(genre.name.capitalized)
-                                                .genreTextViewModifier()
-                                        }
+                                    Spacer()
+                                    
+                                    HStack(spacing: 20) {
+                                        Text(fullDetail.rated)
+                                            .squareTextViewModifier()
+                                        
+                                        // Heart for Favorite
+                                        Button(
+                                            action: {
+                                                // Todo
+                                            }, label: {
+                                                Image(systemName: "suit.heart.fill")
+                                                    .foregroundColor(.gray)
+                                                    .font(.system(size: 35))
+                                            }
+                                        )
                                     }
                                 }
                                 
                                 Spacer()
+                                
+                                // Bottom part
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        // runtime and release date (if upcoming)
+                                        Text(detail.title.uppercased())
+                                            .font(.system(size: 30, weight: .bold))
+                                            .foregroundColor(.white)
+                                            //.padding(.bottom, 2)
+                                        
+                                        HStack(spacing: 30) {
+                                            Text(stringToTime(strTime: detail.releaseDate))
+                                                .font(.system(size: 13, weight: .semibold))
+                                                .foregroundColor(.white.opacity(0.7))
+                                            Text(isUpcoming ?
+                                                 getDate(date: detail.releaseDate, forYear: false) :
+                                                    getDate(date: detail.releaseDate, forYear: true))
+                                                .font(.system(size: 13, weight: .semibold))
+                                                .foregroundColor(.white.opacity(0.7))
+                                        }
+                                        .padding(.bottom, 10)
+                                        
+                                        HStack(alignment: .lastTextBaseline) {
+                                            ForEach(detail.genre, id:\.self) { genre in
+                                                Text(genre.name.capitalized)
+                                                    .genreTextViewModifier()
+                                            }
+                                        }
+                                    }
+                                    
+                                    Spacer()
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 70)
+                            .padding(.bottom, 5)
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 70)
-                        .padding(.bottom, 5)
-                    }
-                )
-                .edgesIgnoringSafeArea(.top)
+                    )
+                    .edgesIgnoringSafeArea(.top)
+            } placeholder: {
+                placeholderImage()
+            }
             
             // Plot
             VStack(alignment: .leading) {
@@ -154,11 +161,11 @@ struct DetailView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(viewModel.getDirectors(castDetail: castDetail), id: \.self) { director in
-                            CastProfileView(name: director.name, movieRole: director.job, profilePicture: director.profile_path, buttonAction: { })
+                            CastProfileView(name: director.name, movieRole: director.job, imagePath: director.profile_path, buttonAction: { })
                         }
                         
                         ForEach(castDetail.cast, id: \.self) { cast in
-                            CastProfileView(name: cast.name, movieRole: cast.character, profilePicture: cast.picture, buttonAction: { })
+                            CastProfileView(name: cast.name, movieRole: cast.character, imagePath: cast.picture, buttonAction: { })
                         }
                     }
                 }

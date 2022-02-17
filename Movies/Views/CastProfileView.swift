@@ -10,20 +10,26 @@ import SwiftUI
 struct CastProfileView: View {
     let name: String
     let movieRole: String
-    let profilePicture: String
+    let imagePath: String
     let buttonAction: Func
+    
+    let imageBaseUrl = "https://image.tmdb.org/t/p/w500"
     
     var body: some View {
         VStack {
             Button(action: {
                 buttonAction()
             }, label: {
-                Image(profilePicture)
-                    .resizable()
-                    .aspectRatio(1, contentMode: .fill)
-                    .frame(width: 100, height: 100)
-                    .clipped()
-                    .clipShape(Capsule())
+                AsyncImage(url: URL(string: imageBaseUrl.appending(imagePath))) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fill)
+                        .frame(width: 100, height: 100)
+                        .clipped()
+                        .clipShape(Capsule())
+                } placeholder: {
+                    placeholderImage()
+                }
             })
             
             // Name

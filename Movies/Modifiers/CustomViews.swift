@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-// placeholder
-@ViewBuilder
-func placeholderImage() -> some View {
-    Image(systemName: "photo")
-        .renderingMode(.template)
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 150, height: 150)
-        .foregroundColor(.gray)
-}
-
 // Container label Texts
 struct HeadlineLabel: View {
     let label: String
