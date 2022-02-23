@@ -13,14 +13,12 @@ struct TMDBResult: Hashable, Codable {
     let releaseDate: String
     let tmdbID: Int
     let title: String
-    let tmdbRating: Double
     
     enum CodingKeys: String, CodingKey {
         case backdrop = "backdrop_path"
         case poster = "poster_path"
         case releaseDate = "release_date"
         case tmdbID = "id"
-        case tmdbRating = "vote_average"
         case title
     }
 }
@@ -171,6 +169,6 @@ enum ReturnType {
     case browseDirector(results: BrowseDirector)
 }
 
-enum GetFrom: CaseIterable {
+enum MovieType: CaseIterable {
     case upcoming, nowPlaying, topRated, popular, detail, omdb, credits, search, browseActor, browseDirector
 }

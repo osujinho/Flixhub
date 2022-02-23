@@ -9,13 +9,10 @@ import SwiftUI
 
 struct DetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var viewModel: MoviesViewModel
-    @State private var isExpanded: Bool = false
+    @StateObject private var viewModel = DetailViewModel(networkManager: NetworkManager(), urlManager: URLManager())
     
-    private let detail: TMDBDetail
-    private let fullDetail: OMDBDetail
-    private let castDetail: CastDetail
-    private let isUpcoming: Bool
+    let isUpcoming: Bool
+    let movieID: String
     
     private let gradient = LinearGradient(
         gradient: Gradient(stops: [
@@ -29,7 +26,7 @@ struct DetailView: View {
     var body: some View {
         VStack {
             // top With Image and info
-            AsyncImage(url: URL(string: viewModel.imageBaseUrl.appending(detail.poster))) { image in
+            AsyncImage(url: URL(string: viewModel.urlManager.imageBaseUrl.appending(viewModel.tmdbDetail.poster))) { image in
                 image
                     .resizable()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -37,7 +34,7 @@ struct DetailView: View {
                     .aspectRatio(contentMode: .fill)
                     .overlay(
                         ZStack(alignment: .bottom) {
-                            AsyncImage(url: URL(string: viewModel.imageBaseUrl.appending(detail.poster))) { image in
+                            AsyncImage(url: URL(string: viewModel.urlManager.imageBaseUrl.appending(viewModel.tmdbDetail.poster))) { image in
                                 image
                                     .resizable()
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -65,14 +62,14 @@ struct DetailView: View {
                                             }
                                         )
                                         
-                                        Text(fullDetail.rating)
+                                        Text(viewModel.omdbDetail.rating)
                                             .circleTextViewModifier()
                                     }
                                     
                                     Spacer()
                                     
                                     HStack(spacing: 20) {
-                                        Text(fullDetail.rated)
+                                        Text(viewModel.omdbDetail.rated)
                                             .squareTextViewModifier()
                                         
                                         // Heart for Favorite
@@ -94,25 +91,25 @@ struct DetailView: View {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         // runtime and release date (if upcoming)
-                                        Text(detail.title.uppercased())
+                                        Text(viewModel.tmdbDetail.title.uppercased())
                                             .font(.system(size: 30, weight: .bold))
                                             .foregroundColor(.white)
                                             //.padding(.bottom, 2)
                                         
                                         HStack(spacing: 30) {
-                                            Text(stringToTime(strTime: detail.releaseDate))
+                                            Text(stringToTime(strTime: viewModel.tmdbDetail.releaseDate))
                                                 .font(.system(size: 13, weight: .semibold))
                                                 .foregroundColor(.white.opacity(0.7))
                                             Text(isUpcoming ?
-                                                 getDate(date: detail.releaseDate, forYear: false) :
-                                                    getDate(date: detail.releaseDate, forYear: true))
+                                                 getDate(date: viewModel.tmdbDetail.releaseDate, forYear: false) :
+                                                    getDate(date: viewModel.tmdbDetail.releaseDate, forYear: true))
                                                 .font(.system(size: 13, weight: .semibold))
                                                 .foregroundColor(.white.opacity(0.7))
                                         }
                                         .padding(.bottom, 10)
                                         
                                         HStack(alignment: .lastTextBaseline) {
-                                            ForEach(detail.genre, id:\.self) { genre in
+                                            ForEach(viewModel.tmdbDetail.genre, id:\.self) { genre in
                                                 Text(genre.name.capitalized)
                                                     .genreTextViewModifier()
                                             }
@@ -137,14 +134,14 @@ struct DetailView: View {
                 Text("Synopsis")
                     .font(.system(size: 20, weight: .bold))
                     .padding(.bottom, 5)
-                Text(detail.plot)
+                Text(viewModel.tmdbDetail.plot)
                     .font(.subheadline)
-                    .lineLimit(isExpanded ? nil : 2)
+                    .lineLimit(viewModel.isExpanded ? nil : 2)
                     .padding(.bottom, 8)
                 Button(action: {
-                    isExpanded.toggle()
+                    viewModel.isExpanded.toggle()
                 }) {
-                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                    Image(systemName: viewModel.isExpanded ? "chevron.up" : "chevron.down")
                         .foregroundColor(.gray)
                 }
                 // design plot with more which will increase
@@ -160,11 +157,11 @@ struct DetailView: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
-                        ForEach(viewModel.getDirectors(castDetail: castDetail), id: \.self) { director in
+                        ForEach(viewModel.getDirectors(), id: \.self) { director in
                             CastProfileView(name: director.name, movieRole: director.job, imagePath: director.profile_path, buttonAction: { })
                         }
                         
-                        ForEach(castDetail.cast, id: \.self) { cast in
+                        ForEach(viewModel.credits.cast, id: \.self) { cast in
                             CastProfileView(name: cast.name, movieRole: cast.character, imagePath: cast.picture, buttonAction: { })
                         }
                     }
@@ -177,15 +174,20 @@ struct DetailView: View {
             
             Spacer()
         }
+        .task {
+            await viewModel.networkCall(id: movieID)
+        }
         .navigationBarBackButtonHidden(true)
         .alert(isPresented: $viewModel.hasError) {
             Alert(
                 title: Text("Movie Detail Error"),
                 message: Text(viewModel.errorMessage),
                 primaryButton: .destructive(Text("Retry")) {
-                    // Use Task to run async method
+                    Task { await viewModel.networkCall(id: movieID) }
                 },
-                secondaryButton: .cancel()  // add a way to dismiss view and go back
+                secondaryButton: .cancel() {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
             )
         }
     }

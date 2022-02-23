@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct PosterView: View {
-    let imagePath: String
+    let imageUrl: String
     let titleOrDate: String
     let isPoster: Bool
-    
-    let imageBaseURL = "https://image.tmdb.org/t/p/w500"
     
     var body: some View {
         
@@ -25,14 +23,14 @@ struct PosterView: View {
             endPoint: .top
         )
         
-        AsyncImage(url: URL(string: imageBaseURL.appending(imagePath))) { image in
+        AsyncImage(url: URL(string: imageUrl)) { image in
             image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: isPoster ? 150 : 230)
                 .overlay(
                     ZStack(alignment: .bottom) {
-                        AsyncImage(url: URL(string: imageBaseURL.appending(imagePath))) { image in
+                        AsyncImage(url: URL(string: imageUrl)) { image in
                             image
                                 .resizable()
                                 .frame(width: isPoster ? 150 : 230)

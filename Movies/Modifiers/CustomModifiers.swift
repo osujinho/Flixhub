@@ -55,7 +55,7 @@ extension View {
     }
 }
 
-// Squate Text used in detail view
+// Squate Text used in detail view for the Rated text
 struct SquareTextViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
@@ -117,52 +117,3 @@ extension View {
         self.modifier(PosterViewModifier())
     }
 }
-
-//// Modifier for the Poster and backdrop in the carousel of browse view
-//struct CarouselImageViewModifier: ViewModifier {
-//    let imagePath: String
-//    let titleOrDate: String
-//    let isPoster: Bool
-//
-//    let gradient = LinearGradient(
-//        gradient: Gradient(stops: [
-//            .init(color: .black, location: 0),
-//            .init(color: .clear, location: 0.4)
-//        ]),
-//        startPoint: .bottom,
-//        endPoint: .top
-//    )
-//
-//    func body(content: Content) -> some View {
-//        return content
-//            .resizable()
-//            .aspectRatio(contentMode: .fit)
-//            .frame(width: isPoster ? 150 : 230)
-//            .overlay(
-//                ZStack(alignment: .bottom) {
-//                    Image(imagePath)
-//                        .resizable()
-//                        .frame(width: isPoster ? 150 : 230)
-//                        .blur(radius: 20) /// blur the image
-//                        .padding(-20) /// expand the blur a bit to cover the edges
-//                        .clipped() /// prevent blur overflow
-//                        .mask(gradient) /// mask the blurred image using the gradient's alpha values
-//
-//                    gradient /// also add the gradient as an overlay (this time, the purple will show up)
-//
-//                    HStack {
-//                        Spacer()
-//                        VStack(alignment: .leading) {
-//                            Text(isPoster ? getDate(date: titleOrDate, forYear: false) : titleOrDate)
-//                                .font(.system(size: isPoster ? 12 : 18, weight: .bold))
-//                                .opacity(isPoster ? 0.75 : 1)
-//                                .padding(.bottom, 1)
-//                        }
-//                        Spacer()
-//                    }
-//                    .foregroundColor(.white)
-//                    .padding(.bottom, 2)
-//                }
-//            )
-//    }
-//}

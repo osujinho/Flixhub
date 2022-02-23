@@ -105,3 +105,17 @@ struct NavigationLinkButton: View {
         .disabled(isDisabled)
     }
 }
+
+// Placeholder for Images
+@ViewBuilder
+func placeholderImage() -> some View {
+    Image(systemName: "photo")
+        .renderingMode(.template)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .frame(width: 150, height: 150)
+        .foregroundColor(.gray)
+        .overlay(
+            ProgressView()
+        )
+}
