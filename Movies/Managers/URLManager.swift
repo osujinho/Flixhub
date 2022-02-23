@@ -20,7 +20,7 @@ class URLManager {
         case .topRated: return baseURL.appending("movie/top_rated")
         case .popular: return baseURL.appending("movie/popular")
         case .detail: return baseURL.appending("movie/\(id)")
-        case .omdb: return "http://img.omdbapi.com/"
+        case .omdb: return "http://www.omdbapi.com/"
         case .credits: return baseURL.appending("movie/\(id)/credits")
         case .search: return baseURL.appending("search/movie")
         case .browseActor, .browseDirector: return baseURL.appending("person/\(id)/movie_credits")

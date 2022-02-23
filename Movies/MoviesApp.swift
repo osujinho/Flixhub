@@ -9,11 +9,9 @@ import SwiftUI
 
 @main
 struct MoviesApp: App {
-    @StateObject private var viewModel = MoviesViewModel(networkManager: NetworkManager(), urlManager: URLManager())
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(viewModel)
         }
     }
 }

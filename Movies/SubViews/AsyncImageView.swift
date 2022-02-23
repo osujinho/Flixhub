@@ -9,7 +9,12 @@ import SwiftUI
 
 struct AsyncImageView: View {
     let path: String?
-    let forProfile: Bool = false
+    let forProfile: Bool
+    
+    init(path: String?, forProfile: Bool = false) {
+        self.path = path
+        self.forProfile = forProfile
+    }
     
     var body: some View {
         AsyncImage(url: URL(string: getImageUrl(path)), transaction: Transaction(animation: .spring())) { phase in

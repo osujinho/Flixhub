@@ -45,6 +45,7 @@ struct DetailView: View {
                             // Top part
                             HStack {
                                 HStack(spacing: 20) {
+                                    // Back button
                                     Button(
                                         action: { self.presentationMode.wrappedValue.dismiss()
                                             
@@ -54,7 +55,7 @@ struct DetailView: View {
                                                 .font(.system(size: 30))
                                         }
                                     )
-                                    
+                                    // Rating
                                     Text(viewModel.omdbDetail.rating)
                                         .circleTextViewModifier()
                                 }
@@ -62,6 +63,7 @@ struct DetailView: View {
                                 Spacer()
                                 
                                 HStack(spacing: 20) {
+                                    // Rated eg, Rated PG-13
                                     Text(viewModel.omdbDetail.rated)
                                         .squareTextViewModifier()
                                     
@@ -169,7 +171,7 @@ struct DetailView: View {
             }
             .background(Color.gray.opacity(0.1))
             .padding(.bottom, 30)
-            .edgesIgnoringSafeArea(.bottom)
+            //.edgesIgnoringSafeArea(.bottom)
             
             Spacer()
         }
