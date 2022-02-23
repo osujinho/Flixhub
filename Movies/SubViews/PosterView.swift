@@ -58,6 +58,7 @@ struct PosterView: View {
                         .padding(.bottom, 2)
                     }
                 )
+                .cornerRadius(10)
         } placeholder: {
             placeholderImage()
         }
