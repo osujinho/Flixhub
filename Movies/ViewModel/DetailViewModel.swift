@@ -29,7 +29,7 @@ import Foundation
     }
     
     // get movie detail
-    func networkCall(id: String) async {
+    func getMovieDetail(id: String) async {
         self.hasError = false
         
         let url = urlManager.buildURL(movieType: .detail, id: id)

@@ -21,7 +21,7 @@ struct SearchView: View {
                     label: "Search",
                     bgColor: .blue,
                     action: {
-                        Task { await viewModel.networkCall() }
+                        Task { await viewModel.searchMovie() }
                     },
                     isDisabled: viewModel.movieTitle.isEmpty)
             }
@@ -50,7 +50,7 @@ struct SearchView: View {
                 message: Text(viewModel.errorMessage),
                 primaryButton: .destructive(Text("Retry")) {
                     Task {
-                        await viewModel.networkCall()
+                        await viewModel.searchMovie()
                     }
                 },
                 secondaryButton: .cancel() { viewModel.movieTitle.removeAll() }

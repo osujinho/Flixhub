@@ -28,10 +28,10 @@ struct BrowseView: View {
             }
             .navigationTitle("Browse")
             .task {
-                await viewModel.networkCall(type: .upcoming, value: "1")
-                await viewModel.networkCall(type: .nowPlaying, value: "1")
-                await viewModel.networkCall(type: .topRated, value: "1")
-                await viewModel.networkCall(type: .popular, value: "1")
+                await viewModel.fetchMovies(type: .upcoming, value: "1")
+                await viewModel.fetchMovies(type: .nowPlaying, value: "1")
+                await viewModel.fetchMovies(type: .topRated, value: "1")
+                await viewModel.fetchMovies(type: .popular, value: "1")
             }
             .alert(isPresented: $viewModel.hasError) {
                 Alert(
@@ -40,10 +40,10 @@ struct BrowseView: View {
                     dismissButton: .destructive(Text("Retry")) {
                         // Use Task to run async method
                         Task {
-                            await viewModel.networkCall(type: .upcoming, value: "1")
-                            await viewModel.networkCall(type: .nowPlaying, value: "1")
-                            await viewModel.networkCall(type: .topRated, value: "1")
-                            await viewModel.networkCall(type: .popular, value: "1")
+                            await viewModel.fetchMovies(type: .upcoming, value: "1")
+                            await viewModel.fetchMovies(type: .nowPlaying, value: "1")
+                            await viewModel.fetchMovies(type: .topRated, value: "1")
+                            await viewModel.fetchMovies(type: .popular, value: "1")
                         }
                     }
                 )

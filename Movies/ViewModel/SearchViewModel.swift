@@ -22,7 +22,7 @@ import Foundation
         self.urlManager = urlManager
     }
     
-    func networkCall() async {
+    func searchMovie() async {
         self.hasError = false
         self.searchSuccessful = false
         

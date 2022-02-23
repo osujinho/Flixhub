@@ -23,7 +23,7 @@ import Foundation
         self.urlManager = urlManager
     }
     
-    func networkCall(type: MovieType, value: String) async {
+    func fetchMovies(type: MovieType, value: String) async {
         self.hasError = false
         
         let url = urlManager.buildURL(movieType: type, value: value)

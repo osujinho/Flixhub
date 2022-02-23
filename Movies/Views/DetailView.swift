@@ -175,7 +175,7 @@ struct DetailView: View {
             Spacer()
         }
         .task {
-            await viewModel.networkCall(id: movieID)
+            await viewModel.getMovieDetail(id: movieID)
         }
         .navigationBarBackButtonHidden(true)
         .alert(isPresented: $viewModel.hasError) {
@@ -183,7 +183,7 @@ struct DetailView: View {
                 title: Text("Movie Detail Error"),
                 message: Text(viewModel.errorMessage),
                 primaryButton: .destructive(Text("Retry")) {
-                    Task { await viewModel.networkCall(id: movieID) }
+                    Task { await viewModel.getMovieDetail(id: movieID) }
                 },
                 secondaryButton: .cancel() {
                     self.presentationMode.wrappedValue.dismiss()

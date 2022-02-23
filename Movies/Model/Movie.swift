@@ -156,19 +156,6 @@ struct CrewMovies: Hashable, Codable {
     }
 }
 
-enum ReturnType {
-    case upcoming(movies: Upcoming)
-    case nowPlaying(movies: NowPlaying)
-    case topRated(movies: TopRated)
-    case popular(movies: Popular)
-    case detail(movie: TMDBDetail)
-    case omdb(movie: OMDBDetail)
-    case credits(credit: CastDetail)
-    case search(result: TMDBSearch)
-    case browseActor(results: BrowseActor)
-    case browseDirector(results: BrowseDirector)
-}
-
 enum MovieType: CaseIterable {
     case upcoming, nowPlaying, topRated, popular, detail, omdb, credits, search, browseActor, browseDirector
 }
