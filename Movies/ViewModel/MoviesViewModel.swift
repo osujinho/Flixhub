@@ -25,6 +25,12 @@ import Foundation
     
 }
 
+// Function to get the imageURL
+func getImageUrl(_ path: String?) -> String {
+    let imageBaseUrl = "https://image.tmdb.org/t/p/w500"
+    return imageBaseUrl.appending(path ?? "")
+}
+
 // string to date
 func getDate(date: String, forYear: Bool) -> String {
     let oldDateFormatter = DateFormatter()

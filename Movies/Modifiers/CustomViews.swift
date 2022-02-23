@@ -119,3 +119,51 @@ func placeholderImage() -> some View {
             ProgressView()
         )
 }
+
+// AsyncImage for Profile pictures
+@ViewBuilder
+func castProfileAsyncImage(for phase: AsyncImagePhase) -> some View {
+   switch phase {
+   case .empty:
+       Image(systemName: "person.circle.fill")
+           .renderingMode(.template)
+           .resizable()
+           .aspectRatio(contentMode: .fit)
+           .frame(width: 100, height: 100)
+           .foregroundColor(.gray)
+           .overlay(
+               ProgressView()
+           )
+   case .success(let image):
+       image
+           .resizable()
+           .aspectRatio(1, contentMode: .fill)
+           .frame(width: 100, height: 100)
+           .clipped()
+           .clipShape(Capsule())
+   case .failure(_):
+       Image(systemName: "person.circle.fill")
+           .renderingMode(.template)
+           .resizable()
+           .aspectRatio(contentMode: .fit)
+           .frame(width: 100, height: 100)
+           .foregroundColor(.gray)
+           .overlay(
+               Image(systemName: "exclamationmark.triangle.fill")
+                   .renderingMode(.original)
+                   .font(.system(size: 20))
+           )
+   @unknown default:
+       Image(systemName: "person.circle.fill")
+           .renderingMode(.template)
+           .resizable()
+           .aspectRatio(contentMode: .fit)
+           .frame(width: 100, height: 100)
+           .foregroundColor(.gray)
+           .overlay(
+               Image(systemName: "questionmark")
+                   .renderingMode(.original)
+                   .font(.system(size: 25))
+           )
+   }
+}

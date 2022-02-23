@@ -94,7 +94,7 @@ struct CastDetail: Hashable, Codable {
 struct Cast: Hashable, Codable {
     let castID: Int
     let name: String
-    let picture: String
+    let picture: String?
     let character: String
     
     enum CodingKeys: String, CodingKey {
@@ -127,7 +127,7 @@ struct CastMovies: Hashable, Codable {
 struct Crew: Hashable, Codable {
     let id: Int
     let name: String
-    let profile_path: String
+    let profile_path: String?
     let job: String
 }
 

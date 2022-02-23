@@ -46,6 +46,7 @@ import Foundation
         } catch {
             // Error in case data could not be loaded
             errorMessage = error.localizedDescription
+            print(error)
             self.hasError = true
         }
     }

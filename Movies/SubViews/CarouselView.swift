@@ -40,28 +40,26 @@ struct CarouselView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 16) {
                     ForEach(movies, id: \.self) { movie in
-                        NavigationLink(destination: DetailView( isUpcoming: isPoster, movieID: String(movie.tmdbID) ) ) {
-                            GeometryReader { proxy in
-                                let scale = getScale(proxy: proxy)
-                                NavigationLink(
-                                    // Destination to be changed
-                                    destination: EmptyView(),
-                                    label: {
-                                        PosterView(
-                                            imageUrl: imageUrl.appending(isPoster ? movie.poster : movie.backdrop),
-                                            titleOrDate: isPoster ? getDate(date: movie.releaseDate, forYear: false) : movie.title,
-                                            
-                                            isPoster: isPoster)
-                                    })
-                                    .scaleEffect(.init(width: scale, height: scale))
-                                    .animation(.easeOut, value: 1)
-                                    .padding(.vertical)
-                            } //End Geometry
-                            .frame(width: isPoster ? 145 : 235, height: isPoster ? 300 : 180)
-                            .padding(.horizontal, 10)
-                            .padding(.bottom, 5)
-                            .padding(.top, isPoster ? 20 : 5)
-                        }
+                        GeometryReader { proxy in
+                            let scale = getScale(proxy: proxy)
+                            NavigationLink(
+                                // Destination to be changed
+                                destination: DetailView( isUpcoming: isPoster, movieID: String(movie.tmdbID) ),
+                                label: {
+                                    PosterView(
+                                        imageUrl: imageUrl.appending(isPoster ? movie.poster : movie.backdrop),
+                                        titleOrDate: isPoster ? getDate(date: movie.releaseDate, forYear: false) : movie.title,
+                                        
+                                        isPoster: isPoster)
+                                })
+                                .scaleEffect(.init(width: scale, height: scale))
+                                .animation(.easeOut, value: 1)
+                                .padding(.vertical)
+                        } //End Geometry
+                        .frame(width: isPoster ? 145 : 235, height: isPoster ? 300 : 180)
+                        .padding(.horizontal, 10)
+                        .padding(.bottom, 5)
+                        .padding(.top, isPoster ? 20 : 5)
                     } //End ForEach
                     Spacer()
                         .frame(width: 10)
