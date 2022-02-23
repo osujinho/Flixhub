@@ -14,16 +14,16 @@ struct BrowseView: View {
         NavigationView {
             ScrollView {
                 // Upcoming
-                CarouselView(categoryName: "Upcoming", categoryNameBackgroundColor: .orange, movies: viewModel.upcoming.results, isPoster: true, imageUrl: viewModel.urlManager.imageBaseUrl)
+                CarouselView(categoryName: "Upcoming", categoryNameBackgroundColor: .orange, movies: viewModel.upcoming.results, isPoster: true)
                 
                 // Now playing
-                CarouselView(categoryName: "Now Playing", categoryNameBackgroundColor: .green, movies: viewModel.nowPlaying.results, isPoster: false, imageUrl: viewModel.urlManager.imageBaseUrl)
+                CarouselView(categoryName: "Now Playing", categoryNameBackgroundColor: .green, movies: viewModel.nowPlaying.results, isPoster: false)
                 
                 // Popular
-                CarouselView(categoryName: "Popular", categoryNameBackgroundColor: .blue, movies: viewModel.popular.results, isPoster: false, imageUrl: viewModel.urlManager.imageBaseUrl)
+                CarouselView(categoryName: "Popular", categoryNameBackgroundColor: .blue, movies: viewModel.popular.results, isPoster: false)
                 
                 // Top Rated
-                CarouselView(categoryName: "Top Rated", categoryNameBackgroundColor: .yellow, movies: viewModel.topRated.results, isPoster: false, imageUrl: viewModel.urlManager.imageBaseUrl)
+                CarouselView(categoryName: "Top Rated", categoryNameBackgroundColor: .yellow, movies: viewModel.topRated.results, isPoster: false)
                 
             }
             .navigationTitle("Browse")
