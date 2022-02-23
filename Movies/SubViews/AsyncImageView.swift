@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AsyncImageView: View {
     let path: String?
-    let forProfile: Bool
+    let forProfile: Bool = false
     
     var body: some View {
         AsyncImage(url: URL(string: getImageUrl(path)), transaction: Transaction(animation: .spring())) { phase in
@@ -28,7 +28,6 @@ struct AsyncImageView: View {
                 image
                     .resizable()
                     .scaledToFill()
-                    //.clipped()
                     .if(forProfile) { view in
                         view
                             .padding(.top, 30)

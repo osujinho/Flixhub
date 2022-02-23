@@ -16,18 +16,11 @@ struct CastProfileView: View {
     var body: some View {
         VStack {
             Button(action: {
+                // Call for async function
                 buttonAction()
             }, label: {
-                AsyncImage(url: URL(string: getImageUrl(imagePath) )) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fill)
-                        .frame(width: 100, height: 100)
-                        .clipped()
-                        .clipShape(Capsule())
-                } placeholder: {
-                    placeholderImage()
-                }
+                AsyncImageView(path: imagePath, forProfile: true)
+                    .frame(width: 120)
             })
             
             // Name

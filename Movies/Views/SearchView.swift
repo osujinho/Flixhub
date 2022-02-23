@@ -34,9 +34,7 @@ struct SearchView: View {
                     List {
                         ForEach(viewModel.searchResult.results, id: \.self) { movie in
                             NavigationLink( destination: DetailView( isUpcoming: false, movieID: String( movie.tmdbID ) ) ) {
-                                ResultRowView(
-                                    imageBaseUrl: viewModel.urlManager.imageBaseUrl,
-                                    movie: movie)
+                                ResultRowView(movie: movie)
                             }
                         }
                     }

@@ -8,8 +8,8 @@
 import Foundation
 // shows movie for the browse view
 struct TMDBResult: Hashable, Codable {
-    let backdrop: String
-    let poster: String
+    let backdrop: String?
+    let poster: String?
     let releaseDate: String
     let tmdbID: Int
     let title: String
@@ -45,8 +45,8 @@ struct Popular: Hashable, Codable {
 
 // For movie detail once clicked on
 struct TMDBDetail: Hashable, Codable {
-    let backdrop: String
-    let poster: String
+    let backdrop: String?
+    let poster: String?
     let releaseDate: String
     let tmdbID: Int
     let title: String
@@ -110,7 +110,7 @@ struct BrowseActor: Hashable, Codable {
 }
 
 struct CastMovies: Hashable, Codable {
-    let poster: String
+    let poster: String?
     let movieId: Int
     let title: String
     let releaseDate: String
@@ -143,7 +143,7 @@ struct BrowseDirector: Hashable, Codable {
 struct CrewMovies: Hashable, Codable {
     let movieId: Int
     let title: String
-    let poster: String
+    let poster: String?
     let job: String
     let releaseDate: String
     

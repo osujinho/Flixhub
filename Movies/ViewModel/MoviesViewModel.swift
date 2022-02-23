@@ -15,14 +15,6 @@ import Foundation
     @Published var omdbDetail = UrlItem(key: "i", value: "")
     @Published var popular: [TMDBResult] = []
     
-    private let networkManager: NetworkManager
-    private let urlManager: URLManager
-    
-    init(networkManager: NetworkManager, urlManager: URLManager) {
-        self.networkManager = networkManager
-        self.urlManager = urlManager
-    }
-    
 }
 
 // Function to get the imageURL

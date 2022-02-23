@@ -13,7 +13,6 @@ struct CarouselView: View {
     let categoryNameBackgroundColor: Color
     let movies: [TMDBResult]
     let isPoster: Bool
-    let imageUrl: String
     
     private let gradient = LinearGradient(
         gradient: Gradient(stops: [
@@ -43,13 +42,11 @@ struct CarouselView: View {
                         GeometryReader { proxy in
                             let scale = getScale(proxy: proxy)
                             NavigationLink(
-                                // Destination to be changed
                                 destination: DetailView( isUpcoming: isPoster, movieID: String(movie.tmdbID) ),
                                 label: {
                                     PosterView(
-                                        imageUrl: imageUrl.appending(isPoster ? movie.poster : movie.backdrop),
+                                        imagePath: isPoster ? movie.poster : movie.backdrop,
                                         titleOrDate: isPoster ? getDate(date: movie.releaseDate, forYear: false) : movie.title,
-                                        
                                         isPoster: isPoster)
                                 })
                                 .scaleEffect(.init(width: scale, height: scale))

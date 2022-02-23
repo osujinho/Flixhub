@@ -11,7 +11,17 @@ import Foundation
     @Published private(set) var errorMessage: String = ""
     @Published var isExpanded: Bool = false
     @Published private(set) var omdbDetail = OMDBDetail(rated: "", rating: "")
-    @Published private(set) var tmdbDetail = TMDBDetail(backdrop: "", poster: "", releaseDate: "", tmdbID: 0, title: "", genre: [Genre](), plot: "", runtime: 0, imdbID: "")
+    @Published private(set) var tmdbDetail = TMDBDetail(
+        backdrop: nil,
+        poster: nil,
+        releaseDate: "",
+        tmdbID: 0,
+        title: "",
+        genre: [Genre](),
+        plot: "",
+        runtime: 0,
+        imdbID: ""
+    )
     @Published private(set) var credits = CastDetail(cast: [Cast](), crew: [Crew]())
     @Published var hasError: Bool = false
     

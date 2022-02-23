@@ -8,20 +8,13 @@
 import SwiftUI
 
 struct ResultRowView: View {
-    let imageBaseUrl: String
     let movie: TMDBResult
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
-            AsyncImage(url: URL(string: imageBaseUrl.appending(movie.poster))) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 160)
-                    .cornerRadius(10)
-            } placeholder: {
-                placeholderImage()
-            }
+            AsyncImageView(path: movie.poster)
+                .frame(height: 160)
+                .cornerRadius(10)
             
             VStack(alignment: .leading, spacing: 10) {
                 Text(movie.title)

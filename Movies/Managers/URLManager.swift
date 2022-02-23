@@ -9,7 +9,6 @@ import Foundation
 
 class URLManager {
     private let baseURL = "https://api.themoviedb.org/3/"
-    let imageBaseUrl = "https://image.tmdb.org/t/p/w500"
     let omdpKey = UrlItem(key: "apikey", value: "4324aa3d")
     let tmdbKey = UrlItem(key: "api_key", value: "20273c51e3e2e33ccf30874850c5e3b5")
     let language = UrlItem(key: "language", value: "en-US")
@@ -28,7 +27,7 @@ class URLManager {
         }
     }
     
-    public func getUrlItems(movieType: MovieType, value: String = "") -> [UrlItem] {
+    private func getUrlItems(movieType: MovieType, value: String = "") -> [UrlItem] {
         switch movieType {
         case .upcoming, .nowPlaying, .topRated, .popular:
             return [tmdbKey, language, UrlItem(key: "page", value: value)]
