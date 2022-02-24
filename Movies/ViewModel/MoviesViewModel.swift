@@ -39,8 +39,8 @@ func getDate(date: String, forYear: Bool) -> String {
 }
 
 // string to time
-func stringToTime(strTime: String) -> String {
-    guard let totalMinutes = Double(strTime) else { return strTime }
+func stringToTime(strTime: Int) -> String {
+    let totalMinutes = Double(strTime)
     
     let hours = Int(floor(totalMinutes / 60))
     let minutes = Int(totalMinutes) % 60

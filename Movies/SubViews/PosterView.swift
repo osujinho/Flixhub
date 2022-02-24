@@ -24,11 +24,11 @@ struct PosterView: View {
         )
         
         AsyncImageView(path: imagePath)
-            .frame(width: isPoster ? 150 : 230)
+            .frame(width: isPoster ? 120 : 200)
             .overlay(
                 ZStack(alignment: .bottom) {
                     AsyncImageView(path: imagePath)
-                        .frame(width: isPoster ? 150 : 230)
+                        .frame(width: isPoster ? 120 : 200)
                         .blur(radius: 20) /// blur the image
                         .padding(-20) /// expand the blur a bit to cover the edges
                         .clipped() /// prevent blur overflow

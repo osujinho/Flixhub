@@ -92,7 +92,7 @@ struct DetailView: View {
                                         //.padding(.bottom, 2)
                                     
                                     HStack(spacing: 30) {
-                                        Text(stringToTime(strTime: viewModel.tmdbDetail.releaseDate))
+                                        Text(stringToTime(strTime: viewModel.tmdbDetail.runtime))
                                             .font(.system(size: 13, weight: .semibold))
                                             .foregroundColor(.white.opacity(0.7))
                                         Text(isUpcoming ?

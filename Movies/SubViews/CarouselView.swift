@@ -37,7 +37,7 @@ struct CarouselView: View {
             }.padding(.horizontal)
              
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: 16) {
+                HStack(alignment: .top, spacing: isPoster ? 16 : 22) {
                     ForEach(movies, id: \.self) { movie in
                         GeometryReader { proxy in
                             let scale = getScale(proxy: proxy)
@@ -53,9 +53,9 @@ struct CarouselView: View {
                                 .animation(.easeOut, value: 1)
                                 .padding(.vertical)
                         } //End Geometry
-                        .frame(width: isPoster ? 145 : 235, height: isPoster ? 300 : 180)
+                        .frame(width: isPoster ? 110 : 190, height: isPoster ? 230 : 145)
                         .padding(.horizontal, 10)
-                        .padding(.bottom, 5)
+                        .padding(.bottom, isPoster ? 15 : 5)
                         .padding(.top, isPoster ? 20 : 5)
                     } //End ForEach
                     Spacer()
