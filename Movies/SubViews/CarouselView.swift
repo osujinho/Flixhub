@@ -22,6 +22,8 @@ struct CarouselView: View {
         startPoint: .bottom,
         endPoint: .top
     )
+    
+    private(set) var movieImage = Image(systemName: "video.fill")
      
     var body: some View {
         VStack {
@@ -46,7 +48,7 @@ struct CarouselView: View {
                                 label: {
                                     PosterView(
                                         imagePath: isPoster ? movie.poster : movie.backdrop,
-                                        titleOrDate: isPoster ? getDate(date: movie.releaseDate, forYear: false) : movie.title,
+                                        titleOrDate: isPoster ? movie.releaseDate : movie.title,
                                         isPoster: isPoster)
                                 })
                                 .scaleEffect(.init(width: scale, height: scale))

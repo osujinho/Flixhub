@@ -5,7 +5,7 @@
 //  Created by Michael Osuji on 2/18/22.
 //
 
-import Foundation
+import SwiftUI
 
 @MainActor class DetailViewModel: ObservableObject {
     @Published private(set) var errorMessage: String = ""
@@ -20,10 +20,26 @@ import Foundation
         genre: [Genre](),
         plot: "",
         runtime: 0,
-        imdbID: ""
+        imdbID: "",
+        credits: Credit(cast: [Cast](), crew: [Crew]()),
+        videos: Video(results: [Results]())
     )
-    @Published private(set) var credits = CastDetail(cast: [Cast](), crew: [Crew]())
     @Published var hasError: Bool = false
+    @Published var isLoading: Bool = true
+    @Published var playTrailer: Bool = false
+    
+    var youtubeKey: String {
+        if let video = tmdbDetail.videos.results.first(where: {
+            $0.site.lowercased() == "youtube" && $0.type.lowercased() == "trailer"
+        }) {
+            return video.key
+        }
+        return ""
+    }
+    
+    var director: [Crew] {
+        return tmdbDetail.credits.crew.filter { $0.job == "Director" }
+    }
     
     private let networkManager: NetworkManager
     let urlManager: URLManager
@@ -34,24 +50,30 @@ import Foundation
     }
     
     // Get movie director information
-    func getDirectors() -> [Crew] {
-        credits.crew.filter { $0.job == "Director" }
-    }
+//    func getDirectors() -> [Crew] {
+//        tmdbDetail.credits.crew.filter { $0.job == "Director" }
+//    }
     
     // get movie detail
     func getMovieDetail(id: String) async {
         self.hasError = false
+        self.isLoading = true
         
         let url = urlManager.buildURL(movieType: .detail, id: id)
         
         do {
-            // load JSON Object
+            /// load JSON Object
             
             tmdbDetail = try await networkManager.makeCall(url: url)
-            let creditsURL = urlManager.buildURL(movieType: .credits, id: String(tmdbDetail.tmdbID))
             let ombdURL = urlManager.buildURL(movieType: .omdb, value: tmdbDetail.imdbID)
-            credits = try await networkManager.makeCall(url: creditsURL)
             omdbDetail = try await networkManager.makeCall(url: ombdURL)
+            
+            /// Slow the switching of screen
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                withAnimation {
+                    self.isLoading = false
+                }
+            }
             
         } catch {
             // Error in case data could not be loaded

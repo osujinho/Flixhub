@@ -13,172 +13,49 @@ struct DetailView: View {
     
     let isUpcoming: Bool
     let movieID: String
-    
-    private let gradient = LinearGradient(
-        gradient: Gradient(stops: [
-            .init(color: Color.black.opacity(0.7), location: 0),
-            .init(color: .clear, location: 0.4)
-        ]),
-        startPoint: .bottom,
-        endPoint: .top
-    )
+    let movieTitle: String
     
     var body: some View {
-        VStack {
-            // top With Image and info
-            AsyncImageView(path: viewModel.tmdbDetail.poster)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .clipped()
-                .aspectRatio(contentMode: .fill)
-                .overlay(
-                    ZStack(alignment: .bottom) {
-                        AsyncImageView(path: viewModel.tmdbDetail.poster)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .blur(radius: 20)
-                            .padding(-20)
-                            .clipped()
-                            .mask(gradient)
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [.black, .black.opacity(0.7)]), startPoint: .top, endPoint: .bottom)
+            
+            if viewModel.isLoading {
+                LoadingDetailView(movieTitle: movieTitle)
+                    .transition(.scale)
+            } else {
+                VStack(spacing: 0) {
+                    TrailerPlayer(
+                        playTrailer: $viewModel.playTrailer,
+                        videoID: viewModel.youtubeKey,
+                        backdrop: viewModel.tmdbDetail.backdrop
+                    )
+                    .scaledToFit()
+                    
+                    VStack {
+                        MovieTitleAndGenreView(
+                            playTrailer: $viewModel.playTrailer,
+                            movieDetail: viewModel.tmdbDetail,
+                            ratingAndRated: viewModel.omdbDetail,
+                            isUpcoming: isUpcoming
+                        )
                         
-                        gradient
+                        SynopsisView(syposis: viewModel.tmdbDetail.plot)
                         
-                        VStack {
-                            // Top part
-                            HStack {
-                                HStack(spacing: 20) {
-                                    // Back button
-                                    Button(
-                                        action: { self.presentationMode.wrappedValue.dismiss()
-                                            
-                                        }, label: {
-                                            Image(systemName: "chevron.left.circle.fill")
-                                                .foregroundColor(.gray)
-                                                .font(.system(size: 30))
-                                        }
-                                    )
-                                    // Rating
-                                    Text(viewModel.omdbDetail.rating)
-                                        .circleTextViewModifier()
-                                }
-                                
-                                Spacer()
-                                
-                                HStack(spacing: 20) {
-                                    // Rated eg, Rated PG-13
-                                    Text(viewModel.omdbDetail.rated)
-                                        .squareTextViewModifier()
-                                    
-                                    // Heart for Favorite
-                                    Button(
-                                        action: {
-                                            // Todo
-                                        }, label: {
-                                            Image(systemName: "suit.heart.fill")
-                                                .foregroundColor(.gray)
-                                                .font(.system(size: 35))
-                                        }
-                                    )
-                                }
-                            }
-                            
-                            Spacer()
-                            
-                            // Bottom part
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    // runtime and release date (if upcoming)
-                                    Text(viewModel.tmdbDetail.title.uppercased())
-                                        .font(.system(size: 30, weight: .bold))
-                                        .foregroundColor(.white)
-                                        //.padding(.bottom, 2)
-                                    
-                                    HStack(spacing: 30) {
-                                        Text(stringToTime(strTime: viewModel.tmdbDetail.runtime))
-                                            .font(.system(size: 13, weight: .semibold))
-                                            .foregroundColor(.white.opacity(0.7))
-                                        Text(isUpcoming ?
-                                             getDate(date: viewModel.tmdbDetail.releaseDate, forYear: false) :
-                                                getDate(date: viewModel.tmdbDetail.releaseDate, forYear: true))
-                                            .font(.system(size: 13, weight: .semibold))
-                                            .foregroundColor(.white.opacity(0.7))
-                                    }
-                                    .padding(.bottom, 10)
-                                    
-                                    HStack(alignment: .lastTextBaseline) {
-                                        ForEach(viewModel.tmdbDetail.genre, id:\.self) { genre in
-                                            Text(genre.name.capitalized)
-                                                .genreTextViewModifier()
-                                        }
-                                    }
-                                }
-                                
-                                Spacer()
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.top, 70)
-                        .padding(.bottom, 5)
+                        CastView(directors: viewModel.director, casts: viewModel.tmdbDetail.credits.cast)
                     }
-                )
-                .edgesIgnoringSafeArea(.top)
-            
-            // Plot
-            VStack(alignment: .leading) {
-                Text("Synopsis")
-                    .font(.system(size: 20, weight: .bold))
-                    .padding(.bottom, 5)
-                Text(viewModel.tmdbDetail.plot)
-                    .font(.subheadline)
-                    .lineLimit(viewModel.isExpanded ? nil : 2)
-                    .padding(.bottom, 8)
-                Button(action: {
-                    viewModel.isExpanded.toggle()
-                }) {
-                    Image(systemName: viewModel.isExpanded ? "chevron.up" : "chevron.down")
-                        .foregroundColor(.gray)
+                    .frame(maxWidth: UIScreen.main.bounds.width)
+                    
+                    Spacer()
                 }
-                // design plot with more which will increase
+                .transition(.slide)
             }
-            .padding(.horizontal, 10)
-            .padding(.bottom, 5)
-            
-            // The cast members
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Cast")
-                    .font(.system(size: 20, weight: .bold))
-                    .padding(.horizontal, 10)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10) {
-                        ForEach(viewModel.getDirectors(), id: \.self) { director in
-                            CastProfileView(
-                                name: director.name,
-                                movieRole: director.job,
-                                imagePath: director.profile_path,
-                                buttonAction: { }
-                            )
-                        }
-                        
-                        ForEach(viewModel.credits.cast, id: \.self) { cast in
-                            CastProfileView(
-                                name: cast.name,
-                                movieRole: cast.character,
-                                imagePath: cast.picture,
-                                buttonAction: { })
-                        }
-                    }
-                }
-                .padding(.horizontal, 10)
-            }
-            .background(Color.gray.opacity(0.1))
-            .padding(.bottom, 30)
-            //.edgesIgnoringSafeArea(.bottom)
-            
-            Spacer()
         }
+        .edgesIgnoringSafeArea(.all)
         .task {
             await viewModel.getMovieDetail(id: movieID)
         }
         .navigationBarBackButtonHidden(true)
+        .navigationViewStyle(.stack)
         .alert(isPresented: $viewModel.hasError) {
             Alert(
                 title: Text("Movie Detail Error"),

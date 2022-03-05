@@ -7,16 +7,6 @@
 
 import Foundation
 
-@MainActor class MoviesViewModel: ObservableObject {
-    @Published var searchInput = UrlItem(key: "query", value: "")
-    @Published private(set) var hasError: Bool = false
-    @Published var errorMessage = ""
-    @Published var pageNumber: String = "1"
-    @Published var omdbDetail = UrlItem(key: "i", value: "")
-    @Published var popular: [TMDBResult] = []
-    
-}
-
 // Function to get the imageURL
 func getImageUrl(_ path: String?) -> String {
     let imageBaseUrl = "https://image.tmdb.org/t/p/w500"

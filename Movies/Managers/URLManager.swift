@@ -7,11 +7,21 @@
 
 import Foundation
 
+struct UrlItem {
+    let key: String
+    let value: String
+}
+
+enum MovieType: CaseIterable {
+    case upcoming, nowPlaying, topRated, popular, detail, omdb, search, browseActor, browseDirector
+}
+
 class URLManager {
     private let baseURL = "https://api.themoviedb.org/3/"
     let omdpKey = UrlItem(key: "apikey", value: "4324aa3d")
     let tmdbKey = UrlItem(key: "api_key", value: "20273c51e3e2e33ccf30874850c5e3b5")
     let language = UrlItem(key: "language", value: "en-US")
+    let castAndCredit = UrlItem(key: "append_to_response", value: "credits,videos")
     
     private func getURL(type: MovieType, id: String = "") -> String {
         switch type {
@@ -21,7 +31,6 @@ class URLManager {
         case .popular: return baseURL.appending("movie/popular")
         case .detail: return baseURL.appending("movie/\(id)")
         case .omdb: return "http://www.omdbapi.com/"
-        case .credits: return baseURL.appending("movie/\(id)/credits")
         case .search: return baseURL.appending("search/movie")
         case .browseActor, .browseDirector: return baseURL.appending("person/\(id)/movie_credits")
         }
@@ -31,9 +40,9 @@ class URLManager {
         switch movieType {
         case .upcoming, .nowPlaying, .topRated, .popular:
             return [tmdbKey, language, UrlItem(key: "page", value: value)]
-        case .detail: return [tmdbKey]
+        case .detail: return [tmdbKey, castAndCredit]
         case .omdb: return [omdpKey, UrlItem(key: "i", value: value)]
-        case .credits, .browseActor, .browseDirector: return [tmdbKey, language]
+        case .browseActor, .browseDirector: return [tmdbKey, language]
         case .search: return [tmdbKey, UrlItem(key: "query", value: value)]
         }
     }

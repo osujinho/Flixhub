@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// Modifier for containers
+/// Modifier for containers
 struct ContainerViewModifier: ViewModifier {
     let fontColor: Color
     let borderColor: Color
@@ -32,7 +32,7 @@ extension View {
     }
 }
 
-// Circle text used in detail view
+/// Circle text used in detail view for the rating
 struct CircleTextViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
@@ -55,7 +55,7 @@ extension View {
     }
 }
 
-// Squate Text used in detail view for the Rated text
+/// Squate Text used in detail view for the Rated text
 struct SquareTextViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
@@ -78,7 +78,7 @@ extension View {
     }
 }
 
-// Genre text used in detail view
+/// Genre text used in detail view
 struct GenreTextViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
@@ -98,22 +98,18 @@ extension View {
     }
 }
 
-// Modifier for the Poster in detail view
-struct PosterViewModifier: ViewModifier {
+/// Font for the App
+struct MovieFont: ViewModifier {
+    let size: CGFloat
+    
     func body(content: Content) -> some View {
-        return content
-            .clipped()
-            .cornerRadius(8)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color(white: 0.4))
-            )
-            .shadow(radius: 3)
+        content
+            .font(Font.custom("Copperplate", size: size))
     }
 }
 
 extension View {
-    func posterViewModifier() -> some View {
-        self.modifier(PosterViewModifier())
+    func movieFont(size: CGFloat) -> some View {
+        self.modifier(MovieFont(size: size))
     }
 }

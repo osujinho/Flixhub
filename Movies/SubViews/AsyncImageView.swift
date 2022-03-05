@@ -32,15 +32,15 @@ struct AsyncImageView: View {
             case .success(let image):
                 image
                     .resizable()
-                    .scaledToFill()
+                    .aspectRatio(contentMode: forProfile ? .fit : .fill)
                     .if(forProfile) { view in
                         view
-                            .padding(.top, 30)
+                            .frame(width: 120)
                             .clipShape(Circle())
                             .overlay(Circle()
                                         .stroke(Color.blue, lineWidth: 2))
                             .shadow(radius: 4)
-                            .padding(.horizontal, 5)
+                            .padding(.horizontal, 8)
                     }
                     .transition(.slide)
          

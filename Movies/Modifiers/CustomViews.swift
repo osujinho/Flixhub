@@ -78,92 +78,15 @@ struct LabelButton: View {
     }
 }
 
-// Custom navigationLink view for the results
-struct NavigationLinkButton: View {
-    let label: String
-    let bgColor: Color
-    let isDisabled: Bool
-    let destination: AnyView
+/// To round only certain corners
+struct RoundedCornersShape: Shape {
+    let corners: UIRectCorner
+    let radius: CGFloat
     
-    init(label: String, bgColor: Color, isDisabled: Bool = false, destination: AnyView) {
-        self.label = label
-        self.bgColor = bgColor
-        self.isDisabled = isDisabled
-        self.destination = destination
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect,
+                                byRoundingCorners: corners,
+                                cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
     }
-    
-    var body: some View {
-        NavigationLink(destination: destination) {
-            Text(label)
-                .foregroundColor(.white)
-                .padding(10)
-                .padding(.horizontal, 20)
-                .background(bgColor)
-                .clipShape(Capsule())
-                .opacity(isDisabled ? 0.6 : 1.0)
-        }
-        .disabled(isDisabled)
-    }
-}
-
-// Placeholder for Images
-@ViewBuilder
-func placeholderImage() -> some View {
-    Image(systemName: "photo")
-        .renderingMode(.template)
-        .resizable()
-        .aspectRatio(contentMode: .fit)
-        .frame(width: 150, height: 150)
-        .foregroundColor(.gray)
-        .overlay(
-            ProgressView()
-        )
-}
-
-// AsyncImage for Profile pictures
-@ViewBuilder
-func castProfileAsyncImage(for phase: AsyncImagePhase) -> some View {
-   switch phase {
-   case .empty:
-       Image(systemName: "person.circle.fill")
-           .renderingMode(.template)
-           .resizable()
-           .aspectRatio(contentMode: .fit)
-           .frame(width: 100, height: 100)
-           .foregroundColor(.gray)
-           .overlay(
-               ProgressView()
-           )
-   case .success(let image):
-       image
-           .resizable()
-           .aspectRatio(1, contentMode: .fill)
-           .frame(width: 100, height: 100)
-           .clipped()
-           .clipShape(Capsule())
-   case .failure(_):
-       Image(systemName: "person.circle.fill")
-           .renderingMode(.template)
-           .resizable()
-           .aspectRatio(contentMode: .fit)
-           .frame(width: 100, height: 100)
-           .foregroundColor(.gray)
-           .overlay(
-               Image(systemName: "exclamationmark.triangle.fill")
-                   .renderingMode(.original)
-                   .font(.system(size: 20))
-           )
-   @unknown default:
-       Image(systemName: "person.circle.fill")
-           .renderingMode(.template)
-           .resizable()
-           .aspectRatio(contentMode: .fit)
-           .frame(width: 100, height: 100)
-           .foregroundColor(.gray)
-           .overlay(
-               Image(systemName: "questionmark")
-                   .renderingMode(.original)
-                   .font(.system(size: 25))
-           )
-   }
 }

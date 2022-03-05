@@ -54,6 +54,8 @@ struct TMDBDetail: Hashable, Codable {
     let plot: String
     let runtime: Int
     let imdbID: String
+    let credits: Credit
+    let videos: Video
     
     enum CodingKeys: String, CodingKey {
         case backdrop = "backdrop_path"
@@ -65,13 +67,24 @@ struct TMDBDetail: Hashable, Codable {
         case genre = "genres"
         case title
         case runtime
+        case credits
+        case videos
         
     }
 }
 
 struct Genre: Hashable, Codable {
-    let id: Int
     let name: String
+}
+
+struct Video: Hashable, Codable {
+    let results: [Results]
+}
+
+struct Results: Hashable, Codable {
+    let key: String
+    let site: String
+    let type: String
 }
 
 // For getting OMDB Api
@@ -86,7 +99,7 @@ struct OMDBDetail: Hashable, Codable {
 }
 
 // For getting the Actor's details
-struct CastDetail: Hashable, Codable {
+struct Credit: Hashable, Codable {
     let cast: [Cast]
     let crew: [Crew]
 }
@@ -103,6 +116,14 @@ struct Cast: Hashable, Codable {
         case name
         case character
     }
+}
+
+// For director
+struct Crew: Hashable, Codable {
+    let id: Int
+    let name: String
+    let profile_path: String?
+    let job: String
 }
 
 struct BrowseActor: Hashable, Codable {
@@ -123,19 +144,6 @@ struct CastMovies: Hashable, Codable {
     }
 }
 
-// For director
-struct Crew: Hashable, Codable {
-    let id: Int
-    let name: String
-    let profile_path: String?
-    let job: String
-}
-
-struct UrlItem {
-    let key: String
-    let value: String
-}
-
 struct BrowseDirector: Hashable, Codable {
     let crew: [CrewMovies]
 }
@@ -154,8 +162,4 @@ struct CrewMovies: Hashable, Codable {
         case job
         case title
     }
-}
-
-enum MovieType: CaseIterable {
-    case upcoming, nowPlaying, topRated, popular, detail, omdb, credits, search, browseActor, browseDirector
 }
