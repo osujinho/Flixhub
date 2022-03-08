@@ -36,6 +36,16 @@ struct UrlImageView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(.gray)
+                .if(forProfile) { view in
+                    view
+                        .frame(width: 120)
+                        .clipShape(Circle())
+                        .overlay(Circle()
+                                    .stroke(Color.blue, lineWidth: 2))
+                        .shadow(radius: 4)
+                        .padding(.horizontal, 8)
+                        .padding(.bottom, 30)
+                }
                 .overlay(
                     ProgressView()
                 )
@@ -67,6 +77,16 @@ struct UrlImageView: View {
                             .font(.system(size: 25).bold())
                             .foregroundColor(Color.orange)
                     )
+                    .if(forProfile) { view in
+                        view
+                            .frame(width: 120)
+                            .clipShape(Circle())
+                            .overlay(Circle()
+                                        .stroke(Color.blue, lineWidth: 2))
+                            .shadow(radius: 4)
+                            .padding(.horizontal, 8)
+                            .padding(.bottom, 30)
+                    }
             }
         }
     }

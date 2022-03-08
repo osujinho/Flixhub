@@ -56,6 +56,18 @@ struct DetailView: View {
             await viewModel.getMovieDetail(id: movieID)
         }
         .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                    }
+                    .foregroundColor(.white) /// Fix after implementing Both dark and light mode
+                })
+            }
+        }
         .alert(isPresented: $viewModel.hasError) {
             Alert(
                 title: Text("Movie Detail Error"),
