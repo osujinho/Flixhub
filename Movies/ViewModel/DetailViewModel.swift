@@ -42,11 +42,10 @@ import SwiftUI
     }
     
     private let networkManager: NetworkManager
-    let urlManager: URLManager
+    private let urlManager = URLManager.urlManager
     
-    init(networkManager: NetworkManager, urlManager: URLManager) {
+    init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        self.urlManager = urlManager
     }
     
     // Get movie director information

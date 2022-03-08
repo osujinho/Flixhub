@@ -9,7 +9,7 @@ import SwiftUI /// So I can use UIImage
 
 final class ImageLoader: ObservableObject {
     private let imageBaseUrl = "https://image.tmdb.org/t/p/w500"
-    private let cache = CacheManager.instance
+    private let cache = CacheManager.cacheManager
     private var task: URLSessionDataTask?
 
     @Published var data: Data?

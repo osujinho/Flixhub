@@ -11,7 +11,7 @@ struct UrlImageView: View {
     @ObservedObject private var imageLoader: ImageLoader
     private let path: String?
     private let forProfile: Bool
-    private let cache = CacheManager.instance
+    private let cache = CacheManager.cacheManager
     
     init(path: String?, forProfile: Bool = false) {
         self.path = path

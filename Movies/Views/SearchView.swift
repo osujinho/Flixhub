@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    @StateObject var viewModel = SearchViewModel(networkManager: NetworkManager(), urlManager: URLManager())
+    @StateObject var viewModel = SearchViewModel(networkManager: NetworkManager())
     
     var body: some View {
         VStack {

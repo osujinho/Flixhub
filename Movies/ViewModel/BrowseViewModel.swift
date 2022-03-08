@@ -15,12 +15,11 @@ import Foundation
     @Published var hasError: Bool = false
     @Published private(set) var errorMessage: String = ""
     
+    private let urlManager = URLManager.urlManager
     private let networkManager: NetworkManager
-    let urlManager: URLManager
     
-    init(networkManager: NetworkManager, urlManager: URLManager) {
+    init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        self.urlManager = urlManager
     }
     
     func fetchMovies(type: MovieType, value: String) async {

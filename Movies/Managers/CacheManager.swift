@@ -7,7 +7,7 @@
 import SwiftUI
 
 class CacheManager {
-    static let instance = CacheManager()   // This creates a singleton, almost like a global variable.
+    static let cacheManager = CacheManager()   // This creates a singleton, almost like a global variable.
     
     private init(){}   /// restricts instantiation of another Cache manager
     

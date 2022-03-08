@@ -15,11 +15,10 @@ import Foundation
     @Published var searchSuccessful: Bool = false
     
     private let networkManager: NetworkManager
-    let urlManager: URLManager
+    private let urlManager = URLManager.urlManager
     
-    init(networkManager: NetworkManager, urlManager: URLManager) {
+    init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        self.urlManager = urlManager
     }
     
     func searchMovie() async {

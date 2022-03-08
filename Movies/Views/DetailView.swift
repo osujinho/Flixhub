@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject private var viewModel = DetailViewModel(networkManager: NetworkManager(), urlManager: URLManager())
+    @StateObject private var viewModel = DetailViewModel(networkManager: NetworkManager())
     
     let isUpcoming: Bool
     let movieID: String

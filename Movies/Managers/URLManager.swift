@@ -17,6 +17,10 @@ enum MovieType: CaseIterable {
 }
 
 class URLManager {
+    static let urlManager = URLManager()
+    
+    private init() { }
+    
     private let baseURL = "https://api.themoviedb.org/3/"
     let omdpKey = UrlItem(key: "apikey", value: "4324aa3d")
     let tmdbKey = UrlItem(key: "api_key", value: "20273c51e3e2e33ccf30874850c5e3b5")
