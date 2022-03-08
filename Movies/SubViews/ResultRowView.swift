@@ -12,7 +12,7 @@ struct ResultRowView: View {
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
-            AsyncImageView(path: movie.poster)
+            UrlImageView(path: movie.poster)
                 .frame(height: 160)
                 .cornerRadius(10)
             

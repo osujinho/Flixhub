@@ -58,7 +58,7 @@ struct CastProfileView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            AsyncImageView(path: imagePath, forProfile: true)
+            UrlImageView(path: imagePath, forProfile: true)
             
             VStack(spacing: 0) {
                 // Name

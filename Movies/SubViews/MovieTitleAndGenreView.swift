@@ -16,7 +16,7 @@ struct MovieTitleAndGenreView: View {
     var body: some View {
         HStack {
             HStack(alignment: .bottom) { /// Container for all
-                AsyncImageView(path: movieDetail.poster)
+                UrlImageView(path: movieDetail.poster)
                     .frame(width: 85, height: 110)
                     .padding(.bottom, 5)
                 

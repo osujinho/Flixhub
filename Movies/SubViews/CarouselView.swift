@@ -44,7 +44,13 @@ struct CarouselView: View {
                         GeometryReader { proxy in
                             let scale = getScale(proxy: proxy)
                             NavigationLink(
-                                destination: DetailView( isUpcoming: isPoster, movieID: String(movie.tmdbID) ),
+                                destination:
+                                    DetailView(
+                                        isUpcoming: isPoster,
+                                        movieID: String(movie.tmdbID),
+                                        movieTitle: movie.title,
+                                        imagePath: movie.poster
+                                    ),
                                 label: {
                                     PosterView(
                                         imagePath: isPoster ? movie.poster : movie.backdrop,

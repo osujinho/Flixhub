@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoadingDetailView: View {
     let movieTitle: String
+    let imagePath: String?
     
     var body: some View {
         VStack {
@@ -17,9 +18,7 @@ struct LoadingDetailView: View {
                 .foregroundColor(.white)
                 .padding(.bottom, 10)
             
-            Image("avengers")
-                .resizable()
-                .scaledToFill()
+            UrlImageView(path: imagePath)
                 .frame(width: UIScreen.main.bounds.width * 0.7 , height: UIScreen.main.bounds.height * 0.5)
                 .cornerRadius(10)
                 .padding(.bottom, 20)

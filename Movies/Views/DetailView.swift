@@ -14,13 +14,14 @@ struct DetailView: View {
     let isUpcoming: Bool
     let movieID: String
     let movieTitle: String
+    let imagePath: String?
     
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.black, .black.opacity(0.7)]), startPoint: .top, endPoint: .bottom)
             
             if viewModel.isLoading {
-                LoadingDetailView(movieTitle: movieTitle)
+                LoadingDetailView(movieTitle: movieTitle, imagePath: imagePath)
                     .transition(.scale)
             } else {
                 VStack(spacing: 0) {
@@ -55,7 +56,6 @@ struct DetailView: View {
             await viewModel.getMovieDetail(id: movieID)
         }
         .navigationBarBackButtonHidden(true)
-        .navigationViewStyle(.stack)
         .alert(isPresented: $viewModel.hasError) {
             Alert(
                 title: Text("Movie Detail Error"),

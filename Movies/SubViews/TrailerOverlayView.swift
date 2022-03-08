@@ -21,11 +21,11 @@ struct TrailerOverlayView: View {
     )
     
     var body: some View {
-        AsyncImageView(path: backdrop)
+        UrlImageView(path: backdrop)
             .clipped()
             .overlay(
                 ZStack(alignment: .bottom) {
-                    AsyncImageView(path: backdrop)
+                    UrlImageView(path: backdrop)
                         .blur(radius: 20)
                         .padding(-20)
                         .clipped()
