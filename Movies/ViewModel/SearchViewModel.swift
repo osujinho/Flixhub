@@ -14,12 +14,8 @@ import Foundation
     @Published var movieTitle: String = ""
     @Published var searchSuccessful: Bool = false
     
-    private let networkManager: NetworkManager
+    private let networkManager = NetworkManager.networkManager
     private let urlManager = URLManager.urlManager
-    
-    init(networkManager: NetworkManager) {
-        self.networkManager = networkManager
-    }
     
     func searchMovie() async {
         self.hasError = false

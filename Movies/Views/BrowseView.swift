@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BrowseView: View {
-    @StateObject var viewModel = BrowseViewModel(networkManager: NetworkManager())
+    @StateObject var viewModel = BrowseViewModel()
     
     var body: some View {
         NavigationView {

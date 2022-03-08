@@ -16,11 +16,7 @@ import Foundation
     @Published private(set) var errorMessage: String = ""
     
     private let urlManager = URLManager.urlManager
-    private let networkManager: NetworkManager
-    
-    init(networkManager: NetworkManager) {
-        self.networkManager = networkManager
-    }
+    private let networkManager = NetworkManager.networkManager
     
     func fetchMovies(type: MovieType, value: String) async {
         self.hasError = false

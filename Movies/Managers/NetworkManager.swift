@@ -13,6 +13,10 @@ enum NetworkError: Error {
 }
 
 final class NetworkManager {
+    static let networkManager = NetworkManager()
+    
+    private init() { }
+    
     public func makeCall<T: Codable>(url: String) async throws -> T {
         let urlSession = URLSession.shared
         guard let url = URL(string: url) else { throw NetworkError.badURL }

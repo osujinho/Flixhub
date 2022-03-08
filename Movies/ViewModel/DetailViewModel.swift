@@ -41,17 +41,8 @@ import SwiftUI
         return tmdbDetail.credits.crew.filter { $0.job == "Director" }
     }
     
-    private let networkManager: NetworkManager
+    private let networkManager = NetworkManager.networkManager
     private let urlManager = URLManager.urlManager
-    
-    init(networkManager: NetworkManager) {
-        self.networkManager = networkManager
-    }
-    
-    // Get movie director information
-//    func getDirectors() -> [Crew] {
-//        tmdbDetail.credits.crew.filter { $0.job == "Director" }
-//    }
     
     // get movie detail
     func getMovieDetail(id: String) async {
