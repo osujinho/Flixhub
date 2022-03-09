@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct LoadingDetailView: View {
-    let movieTitle: String
+struct LoadingView: View {
+    let heading: String
     let imagePath: String?
     
     var body: some View {
         VStack {
-            Text("Loading Details on \(movieTitle)")
+            Text(heading)
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.white)
                 .padding(.bottom, 10)

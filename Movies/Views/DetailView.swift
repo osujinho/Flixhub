@@ -21,7 +21,10 @@ struct DetailView: View {
             LinearGradient(gradient: Gradient(colors: [.black, .black.opacity(0.7)]), startPoint: .top, endPoint: .bottom)
             
             if viewModel.isLoading {
-                LoadingDetailView(movieTitle: movieTitle, imagePath: imagePath)
+                LoadingView(
+                    heading: "Loading details on \(movieTitle)",
+                    imagePath: imagePath
+                )
                     .transition(.scale)
             } else {
                 VStack(spacing: 0) {
@@ -61,10 +64,10 @@ struct DetailView: View {
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
                 }, label: {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                    }
-                    .foregroundColor(.white) /// Fix after implementing Both dark and light mode
+                    Image(systemName: "chevron.left.circle.fill")
+                        .renderingMode(.original)
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.black) /// Fix after implementing Both dark and light mode
                 })
             }
         }

@@ -27,20 +27,39 @@ struct CastView: View {
                     HStack(alignment: .firstTextBaseline, spacing: 10) {
                         /// Put them in a navigationLink to search movies about cast member
                         ForEach(directors, id: \.self) { director in
-                            CastProfileView(
-                                name: director.name,
-                                movieRole: director.job,
-                                imagePath: director.profile_path
-                            )
+                            NavigationLink(destination:
+                                            CastMovieView(
+                                                castName: director.name,
+                                                forDirector: true,
+                                                type: .browseDirector,
+                                                castID: String( director.id ),
+                                                imagePath: director.profile_path
+                                            )
+                            ) {
+                                CastProfileView(
+                                    name: director.name,
+                                    movieRole: director.job,
+                                    imagePath: director.profile_path
+                                )
+                            }
                         }
                         .padding(.leading, 10)
                         
                         ForEach(casts, id: \.self) { cast in
-                            CastProfileView(
-                                name: cast.name,
-                                movieRole: cast.character,
-                                imagePath: cast.picture
-                            )
+                            NavigationLink(destination:
+                                      CastMovieView(
+                                        castName: cast.name,
+                                        forDirector: false,
+                                        type: .browseActor,
+                                        castID: String( cast.castID ),
+                                        imagePath: cast.picture)
+                            ) {
+                                CastProfileView(
+                                    name: cast.name,
+                                    movieRole: cast.character,
+                                    imagePath: cast.picture
+                                )
+                            }
                         }
                     }
                 }
