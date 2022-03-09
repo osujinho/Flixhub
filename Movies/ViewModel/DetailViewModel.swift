@@ -5,7 +5,7 @@
 //  Created by Michael Osuji on 2/18/22.
 //
 
-import SwiftUI
+import SwiftUI  /// Need for animation
 
 @MainActor class DetailViewModel: ObservableObject {
     @Published private(set) var errorMessage: String = ""
@@ -27,6 +27,7 @@ import SwiftUI
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true
     @Published var playTrailer: Bool = false
+    @Published var synopsisExpanded: Bool = false
     
     var youtubeKey: String {
         if let video = tmdbDetail.videos.results.first(where: {

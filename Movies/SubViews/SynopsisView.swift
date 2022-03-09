@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SynopsisView: View {
-    @State private var isExpanded = false
+    @Binding var isExpanded: Bool
     let syposis: String
     
     var body: some View {

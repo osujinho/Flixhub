@@ -30,22 +30,25 @@ struct DetailView: View {
                 VStack(spacing: 0) {
                     TrailerPlayer(
                         playTrailer: $viewModel.playTrailer,
+                        synopsisExpanded: $viewModel.synopsisExpanded,
                         videoID: viewModel.youtubeKey,
                         backdrop: viewModel.tmdbDetail.backdrop
                     )
                     .scaledToFit()
                     
                     VStack {
+                        
                         MovieTitleAndGenreView(
                             playTrailer: $viewModel.playTrailer,
+                            synopsisExpanded: $viewModel.synopsisExpanded,
                             movieDetail: viewModel.tmdbDetail,
                             ratingAndRated: viewModel.omdbDetail,
                             isUpcoming: isUpcoming
                         )
                         
-                        SynopsisView(syposis: viewModel.tmdbDetail.plot)
+                        SynopsisView(isExpanded: $viewModel.synopsisExpanded, syposis: viewModel.tmdbDetail.plot)
                         
-                        CastView(directors: viewModel.director, casts: viewModel.tmdbDetail.credits.cast)
+                        CastListView(directors: viewModel.director, casts: viewModel.tmdbDetail.credits.cast)
                     }
                     .frame(maxWidth: UIScreen.main.bounds.width)
                     
@@ -54,7 +57,7 @@ struct DetailView: View {
                 .transition(.slide)
             }
         }
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.top)
         .task {
             await viewModel.getMovieDetail(id: movieID)
         }

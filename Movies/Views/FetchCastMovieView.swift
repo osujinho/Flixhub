@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CastMovieView: View {
+struct FetchCastMovieView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel = CastMovieViewModel()
     

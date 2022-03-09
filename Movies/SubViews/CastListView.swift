@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CastView: View {
+struct CastListView: View {
     let directors: [Crew]
     let casts: [Cast]
     
@@ -22,13 +22,13 @@ struct CastView: View {
                 Spacer()
             }
             
-            ScrollView {
+            VStack {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(alignment: .firstTextBaseline, spacing: 10) {
+                    HStack(alignment: .bottom, spacing: 10) {
                         /// Put them in a navigationLink to search movies about cast member
                         ForEach(directors, id: \.self) { director in
                             NavigationLink(destination:
-                                            CastMovieView(
+                                            FetchCastMovieView(
                                                 castName: director.name,
                                                 forDirector: true,
                                                 type: .browseDirector,
@@ -47,12 +47,12 @@ struct CastView: View {
                         
                         ForEach(casts, id: \.self) { cast in
                             NavigationLink(destination:
-                                      CastMovieView(
-                                        castName: cast.name,
-                                        forDirector: false,
-                                        type: .browseActor,
-                                        castID: String( cast.castID ),
-                                        imagePath: cast.picture)
+                                            FetchCastMovieView(
+                                                castName: cast.name,
+                                                forDirector: false,
+                                                type: .browseActor,
+                                                castID: String( cast.castID ),
+                                                imagePath: cast.picture)
                             ) {
                                 CastProfileView(
                                     name: cast.name,
@@ -61,11 +61,13 @@ struct CastView: View {
                                 )
                             }
                         }
-                    }
-                }
+                        
+                    } /// End of HStack
+                    
+                } /// End of ScrollView
                 .padding(.horizontal, 10)
-            }
-            .padding(.top, -20)
+            } /// End of VStack
+            //.padding(.top, -20)
         }
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovieTitleAndGenreView: View {
     @Binding var playTrailer: Bool
+    @Binding var synopsisExpanded: Bool
     let movieDetail: TMDBDetail
     let ratingAndRated: OMDBDetail
     let isUpcoming: Bool
@@ -16,9 +17,11 @@ struct MovieTitleAndGenreView: View {
     var body: some View {
         HStack {
             HStack(alignment: .bottom) { /// Container for all
-                UrlImageView(path: movieDetail.poster)
-                    .frame(width: 85, height: 110)
-                    .padding(.bottom, 5)
+                if !synopsisExpanded {
+                    UrlImageView(path: movieDetail.poster)
+                        .frame(width: 85, height: 110)
+                        .padding(.bottom, 5)
+                }
                 
                 VStack(alignment: .leading) { /// For the Texts
                     HStack {
@@ -48,26 +51,42 @@ struct MovieTitleAndGenreView: View {
                              getDate(date: movieDetail.releaseDate, forYear: false) :
                                 getDate(date: movieDetail.releaseDate, forYear: true)
                         )
+                        
+                        if synopsisExpanded {
+                            Spacer()
+                                .frame(maxWidth: 30)
+                            
+                            HStack(spacing: 12) { /// For the rating and Rated
+                                Text(ratingAndRated.rated)
+                                    .foregroundColor(.blue)
+                                Text(ratingAndRated.rating)
+                                    .foregroundColor(.red.opacity(0.8))
+                            } /// End of rating and rated stack
+                            .movieFont(size: 12)
+                        }
+                        
                     } /// End of  runtime and year stack
                     .movieFont(size: 14)
                     .foregroundColor(.white.opacity(0.7))
                     .padding(.bottom, 2)
                     
-                    HStack(spacing: 12) { /// For the rating and Rated
-                        Text(ratingAndRated.rated)
-                            .foregroundColor(.blue)
-                        Text(ratingAndRated.rating)
-                            .foregroundColor(.red.opacity(0.8))
-                    } /// End of rating and rated stack
-                    .movieFont(size: 12)
-                    .padding(.bottom, 5)
-                    
-                    HStack(alignment: .lastTextBaseline) { /// Stack for the genres
-                        ForEach(movieDetail.genre, id: \.self) { genre in
-                            Text(genre.name.capitalized)
-                                .genreTextViewModifier()
-                        }
-                    } /// End of stack for Genres
+                    if !synopsisExpanded {
+                        HStack(spacing: 12) { /// For the rating and Rated
+                            Text(ratingAndRated.rated)
+                                .foregroundColor(.blue)
+                            Text(ratingAndRated.rating)
+                                .foregroundColor(.red.opacity(0.8))
+                        } /// End of rating and rated stack
+                        .movieFont(size: 12)
+                        .padding(.bottom, 5)
+                        
+                        HStack(alignment: .lastTextBaseline) { /// Stack for the genres
+                            ForEach(movieDetail.genre, id: \.self) { genre in
+                                Text(genre.name.capitalized)
+                                    .genreTextViewModifier()
+                            }
+                        } /// End of stack for Genres
+                    }
                 } /// End of Texts VStack
                 
                 Spacer()  /// To make items aligned leading in a HStack
