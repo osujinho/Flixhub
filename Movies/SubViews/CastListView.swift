@@ -21,11 +21,10 @@ struct CastListView: View {
                 
                 Spacer()
             }
-            
-            VStack {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(alignment: .bottom, spacing: 10) {
-                        /// Put them in a navigationLink to search movies about cast member
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .bottom, spacing: 10) {
+                    /// Put them in a navigationLink to search movies about cast member
+                    HStack {
                         ForEach(directors, id: \.self) { director in
                             NavigationLink(destination:
                                             FetchCastMovieView(
@@ -61,13 +60,11 @@ struct CastListView: View {
                                 )
                             }
                         }
-                        
-                    } /// End of HStack
-                    
-                } /// End of ScrollView
-                .padding(.horizontal, 10)
-            } /// End of VStack
-            //.padding(.top, -20)
+                    }
+                } /// End of HStack
+            } /// End of ScrollView
+            .padding(.horizontal, 10)
+            .padding(.top, 10)
         }
     }
 }
@@ -80,23 +77,32 @@ struct CastProfileView: View {
     var body: some View {
         VStack(spacing: 0) {
             UrlImageView(path: imagePath, forProfile: true)
+                
+                .frame(maxWidth: 100, maxHeight: 100, alignment: .top)
+                .clipShape(Circle())
+                .overlay(Circle()
+                            .stroke(Color.blue, lineWidth: 2))
+                .shadow(radius: 4)
+                .padding(.horizontal, 8)
+                .padding(.bottom, 10)
             
             VStack(spacing: 0) {
                 // Name
                 Text(name)
                     .movieFont(size: 13)
                     .foregroundColor(.white)
+                    .lineLimit(nil)
                     .padding(.bottom, 1)
                 
                 // Movie Role
                 Text(movieRole)
                     .movieFont(size: 10)
                     .foregroundColor(.white.opacity(0.7))
-                    .frame(width: 110)
                     .lineLimit(nil)
             }
-            .padding(.top, -20)
         }
+        .scaledToFit()
+        .padding(.top, 3)
         .padding(.bottom, 10)
         .padding(.trailing, 10)
     }

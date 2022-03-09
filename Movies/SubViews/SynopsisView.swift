@@ -28,7 +28,7 @@ struct SynopsisView: View {
                 }
             }) {
                 Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                    .foregroundColor(.gray)
+                    .foregroundColor(isExpanded ? .red.opacity(0.8) : .blue.opacity(0.8))
             }
         }
         .padding(.horizontal, 10)

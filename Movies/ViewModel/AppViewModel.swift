@@ -37,3 +37,9 @@ func stringToTime(strTime: Int) -> String {
     
     return "\(hours)h \(minutes)mins"
 }
+
+enum DefaultImage: String, CaseIterable, Identifiable {
+    case profile, poster, backdrop
+    
+    var id: DefaultImage { self }
+}

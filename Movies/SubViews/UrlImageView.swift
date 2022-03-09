@@ -10,11 +10,13 @@ import SwiftUI
 struct UrlImageView: View {
     @ObservedObject private var imageLoader: ImageLoader
     private let path: String?
+    private let defaultImage: DefaultImage.RawValue
     private let forProfile: Bool
     private let cache = CacheManager.cacheManager
     
-    init(path: String?, forProfile: Bool = false) {
+    init(path: String?, defaultImage: DefaultImage.RawValue, forProfile: Bool = false) {
         self.path = path
+        self.defaultImage = defaultImage
         self.forProfile = forProfile
         self.imageLoader = ImageLoader(path)
     }
@@ -31,21 +33,14 @@ struct UrlImageView: View {
     var body: some View {
         /// Still looking up Image for the given path
         if imageLoader.isLoading {
-            Image(systemName: forProfile ? "person.circle.fill" : "photo")
-                .renderingMode(.template)
+            Image(defaultImage)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .foregroundColor(.gray)
                 .if(forProfile) { view in
                     view
-                        .frame(width: 120)
-                        .clipShape(Circle())
-                        .overlay(Circle()
-                                    .stroke(Color.blue, lineWidth: 2))
-                        .shadow(radius: 4)
-                        .padding(.horizontal, 8)
-                        .padding(.bottom, 30)
+                        .frame(width: 100, height: 100)
                 }
+                .foregroundColor(.gray)
                 .overlay(
                     ProgressView()
                 )
@@ -54,21 +49,11 @@ struct UrlImageView: View {
             if let loadedImage = image {
                 Image(uiImage: loadedImage)
                     .resizable()
-                    .aspectRatio(contentMode: forProfile ? .fit : .fill)
-                    .if(forProfile) { view in
-                        view
-                            .frame(width: 120)
-                            .clipShape(Circle())
-                            .overlay(Circle()
-                                        .stroke(Color.blue, lineWidth: 2))
-                            .shadow(radius: 4)
-                            .padding(.horizontal, 8)
-                    }
+                    .aspectRatio(contentMode: .fill)
                     .transition(.slide)
             } else {
                 /// No Image returned for the given path
                 Image(systemName: forProfile ? "person.circle.fill" : "photo")
-                    .renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .foregroundColor(.gray)
@@ -77,16 +62,6 @@ struct UrlImageView: View {
                             .font(.system(size: 25).bold())
                             .foregroundColor(Color.orange)
                     )
-                    .if(forProfile) { view in
-                        view
-                            .frame(width: 120)
-                            .clipShape(Circle())
-                            .overlay(Circle()
-                                        .stroke(Color.blue, lineWidth: 2))
-                            .shadow(radius: 4)
-                            .padding(.horizontal, 8)
-                            .padding(.bottom, 30)
-                    }
             }
         }
     }

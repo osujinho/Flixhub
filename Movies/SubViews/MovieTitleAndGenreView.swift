@@ -25,10 +25,13 @@ struct MovieTitleAndGenreView: View {
                 
                 VStack(alignment: .leading) { /// For the Texts
                     HStack {
-                        Text(movieDetail.title.uppercased())   /// Title
-                            .movieFont(size: 24)
-                            .foregroundColor(.white)
-                            .padding(.bottom, 5)
+                        VStack {
+                            Text(movieDetail.title.uppercased())   /// Title
+                                .movieFont(size: 24)
+                                .foregroundColor(.white)
+                                .padding(.bottom, 5)
+                                .lineLimit(nil)
+                        } /// Embed in a VStack so it can expand
                         
                         Spacer()
                         
