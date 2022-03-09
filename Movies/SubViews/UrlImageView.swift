@@ -10,14 +10,12 @@ import SwiftUI
 struct UrlImageView: View {
     @ObservedObject private var imageLoader: ImageLoader
     private let path: String?
-    private let defaultImage: DefaultImage.RawValue
-    private let forProfile: Bool
+    private let defaultImage: DefaultImage
     private let cache = CacheManager.cacheManager
     
-    init(path: String?, defaultImage: DefaultImage.RawValue, forProfile: Bool = false) {
+    init(path: String?, defaultImage: DefaultImage) {
         self.path = path
         self.defaultImage = defaultImage
-        self.forProfile = forProfile
         self.imageLoader = ImageLoader(path)
     }
     
@@ -33,13 +31,9 @@ struct UrlImageView: View {
     var body: some View {
         /// Still looking up Image for the given path
         if imageLoader.isLoading {
-            Image(defaultImage)
+            Image(defaultImage.rawValue)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .if(forProfile) { view in
-                    view
-                        .frame(width: 100, height: 100)
-                }
                 .foregroundColor(.gray)
                 .overlay(
                     ProgressView()
@@ -53,15 +47,10 @@ struct UrlImageView: View {
                     .transition(.slide)
             } else {
                 /// No Image returned for the given path
-                Image(systemName: forProfile ? "person.circle.fill" : "photo")
+                Image(defaultImage.rawValue)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .foregroundColor(.gray)
-                    .overlay(
-                        Image(systemName: "exclamationmark.icloud")
-                            .font(.system(size: 25).bold())
-                            .foregroundColor(Color.orange)
-                    )
             }
         }
     }

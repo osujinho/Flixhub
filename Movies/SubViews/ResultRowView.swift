@@ -14,7 +14,7 @@ struct ResultRowView: View {
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
-            UrlImageView(path: poster)
+            UrlImageView(path: poster, defaultImage: .poster)
                 .scaledToFit()
                 .frame(height: 160)
                 .cornerRadius(10)

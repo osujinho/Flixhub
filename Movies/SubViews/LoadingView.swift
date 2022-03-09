@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoadingView: View {
     let heading: String
-    let imagePath: String?
+    let poster: String?
     
     var body: some View {
         VStack {
@@ -18,7 +18,7 @@ struct LoadingView: View {
                 .foregroundColor(.white)
                 .padding(.bottom, 10)
             
-            UrlImageView(path: imagePath)
+            UrlImageView(path: poster, defaultImage: .poster)
                 .frame(width: UIScreen.main.bounds.width * 0.7 , height: UIScreen.main.bounds.height * 0.5)
                 .cornerRadius(10)
                 .padding(.bottom, 20)

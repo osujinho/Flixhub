@@ -18,7 +18,7 @@ struct MovieTitleAndGenreView: View {
         HStack {
             HStack(alignment: .bottom) { /// Container for all
                 if !synopsisExpanded {
-                    UrlImageView(path: movieDetail.poster)
+                    UrlImageView(path: movieDetail.poster, defaultImage: .poster)
                         .frame(width: 85, height: 110)
                         .padding(.bottom, 5)
                 }

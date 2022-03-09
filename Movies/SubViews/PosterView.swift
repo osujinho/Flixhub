@@ -23,11 +23,11 @@ struct PosterView: View {
             endPoint: .top
         )
         
-        UrlImageView(path: imagePath)
+        UrlImageView(path: imagePath, defaultImage: isPoster ? .poster : .backdrop)
             .frame(width: isPoster ? 120 : 200)
             .overlay(
                 ZStack(alignment: .bottom) {
-                    UrlImageView(path: imagePath)
+                    UrlImageView(path: imagePath, defaultImage: isPoster ? .poster : .backdrop)
                         .frame(width: isPoster ? 120 : 200)
                         .blur(radius: 20) /// blur the image
                         .padding(-20) /// expand the blur a bit to cover the edges

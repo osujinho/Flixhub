@@ -32,13 +32,13 @@ struct CastListView: View {
                                                 forDirector: true,
                                                 type: .browseDirector,
                                                 castID: String( director.id ),
-                                                imagePath: director.profile_path
+                                                profile: director.profile_path
                                             )
                             ) {
                                 CastProfileView(
                                     name: director.name,
                                     movieRole: director.job,
-                                    imagePath: director.profile_path
+                                    profile: director.profile_path
                                 )
                             }
                         }
@@ -51,12 +51,12 @@ struct CastListView: View {
                                                 forDirector: false,
                                                 type: .browseActor,
                                                 castID: String( cast.castID ),
-                                                imagePath: cast.picture)
+                                                profile: cast.picture)
                             ) {
                                 CastProfileView(
                                     name: cast.name,
                                     movieRole: cast.character,
-                                    imagePath: cast.picture
+                                    profile: cast.picture
                                 )
                             }
                         }
@@ -72,11 +72,11 @@ struct CastListView: View {
 struct CastProfileView: View {
     let name: String
     let movieRole: String
-    let imagePath: String?
+    let profile: String?
     
     var body: some View {
         VStack(spacing: 0) {
-            UrlImageView(path: imagePath, forProfile: true)
+            UrlImageView(path: profile, defaultImage: .profile)
                 
                 .frame(maxWidth: 100, maxHeight: 100, alignment: .top)
                 .clipShape(Circle())

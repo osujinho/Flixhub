@@ -23,7 +23,7 @@ struct DetailView: View {
             if viewModel.isLoading {
                 LoadingView(
                     heading: "Loading details on \(movieTitle)",
-                    imagePath: imagePath
+                    poster: imagePath
                 )
                     .transition(.scale)
             } else {

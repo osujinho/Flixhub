@@ -15,14 +15,14 @@ struct FetchCastMovieView: View {
     let forDirector: Bool
     let type: MovieType
     let castID: String
-    let imagePath: String?
+    let profile: String?
     
     var body: some View {
         VStack {
             if viewModel.isLoading {
                 LoadingView(
                     heading: forDirector ? "Getting more movies directed by \(castName)" : "Getting more movies with \(castName)",
-                    imagePath: imagePath)
+                    poster: profile)
                     .transition(.slide)
             } else {
                 VStack {
@@ -40,7 +40,7 @@ struct FetchCastMovieView: View {
                         Spacer()
                     }
                     HStack(alignment: .lastTextBaseline) { /// Display heading including profile picture
-                        UrlImageView(path: imagePath)
+                        UrlImageView(path: profile, defaultImage: .profile)
                             .frame(width: 100, height: 150)
                             .cornerRadius(10)
                         
