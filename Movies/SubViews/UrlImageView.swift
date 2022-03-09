@@ -33,7 +33,7 @@ struct UrlImageView: View {
         if imageLoader.isLoading {
             Image(defaultImage.rawValue)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
+                .aspectRatio(contentMode: .fill)
                 .foregroundColor(.gray)
                 .overlay(
                     ProgressView()
@@ -49,7 +49,7 @@ struct UrlImageView: View {
                 /// No Image returned for the given path
                 Image(defaultImage.rawValue)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .aspectRatio(contentMode: .fill)
                     .foregroundColor(.gray)
             }
         }
