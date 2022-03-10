@@ -74,3 +74,4 @@ import SwiftUI  /// Need for animation
         }
     }
 }
+

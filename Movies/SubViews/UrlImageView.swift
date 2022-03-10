@@ -30,27 +30,37 @@ struct UrlImageView: View {
     
     var body: some View {
         /// Still looking up Image for the given path
-        if imageLoader.isLoading {
+        switch path {
+        case _ where (path == nil):
             Image(defaultImage.rawValue)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .foregroundColor(.gray)
-                .overlay(
-                    ProgressView()
-                )
-        } else {
-            /// Image returned for the given path
-            if let loadedImage = image {
+        case _ where (cache.get(name: path ?? "") != nil):
+            if let cacheImage = cache.get(name: path ?? "") {
+                Image(uiImage: cacheImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            }
+        default:
+            /// Return progress View
+            if imageLoader.isLoading {
+                Image(defaultImage.rawValue)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .overlay(
+                        ProgressView()
+                    )
+            /// Return loaded Image
+            } else if let loadedImage = imageLoader.data.flatMap(UIImage.init) {
                 Image(uiImage: loadedImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .transition(.slide)
+            /// Return Placeholder
             } else {
-                /// No Image returned for the given path
                 Image(defaultImage.rawValue)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .foregroundColor(.gray)
             }
         }
     }
