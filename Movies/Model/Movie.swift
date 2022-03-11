@@ -10,7 +10,7 @@ import Foundation
 struct TMDBResult: Hashable, Codable {
     let backdrop: String?
     let poster: String?
-    let releaseDate: String
+    let releaseDate: String?
     let tmdbID: Int
     let title: String
     
@@ -47,12 +47,12 @@ struct Popular: Hashable, Codable {
 struct TMDBDetail: Hashable, Codable {
     let backdrop: String?
     let poster: String?
-    let releaseDate: String
+    let releaseDate: String?
     let tmdbID: Int
     let title: String
     let genre: [Genre]
-    let plot: String
-    let runtime: Int
+    let plot: String?
+    let runtime: Int?
     let imdbID: String
     let credits: Credit
     let videos: Video
@@ -134,7 +134,7 @@ struct CastMovies: Hashable, Codable {
     let poster: String?
     let movieId: Int
     let title: String
-    let releaseDate: String
+    let releaseDate: String?
     
     enum CodingKeys: String, CodingKey {
         case poster = "poster_path"
@@ -153,7 +153,7 @@ struct CrewMovies: Hashable, Codable {
     let title: String
     let poster: String?
     let job: String
-    let releaseDate: String
+    let releaseDate: String?
     
     enum CodingKeys: String, CodingKey {
         case poster = "poster_path"

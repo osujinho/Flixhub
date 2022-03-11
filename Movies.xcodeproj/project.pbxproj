@@ -23,6 +23,8 @@
 		B368F62827D81EF200E03E4D /* CastMovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B368F62727D81EF200E03E4D /* CastMovieViewModel.swift */; };
 		B368F62A27D823A000E03E4D /* FetchCastMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B368F62927D823A000E03E4D /* FetchCastMovieView.swift */; };
 		B368F62C27D90D1E00E03E4D /* SpashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B368F62B27D90D1E00E03E4D /* SpashView.swift */; };
+		B368F62E27DA6F8800E03E4D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B368F62D27DA6F8800E03E4D /* MainView.swift */; };
+		B368F63027DB005F00E03E4D /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B368F62F27DB005F00E03E4D /* SearchBarView.swift */; };
 		B36A5B5727C85DAA00332610 /* TrailerOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36A5B5627C85DAA00332610 /* TrailerOverlayView.swift */; };
 		B3B0A67427B2E0BE00810587 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0A67327B2E0BE00810587 /* NetworkManager.swift */; };
 		B3B0A67727B2E0E900810587 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0A67627B2E0E900810587 /* Extensions.swift */; };
@@ -58,6 +60,8 @@
 		B368F62727D81EF200E03E4D /* CastMovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastMovieViewModel.swift; sourceTree = "<group>"; };
 		B368F62927D823A000E03E4D /* FetchCastMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCastMovieView.swift; sourceTree = "<group>"; };
 		B368F62B27D90D1E00E03E4D /* SpashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpashView.swift; sourceTree = "<group>"; };
+		B368F62D27DA6F8800E03E4D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		B368F62F27DB005F00E03E4D /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		B36A5B5627C85DAA00332610 /* TrailerOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerOverlayView.swift; sourceTree = "<group>"; };
 		B3B0A62727AC9AEB00810587 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B3B0A67327B2E0BE00810587 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 				B33A341327BC869100EB05D9 /* BrowseView.swift */,
 				B3C9CA6F27C05E1700BC9DA9 /* SearchView.swift */,
 				B368F62927D823A000E03E4D /* FetchCastMovieView.swift */,
+				B368F62D27DA6F8800E03E4D /* MainView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +169,7 @@
 				B368F61727D2D96200E03E4D /* LoadingView.swift */,
 				B368F62327D6932D00E03E4D /* UrlImageView.swift */,
 				B368F62B27D90D1E00E03E4D /* SpashView.swift */,
+				B368F62F27DB005F00E03E4D /* SearchBarView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -307,6 +313,7 @@
 				B3C9CA7227C081D200BC9DA9 /* DetailViewModel.swift in Sources */,
 				B33A341427BC869100EB05D9 /* BrowseView.swift in Sources */,
 				B3CF1BB827A9C60B004CD7F2 /* DetailView.swift in Sources */,
+				B368F63027DB005F00E03E4D /* SearchBarView.swift in Sources */,
 				B3C9CA7027C05E1700BC9DA9 /* SearchView.swift in Sources */,
 				B368F61627D2D93000E03E4D /* SynopsisView.swift in Sources */,
 				B33A341227BC722A00EB05D9 /* CastListView.swift in Sources */,
@@ -315,6 +322,7 @@
 				B3CF1BAF27A9BD68004CD7F2 /* CustomModifiers.swift in Sources */,
 				B3C9CA6C27C0161100BC9DA9 /* URLManager.swift in Sources */,
 				B33A341027BC663800EB05D9 /* CustomViews.swift in Sources */,
+				B368F62E27DA6F8800E03E4D /* MainView.swift in Sources */,
 				B3CF1BA127A99C11004CD7F2 /* MoviesApp.swift in Sources */,
 				B3CF1BB127A9BE42004CD7F2 /* AppViewModel.swift in Sources */,
 			);

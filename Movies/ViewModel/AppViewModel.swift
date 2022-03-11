@@ -14,7 +14,9 @@ func getImageUrl(_ path: String?) -> String {
 }
 
 // string to date
-func getDate(date: String, forYear: Bool) -> String {
+func getDate(date: String?, forYear: Bool) -> String {
+    guard let date = date else { return "2000-01-01" }
+    
     let oldDateFormatter = DateFormatter()
     oldDateFormatter.dateFormat = "yyyy-MM-dd"
     
@@ -29,7 +31,8 @@ func getDate(date: String, forYear: Bool) -> String {
 }
 
 // string to time
-func stringToTime(strTime: Int) -> String {
+func stringToTime(strTime: Int?) -> String {
+    guard let strTime = strTime else { return "" }
     let totalMinutes = Double(strTime)
     
     let hours = Int(floor(totalMinutes / 60))
@@ -38,9 +41,5 @@ func stringToTime(strTime: Int) -> String {
     return "\(hours)h \(minutes)mins"
 }
 
-enum DefaultImage: String, CaseIterable, Identifiable {
-    case profile, poster, backdrop
-    
-    var id: DefaultImage { self }
-}
+
 

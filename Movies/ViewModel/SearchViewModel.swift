@@ -11,7 +11,13 @@ import Foundation
     @Published private(set) var searchResult = TMDBSearch(results: [TMDBResult]())
     @Published private(set) var errorMessage: String = ""
     @Published var hasError: Bool = false
-    @Published var movieTitle: String = ""
+    @Published var searchText: String = "" {
+        didSet {
+            if !searchText.isEmpty {
+                Task { await searchMovie() }
+            }
+        }
+    }
     @Published var searchSuccessful: Bool = false
     
     private let networkManager = NetworkManager.networkManager
@@ -21,7 +27,7 @@ import Foundation
         self.hasError = false
         self.searchSuccessful = false
         
-        let url = urlManager.buildURL(movieType: .search, value: movieTitle)
+        let url = urlManager.buildURL(movieType: .search, value: searchText)
         
         do {
             // load JSON Object

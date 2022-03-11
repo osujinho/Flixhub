@@ -15,33 +15,35 @@ struct TrailerPlayer: View {
     let backdrop: String?
     
     var body: some View {
-        if playTrailer == false {
-            ZStack {
-                TrailerOverlayView(backdrop: backdrop)
-                
-                Button(action: {
-                    withAnimation {
-                        playTrailer = true
+        Group {
+            if playTrailer == false {
+                ZStack {
+                    TrailerOverlayView(backdrop: backdrop)
+                    
+                    Button(action: {
+                        withAnimation {
+                            playTrailer = true
+                        }
+                    }) {
+                        Image(systemName: "play.fill")
                     }
-                }) {
-                    Image(systemName: "play.fill")
-                }
-                .font(.system(size: 35, weight: .bold))
-                .foregroundColor(.red)
-            } /// End of ZStack
-            .frame(height: synopsisExpanded ? (UIScreen.main.bounds.height * 0.35) : (UIScreen.main.bounds.height * 0.4))
-        } else {
-            ZStack {
-                YouTubePlayerView(
-                    YouTubePlayer(
-                        source: .video(id: videoID),
-                        configuration: .init(
-                            autoPlay: true,
-                            playInline: true
+                    .font(.system(size: 35, weight: .bold))
+                    .foregroundColor(.red)
+                } /// End of ZStack
+                .frame(height: synopsisExpanded ? (UIScreen.main.bounds.height * 0.35) : (UIScreen.main.bounds.height * 0.4))
+            } else {
+                ZStack {
+                    YouTubePlayerView(
+                        YouTubePlayer(
+                            source: .video(id: videoID),
+                            configuration: .init(
+                                autoPlay: true,
+                                playInline: true
+                            )
                         )
                     )
-                )
-            } /// End of ZStack
+                } /// End of ZStack
+            }
         }
     }
 }

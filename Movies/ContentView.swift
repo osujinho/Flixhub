@@ -8,18 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-        
+    @State private var searchText = ""
+    @State private var isEditing = false
+    
     var body: some View {
-        TabView {
-            BrowseView()
-                .tabItem {
-                    Label("Browse", systemImage: "list.dash")
-                }
-            SearchView()
-                .tabItem {
-                    Label("Search", systemImage: "magnifyingglass")
-                }
-        }
+        MainView()
     }
 }
 

@@ -36,6 +36,7 @@ import Foundation
             
         } catch {
             self.errorMessage = error.localizedDescription
+            print(error)
             self.hasError = true
         }
     }

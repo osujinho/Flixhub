@@ -8,45 +8,38 @@
 import SwiftUI
 
 struct BrowseView: View {
-    @StateObject var viewModel = BrowseViewModel()
+    @StateObject var viewModel: BrowseViewModel
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                // Upcoming
-                CarouselView(categoryName: "Upcoming", categoryNameBackgroundColor: .orange, movies: viewModel.upcoming.results, isPoster: true)
-                
-                // Now playing
-                CarouselView(categoryName: "Now Playing", categoryNameBackgroundColor: .green, movies: viewModel.nowPlaying.results, isPoster: false)
-                
-                // Popular
-                CarouselView(categoryName: "Popular", categoryNameBackgroundColor: .blue, movies: viewModel.popular.results, isPoster: false)
-                
-                // Top Rated
-                CarouselView(categoryName: "Top Rated", categoryNameBackgroundColor: .yellow, movies: viewModel.topRated.results, isPoster: false)
-                
+            VStack {
+                ScrollView {
+                    // Upcoming
+                    CarouselView(categoryName: "Upcoming", categoryNameBackgroundColor: .orange, movies: viewModel.upcoming.results, isPoster: true)
+                    
+                    // Now playing
+                    CarouselView(categoryName: "Now Playing", categoryNameBackgroundColor: .green, movies: viewModel.nowPlaying.results, isPoster: false)
+                    
+                    // Popular
+                    CarouselView(categoryName: "Popular", categoryNameBackgroundColor: .blue, movies: viewModel.popular.results, isPoster: false)
+                    
+                    // Top Rated
+                    CarouselView(categoryName: "Top Rated", categoryNameBackgroundColor: .yellow, movies: viewModel.topRated.results, isPoster: false)
+                }
             }
-            .navigationTitle("Browse")
-            .task {
-                await viewModel.fetchMovies(type: .upcoming, value: "1")
-                await viewModel.fetchMovies(type: .nowPlaying, value: "1")
-                await viewModel.fetchMovies(type: .topRated, value: "1")
-                await viewModel.fetchMovies(type: .popular, value: "1")
-            }
-            .alert(isPresented: $viewModel.hasError) {
-                Alert(
-                    title: Text("Error Loading Movies"),
-                    message: Text(viewModel.errorMessage),
-                    dismissButton: .destructive(Text("Retry")) {
-                        // Use Task to run async method
-                        Task {
-                            await viewModel.fetchMovies(type: .upcoming, value: "1")
-                            await viewModel.fetchMovies(type: .nowPlaying, value: "1")
-                            await viewModel.fetchMovies(type: .topRated, value: "1")
-                            await viewModel.fetchMovies(type: .popular, value: "1")
-                        }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    HStack(alignment: .lastTextBaseline, spacing: 10) {
+                        Image("icon")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30, height: 30)
+                            .cornerRadius(10)
+                        Text("Flixhub")
+                            .movieFont(size: 35)
+                            .foregroundColor(.blue.opacity(0.8))
                     }
-                )
+                }
             }
         }
         .navigationViewStyle(.stack)

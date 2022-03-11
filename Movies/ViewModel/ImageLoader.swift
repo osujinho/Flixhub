@@ -38,3 +38,9 @@ final class ImageLoader: ObservableObject {
       task?.cancel()
     }
 }
+
+enum DefaultImage: String, CaseIterable, Identifiable {
+    case profile, poster, backdrop
+    
+    var id: DefaultImage { self }
+}

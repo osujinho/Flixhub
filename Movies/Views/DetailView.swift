@@ -20,41 +20,43 @@ struct DetailView: View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.black, .black.opacity(0.7)]), startPoint: .top, endPoint: .bottom)
             
-            if viewModel.isLoading {
-                LoadingView(
-                    heading: "Loading details on \(movieTitle)",
-                    poster: imagePath
-                )
-                    .transition(.scale)
-            } else {
-                VStack(spacing: 0) {
-                    TrailerPlayer(
-                        playTrailer: $viewModel.playTrailer,
-                        synopsisExpanded: $viewModel.synopsisExpanded,
-                        videoID: viewModel.youtubeKey,
-                        backdrop: viewModel.tmdbDetail.backdrop
+            Group {
+                if viewModel.isLoading {
+                    LoadingView(
+                        heading: "Loading details on \(movieTitle)",
+                        poster: imagePath
                     )
-                    .scaledToFit()
-                    
-                    VStack {
-                        
-                        MovieTitleAndGenreView(
+                        .transition(.scale)
+                } else {
+                    VStack(spacing: 0) {
+                        TrailerPlayer(
                             playTrailer: $viewModel.playTrailer,
                             synopsisExpanded: $viewModel.synopsisExpanded,
-                            movieDetail: viewModel.tmdbDetail,
-                            ratingAndRated: viewModel.omdbDetail,
-                            isUpcoming: isUpcoming
+                            videoID: viewModel.youtubeKey,
+                            backdrop: viewModel.tmdbDetail.backdrop
                         )
+                            .scaledToFit()
                         
-                        SynopsisView(isExpanded: $viewModel.synopsisExpanded, syposis: viewModel.tmdbDetail.plot)
+                        VStack {
+                            
+                            MovieTitleAndGenreView(
+                                playTrailer: $viewModel.playTrailer,
+                                synopsisExpanded: $viewModel.synopsisExpanded,
+                                movieDetail: viewModel.tmdbDetail,
+                                ratingAndRated: viewModel.omdbDetail,
+                                isUpcoming: isUpcoming
+                            )
+                            
+                            SynopsisView(isExpanded: $viewModel.synopsisExpanded, synopsis: viewModel.tmdbDetail.plot)
+                            
+                            CastListView(directors: viewModel.director, casts: viewModel.tmdbDetail.credits.cast)
+                        }
+                        .frame(maxWidth: UIScreen.main.bounds.width)
                         
-                        CastListView(directors: viewModel.director, casts: viewModel.tmdbDetail.credits.cast)
+                        Spacer()
                     }
-                    .frame(maxWidth: UIScreen.main.bounds.width)
-                    
-                    Spacer()
+                    .transition(.slide)
                 }
-                .transition(.slide)
             }
         }
         .edgesIgnoringSafeArea(.top)

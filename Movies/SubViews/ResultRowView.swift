@@ -10,7 +10,7 @@ import SwiftUI
 struct ResultRowView: View {
     let poster: String?
     let title: String
-    let releaseDate: String
+    let releaseDate: String?
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PosterView: View {
     let imagePath: String?
-    let titleOrDate: String
+    let titleOrDate: String?
     let isPoster: Bool
     
     var body: some View {
@@ -39,7 +39,7 @@ struct PosterView: View {
                     HStack {
                         Spacer()
                         VStack(alignment: .leading) {
-                            Text(isPoster ? getDate(date: titleOrDate, forYear: false) : titleOrDate)
+                            Text((isPoster ? getDate(date: titleOrDate, forYear: false) : titleOrDate) ?? "")
                                 .font(.system(size: isPoster ? 12 : 18, weight: .bold))
                                 .opacity(isPoster ? 0.75 : 1)
                                 .padding(.bottom, 1)

@@ -13,46 +13,30 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
-                    TextFieldInput(target: $viewModel.movieTitle, label: "Movie Title", placeHolder: "Enter movie title to search...")
-                    
-                    Spacer()
-                    
-                    LabelButton(
-                        label: "Search",
-                        bgColor: .blue,
-                        action: {
-                            Task { await viewModel.searchMovie() }
-                        },
-                        isDisabled: viewModel.movieTitle.isEmpty)
-                }
-                .containerViewModifier(fontColor: .black, borderColor: .black)
+                SearchBarView(searchText: $viewModel.searchText)
+                    //.padding(.top, -30)
                 
-                if viewModel.searchSuccessful {
-                    List {
-                        Section(header: Text("Movies matching \(viewModel.movieTitle)").movieFont(size: 20).foregroundColor(.blue) ) {
-                            ForEach(viewModel.searchResult.results, id: \.self) { movie in
-                                NavigationLink( destination:
-                                                    DetailView( isUpcoming: false,
-                                                                movieID: String( movie.tmdbID ),
-                                                                movieTitle: movie.title,
-                                                                imagePath: movie.poster
-                                                              )
-                                ) {
-                                    ResultRowView(
-                                        poster: movie.poster,
-                                        title: movie.title,
-                                        releaseDate: movie.releaseDate
-                                    )
-                                }
+                List {
+                    if !viewModel.searchText.isEmpty {
+                        ForEach(viewModel.searchResult.results, id: \.self) { movie in
+                            NavigationLink( destination:
+                                                DetailView( isUpcoming: false,
+                                                            movieID: String( movie.tmdbID ),
+                                                            movieTitle: movie.title,
+                                                            imagePath: movie.poster
+                                                          )
+                            ) {
+                                ResultRowView(
+                                    poster: movie.poster,
+                                    title: movie.title,
+                                    releaseDate: movie.releaseDate
+                                )
                             }
                         }
                     }
-                } else {
-                    EmptyView()
                 }
             }
-            .navigationTitle("Search For Movie")
+            .navigationTitle("Search Movies")
             .navigationBarHidden(viewModel.searchSuccessful ? true : false)
             .alert(isPresented: $viewModel.hasError) {
                 Alert(
@@ -63,7 +47,7 @@ struct SearchView: View {
                             await viewModel.searchMovie()
                         }
                     },
-                    secondaryButton: .cancel() { viewModel.movieTitle.removeAll() }
+                    secondaryButton: .cancel() { viewModel.searchText.removeAll() }
                 )
             }
         }
