@@ -30,13 +30,8 @@ struct BrowseView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     HStack(alignment: .lastTextBaseline, spacing: 10) {
-                        Image("icon")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30, height: 30)
-                            .cornerRadius(10)
                         Text("Flixhub")
-                            .movieFont(size: 35)
+                            .movieFont(style: .appTitle)
                             .foregroundColor(.blue.opacity(0.8))
                     }
                 }

@@ -39,13 +39,13 @@ struct CarouselView: View {
             }.padding(.horizontal)
              
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: isPoster ? 16 : 22) {
+                HStack(alignment: .top, spacing: isPoster ? 3 : 8) {
                     ForEach(movies, id: \.self) { movie in
                         GeometryReader { proxy in
                             let scale = getScale(proxy: proxy)
                             NavigationLink(
                                 destination:
-                                    DetailView(
+                                    MovieDetailView(
                                         isUpcoming: isPoster,
                                         movieID: String(movie.tmdbID),
                                         movieTitle: movie.title,
@@ -61,7 +61,13 @@ struct CarouselView: View {
                                 .animation(.easeOut, value: 1)
                                 .padding(.vertical)
                         } //End Geometry
-                        .frame(width: isPoster ? 110 : 190, height: isPoster ? 230 : 145)
+                        //.frame(width: isPoster ? 110 : 190, height: isPoster ? 230 : 145)
+                        .frame(
+                            width: isPoster ?
+                            carouselPosterSize.width : carouselBackdropSize.width,
+                            height: isPoster ?
+                            carouselPosterSize.height : carouselBackdropSize.height
+                        )
                         .padding(.horizontal, 10)
                         .padding(.bottom, isPoster ? 15 : 5)
                         .padding(.top, isPoster ? 20 : 5)

@@ -24,11 +24,13 @@ struct PosterView: View {
         )
         
         UrlImageView(path: imagePath, defaultImage: isPoster ? .poster : .backdrop)
-            .frame(width: isPoster ? 120 : 200)
+            //.frame(width: isPoster ? 120 : 200)
+            .frame(width: isPoster ? carouselPosterSize.width : carouselBackdropSize.width)
             .overlay(
                 ZStack(alignment: .bottom) {
                     UrlImageView(path: imagePath, defaultImage: isPoster ? .poster : .backdrop)
-                        .frame(width: isPoster ? 120 : 200)
+                        //.frame(width: isPoster ? 120 : 200)
+                        .frame(width: isPoster ? carouselPosterSize.width : carouselBackdropSize.width)
                         .blur(radius: 20) /// blur the image
                         .padding(-20) /// expand the blur a bit to cover the edges
                         .clipped() /// prevent blur overflow

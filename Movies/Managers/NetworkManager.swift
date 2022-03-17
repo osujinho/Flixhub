@@ -17,7 +17,7 @@ final class NetworkManager {
     
     private init() { }
     
-    public func makeCall<T: Codable>(url: String) async throws -> T {
+    public func makeCall<T: Decodable>(url: String) async throws -> T {
         let urlSession = URLSession.shared
         guard let url = URL(string: url) else { throw NetworkError.badURL }
         
@@ -28,3 +28,4 @@ final class NetworkManager {
         return try JSONDecoder().decode(T.self, from: data)
     }
 }
+

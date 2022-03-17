@@ -7,9 +7,8 @@
 
 import SwiftUI  /// Need for animation
 
-@MainActor class DetailViewModel: ObservableObject {
+@MainActor class MovieDetailViewModel: ObservableObject {
     @Published private(set) var errorMessage: String = ""
-    @Published var isExpanded: Bool = false
     @Published private(set) var omdbDetail = OMDBDetail(rated: "", rating: "")
     @Published private(set) var tmdbDetail = TMDBDetail(
         backdrop: nil,
@@ -17,17 +16,18 @@ import SwiftUI  /// Need for animation
         releaseDate: "",
         tmdbID: 0,
         title: "",
-        genre: [Genre](),
+        genres: [Genre](),
         plot: "",
         runtime: 0,
         imdbID: "",
         credits: Credit(cast: [Cast](), crew: [Crew]()),
-        videos: Video(results: [Results]())
+        videos: Video(results: [VideoResults]())
     )
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true
     @Published var playTrailer: Bool = false
     @Published var synopsisExpanded: Bool = false
+    @Published var creditsOption: CreditsOption = .casts
     
     var youtubeKey: String {
         if let video = tmdbDetail.videos.results.first(where: {
@@ -50,7 +50,7 @@ import SwiftUI  /// Need for animation
         self.hasError = false
         self.isLoading = true
         
-        let url = urlManager.buildURL(movieType: .detail, id: id)
+        let url = urlManager.buildURL(movieType: .movieDetail, id: id)
         
         do {
             /// load JSON Object
@@ -65,7 +65,6 @@ import SwiftUI  /// Need for animation
                     self.isLoading = false
                 }
             }
-            
         } catch {
             // Error in case data could not be loaded
             errorMessage = error.localizedDescription

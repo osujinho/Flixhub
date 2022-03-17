@@ -13,7 +13,7 @@ struct UrlItem {
 }
 
 enum MovieType: CaseIterable {
-    case upcoming, nowPlaying, topRated, popular, detail, omdb, search, browseActor, browseDirector
+    case upcoming, nowPlaying, topRated, popular, movieDetail, omdb, search, personDetail, showDetail
 }
 
 class URLManager {
@@ -25,7 +25,8 @@ class URLManager {
     let omdpKey = UrlItem(key: "apikey", value: "4324aa3d")
     let tmdbKey = UrlItem(key: "api_key", value: "20273c51e3e2e33ccf30874850c5e3b5")
     let language = UrlItem(key: "language", value: "en-US")
-    let castAndCredit = UrlItem(key: "append_to_response", value: "credits,videos")
+    let videoAndCredits = UrlItem(key: "append_to_response", value: "credits,videos")
+    let combinedCredits = UrlItem(key: "append_to_response", value: "combined_credits")
     
     private func getURL(type: MovieType, id: String = "") -> String {
         switch type {
@@ -33,10 +34,11 @@ class URLManager {
         case .nowPlaying: return baseURL.appending("movie/now_playing")
         case .topRated: return baseURL.appending("movie/top_rated")
         case .popular: return baseURL.appending("movie/popular")
-        case .detail: return baseURL.appending("movie/\(id)")
+        case .movieDetail: return baseURL.appending("movie/\(id)")
         case .omdb: return "http://www.omdbapi.com/"
-        case .search: return baseURL.appending("search/movie")
-        case .browseActor, .browseDirector: return baseURL.appending("person/\(id)/movie_credits")
+        case .search: return baseURL.appending("search/multi")
+        case .personDetail: return baseURL.appending("person/\(id)")
+        case .showDetail: return baseURL.appending("tv/\(id)")
         }
     }
     
@@ -44,10 +46,11 @@ class URLManager {
         switch movieType {
         case .upcoming, .nowPlaying, .topRated, .popular:
             return [tmdbKey, language, UrlItem(key: "page", value: value)]
-        case .detail: return [tmdbKey, castAndCredit]
+        case .movieDetail: return [tmdbKey, videoAndCredits]
         case .omdb: return [omdpKey, UrlItem(key: "i", value: value)]
-        case .browseActor, .browseDirector: return [tmdbKey, language]
+        case .personDetail: return [tmdbKey, language, combinedCredits]
         case .search: return [tmdbKey, UrlItem(key: "query", value: value)]
+        case .showDetail: return [tmdbKey, language, videoAndCredits]
         }
     }
     

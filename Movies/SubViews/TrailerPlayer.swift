@@ -30,9 +30,9 @@ struct TrailerPlayer: View {
                     .font(.system(size: 35, weight: .bold))
                     .foregroundColor(.red)
                 } /// End of ZStack
-                .frame(height: synopsisExpanded ? (UIScreen.main.bounds.height * 0.35) : (UIScreen.main.bounds.height * 0.4))
+                .frame(height: trailerHeight)
             } else {
-                ZStack {
+                VStack {
                     YouTubePlayerView(
                         YouTubePlayer(
                             source: .video(id: videoID),
@@ -42,7 +42,7 @@ struct TrailerPlayer: View {
                             )
                         )
                     )
-                } /// End of ZStack
+                }
             }
         }
     }

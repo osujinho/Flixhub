@@ -7,28 +7,54 @@
 
 import SwiftUI
 
-/// Modifier for containers
-struct ContainerViewModifier: ViewModifier {
-    let fontColor: Color
-    let borderColor: Color
+let screen = UIScreen.main.bounds
+
+let personDetailProfilePictureSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.25, screen.height * 0.15)
+let listPosterSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.26, screen.height * 0.18)
+let detailPosterSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.20, screen.height * 0.15)
+
+let carouselPosterSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.22, screen.height * 0.18)
+let carouselBackdropSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.4, screen.height * 0.15)
+let trailerHeight: CGFloat = screen.height * 0.35
+let biographyExpandedHeight: CGFloat = screen.height * 0.2
+
+/// Font for the App
+struct MovieFont: ViewModifier {
+    let style: FontStyle
     
     func body(content: Content) -> some View {
         content
-            .foregroundColor(fontColor)
-            .font(.system(size: 14))
-            .padding(10)
-            .background(Color.black.opacity(0.5).cornerRadius(10))
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke((borderColor), lineWidth: 2)
-            )
-            .padding(.horizontal, 15)
+            .font(Font.custom(style.name, size: style.size))
     }
 }
 
 extension View {
-    func containerViewModifier(fontColor: Color, borderColor: Color) -> some View {
-        self.modifier(ContainerViewModifier(fontColor: fontColor, borderColor: borderColor))
+    func movieFont(style: FontStyle) -> some View {
+        self.modifier(MovieFont(style: style))
+    }
+}
+
+enum FontStyle {
+    case label, body, petite, name, title, appTitle, stackHeader
+    
+    var name: String {
+        switch self {
+        case .label, .name, .stackHeader: return "Sony Sketch EF Bold"
+        case .body, .petite: return "Sony Sketch EF"
+        case .title, .appTitle: return "Sony Sketch EF Bold"
+        }
+    }
+    
+    var size: CGFloat {
+        switch self {
+        case .label: return 16
+        case .body: return 14
+        case .petite: return 12
+        case .name: return 22
+        case .title: return 27
+        case .appTitle: return 37
+        case .stackHeader: return 24
+        }
     }
 }
 
@@ -83,7 +109,7 @@ struct GenreTextViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 10, weight: .semibold))
+            .movieFont(style: .petite)
             .foregroundColor(.white.opacity(0.7))
             .padding(5)
             .background(Rectangle()
@@ -98,18 +124,4 @@ extension View {
     }
 }
 
-/// Font for the App
-struct MovieFont: ViewModifier {
-    let size: CGFloat
-    
-    func body(content: Content) -> some View {
-        content
-            .font(Font.custom("Copperplate", size: size))
-    }
-}
 
-extension View {
-    func movieFont(size: CGFloat) -> some View {
-        self.modifier(MovieFont(size: size))
-    }
-}

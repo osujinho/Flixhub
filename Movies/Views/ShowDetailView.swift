@@ -1,19 +1,18 @@
 //
-//  DetailView.swift
+//  ShowDetailView.swift
 //  Movies
 //
-//  Created by Michael Osuji on 2/1/22.
+//  Created by Michael Osuji on 3/14/22.
 //
 
 import SwiftUI
 
-struct DetailView: View {
+struct ShowDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject private var viewModel = DetailViewModel()
+    @StateObject private var viewModel = ShowDetailViewModel()
     
-    let isUpcoming: Bool
-    let movieID: String
-    let movieTitle: String
+    let showId: String
+    let showName: String
     let imagePath: String?
     
     var body: some View {
@@ -23,7 +22,7 @@ struct DetailView: View {
             Group {
                 if viewModel.isLoading {
                     LoadingView(
-                        heading: "Loading details on \(movieTitle)",
+                        heading: "Loading details on \(showName)",
                         poster: imagePath
                     )
                         .transition(.scale)
@@ -33,35 +32,41 @@ struct DetailView: View {
                             playTrailer: $viewModel.playTrailer,
                             synopsisExpanded: $viewModel.synopsisExpanded,
                             videoID: viewModel.youtubeKey,
-                            backdrop: viewModel.tmdbDetail.backdrop
+                            backdrop: viewModel.showDetail.backdrop
                         )
-                            .scaledToFit()
+                        .scaledToFit()
                         
                         VStack {
-                            
-                            MovieTitleAndGenreView(
+                            ShowInfo(
                                 playTrailer: $viewModel.playTrailer,
                                 synopsisExpanded: $viewModel.synopsisExpanded,
-                                movieDetail: viewModel.tmdbDetail,
-                                ratingAndRated: viewModel.omdbDetail,
-                                isUpcoming: isUpcoming
+                                showDetail: viewModel.showDetail
                             )
                             
-                            SynopsisView(isExpanded: $viewModel.synopsisExpanded, synopsis: viewModel.tmdbDetail.plot)
+                            SynopsisOrBiographyView(
+                                isExpanded: $viewModel.synopsisExpanded,
+                                synopsis: viewModel.showDetail.synopsis,
+                                label: "Synopsis"
+                            )
                             
-                            CastListView(directors: viewModel.director, casts: viewModel.tmdbDetail.credits.cast)
+                            CastListView(
+                                synopsisExpanded: $viewModel.synopsisExpanded,
+                                creditsOption: $viewModel.creditsOption,
+                                directors: viewModel.mainCrew,
+                                casts: viewModel.showDetail.credits.cast
+                            )
                         }
                         .frame(maxWidth: UIScreen.main.bounds.width)
                         
                         Spacer()
                     }
                     .transition(.slide)
-                }
-            }
-        }
+                } /// End of else block
+            } /// End og group
+        } /// End of ZStack
         .edgesIgnoringSafeArea(.top)
         .task {
-            await viewModel.getMovieDetail(id: movieID)
+            await viewModel.getShowDetail(id: showId)
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -78,10 +83,10 @@ struct DetailView: View {
         }
         .alert(isPresented: $viewModel.hasError) {
             Alert(
-                title: Text("Movie Detail Error"),
+                title: Text("TV-Show Detail Error"),
                 message: Text(viewModel.errorMessage),
                 primaryButton: .destructive(Text("Retry")) {
-                    Task { await viewModel.getMovieDetail(id: movieID) }
+                    Task { await viewModel.getShowDetail(id: showId) }
                 },
                 secondaryButton: .cancel() {
                     self.presentationMode.wrappedValue.dismiss()
