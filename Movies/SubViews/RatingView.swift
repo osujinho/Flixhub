@@ -42,7 +42,7 @@ struct RatingView: View {
                 return (Color(red: 255 / 255.0, green: 244 / 255.0, blue: 0 / 255.0))
             case _ where ((65...84).contains(centRating)):
                 return (Color(red: 163 / 255.0, green: 255 / 255.0, blue: 0 / 255.0))
-            case _ where (centRating > 85):
+            case _ where (centRating >= 85):
                 return (Color(red: 44 / 255.0, green: 186 / 255.0, blue: 0 / 255.0))
             default: return Color.gray.opacity(0)
             }
