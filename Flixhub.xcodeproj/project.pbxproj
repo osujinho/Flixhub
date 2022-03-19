@@ -104,7 +104,7 @@
 		B3C9CA7127C081D200BC9DA9 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		B3C9CA7327C56E8D00BC9DA9 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		B3C9CA9227C5BA4E00BC9DA9 /* ResultRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRowView.swift; sourceTree = "<group>"; };
-		B3CF1B9D27A99C11004CD7F2 /* Movies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movies.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3CF1B9D27A99C11004CD7F2 /* Flixhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flixhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3CF1BA027A99C11004CD7F2 /* MoviesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesApp.swift; sourceTree = "<group>"; };
 		B3CF1BA227A99C11004CD7F2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B3CF1BA427A99C14004CD7F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -245,7 +245,7 @@
 		B3CF1B9E27A99C11004CD7F2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B3CF1B9D27A99C11004CD7F2 /* Movies.app */,
+				B3CF1B9D27A99C11004CD7F2 /* Flixhub.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -280,9 +280,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B3CF1B9C27A99C11004CD7F2 /* Movies */ = {
+		B3CF1B9C27A99C11004CD7F2 /* Flixhub */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B3CF1BAB27A99C14004CD7F2 /* Build configuration list for PBXNativeTarget "Movies" */;
+			buildConfigurationList = B3CF1BAB27A99C14004CD7F2 /* Build configuration list for PBXNativeTarget "Flixhub" */;
 			buildPhases = (
 				B3CF1B9927A99C11004CD7F2 /* Sources */,
 				B3CF1B9A27A99C11004CD7F2 /* Frameworks */,
@@ -292,12 +292,12 @@
 			);
 			dependencies = (
 			);
-			name = Movies;
+			name = Flixhub;
 			packageProductDependencies = (
 				B368F60F27D2D5FB00E03E4D /* YouTubePlayerKit */,
 			);
 			productName = Movies;
-			productReference = B3CF1B9D27A99C11004CD7F2 /* Movies.app */;
+			productReference = B3CF1B9D27A99C11004CD7F2 /* Flixhub.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -315,7 +315,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B3CF1B9827A99C11004CD7F2 /* Build configuration list for PBXProject "Movies" */;
+			buildConfigurationList = B3CF1B9827A99C11004CD7F2 /* Build configuration list for PBXProject "Flixhub" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -331,7 +331,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B3CF1B9C27A99C11004CD7F2 /* Movies */,
+				B3CF1B9C27A99C11004CD7F2 /* Flixhub */,
 			);
 		};
 /* End PBXProject section */
@@ -539,6 +539,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Movies/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Flixhub;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -569,6 +570,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Movies/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Flixhub;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -590,7 +592,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B3CF1B9827A99C11004CD7F2 /* Build configuration list for PBXProject "Movies" */ = {
+		B3CF1B9827A99C11004CD7F2 /* Build configuration list for PBXProject "Flixhub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B3CF1BA927A99C14004CD7F2 /* Debug */,
@@ -599,7 +601,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B3CF1BAB27A99C14004CD7F2 /* Build configuration list for PBXNativeTarget "Movies" */ = {
+		B3CF1BAB27A99C14004CD7F2 /* Build configuration list for PBXNativeTarget "Flixhub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B3CF1BAC27A99C14004CD7F2 /* Debug */,
