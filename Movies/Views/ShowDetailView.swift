@@ -40,7 +40,8 @@ struct ShowDetailView: View {
                             ShowInfo(
                                 playTrailer: $viewModel.playTrailer,
                                 synopsisExpanded: $viewModel.synopsisExpanded,
-                                showDetail: viewModel.showDetail
+                                showDetail: viewModel.showDetail,
+                                gridCollections: viewModel.gridCollections
                             )
                             
                             SynopsisOrBiographyView(
@@ -52,7 +53,7 @@ struct ShowDetailView: View {
                             CastListView(
                                 synopsisExpanded: $viewModel.synopsisExpanded,
                                 creditsOption: $viewModel.creditsOption,
-                                directors: viewModel.mainCrew,
+                                mainCrew: viewModel.mainCrew,
                                 casts: viewModel.showDetail.credits.cast
                             )
                         }

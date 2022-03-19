@@ -38,8 +38,10 @@ import SwiftUI  /// Need for animation
         return ""
     }
     
-    var director: [Crew] {
-        return tmdbDetail.credits.crew.filter { $0.job == "Director" }
+    var mainCrew: [Crew] {
+        let desiredCrewJobs: Set = ["producer", "director", "story", "executive producer", "storyboard", "screenplay"]
+        
+        return tmdbDetail.credits.crew.filter { desiredCrewJobs.contains($0.job.lowercased()) }
     }
     
     private let networkManager = NetworkManager.networkManager

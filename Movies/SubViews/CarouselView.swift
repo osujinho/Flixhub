@@ -10,90 +10,52 @@ import SwiftUI
 struct CarouselView: View {
      
     let categoryName: String
-    let categoryNameBackgroundColor: Color
     let movies: [TMDBResult]
-    let isPoster: Bool
-    
-    private let gradient = LinearGradient(
-        gradient: Gradient(stops: [
-            .init(color: .purple, location: 0),
-            .init(color: .clear, location: 0.4)
-        ]),
-        startPoint: .bottom,
-        endPoint: .top
-    )
-    
-    private(set) var movieImage = Image(systemName: "video.fill")
+    let totalPages: Int
      
     var body: some View {
         VStack {
             HStack {
                 Text(categoryName)
-                    .font(.system(size: 14, weight: .heavy))
-                    .padding(.vertical, 6)
-                    .padding(.horizontal, 12)
-                    .background(categoryNameBackgroundColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(2)
+                    .movieFont(style: .label)
                 Spacer()
+                
+                NavigationLink(destination:
+                                GetMoreView(
+                                    header: categoryName,
+                                    movies: movies,
+                                    totalPages: totalPages
+                                )
+                ){
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 10))
+                }
+                
             }.padding(.horizontal)
              
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: isPoster ? 3 : 8) {
+                HStack(alignment: .bottom, spacing: 5) {
                     ForEach(movies, id: \.self) { movie in
-                        GeometryReader { proxy in
-                            let scale = getScale(proxy: proxy)
-                            NavigationLink(
-                                destination:
-                                    MovieDetailView(
-                                        isUpcoming: isPoster,
-                                        movieID: String(movie.tmdbID),
-                                        movieTitle: movie.title,
-                                        imagePath: movie.poster
-                                    ),
-                                label: {
-                                    PosterView(
-                                        imagePath: isPoster ? movie.poster : movie.backdrop,
-                                        titleOrDate: isPoster ? movie.releaseDate : movie.title,
-                                        isPoster: isPoster)
-                                })
-                                .scaleEffect(.init(width: scale, height: scale))
-                                .animation(.easeOut, value: 1)
-                                .padding(.vertical)
-                        } //End Geometry
-                        //.frame(width: isPoster ? 110 : 190, height: isPoster ? 230 : 145)
-                        .frame(
-                            width: isPoster ?
-                            carouselPosterSize.width : carouselBackdropSize.width,
-                            height: isPoster ?
-                            carouselPosterSize.height : carouselBackdropSize.height
-                        )
-                        .padding(.horizontal, 10)
-                        .padding(.bottom, isPoster ? 15 : 5)
-                        .padding(.top, isPoster ? 20 : 5)
+                        NavigationLink( destination:
+                                            MovieDetailView(
+                                                movieID: String( movie.tmdbID ),
+                                                movieTitle: movie.title,
+                                                imagePath: movie.poster
+                                            )
+                        ) {
+                            PosterView(
+                                imagePath: movie.poster,
+                                title: movie.title,
+                                rating: movie.tmdbRating
+                            )
+                        }
                     } //End ForEach
-                    Spacer()
-                        .frame(width: 10)
+                    
                 } //End HStack
-                .padding(.horizontal, 16)
+                .padding(.leading, 10)
             }// End ScrollView
         }//End VStack
-    }
-     
-    func getScale(proxy: GeometryProxy) -> CGFloat {
-        let midPoint: CGFloat = 145
-         
-        let viewFrame = proxy.frame(in: .global).minX
-         
-        var scale: CGFloat = 1.0
-        let deltaXAnimationThreshold: CGFloat = 145
-         
-        let diffFromCenter = abs(midPoint - viewFrame - deltaXAnimationThreshold / 2)
-        if diffFromCenter < deltaXAnimationThreshold {
-            scale = 1 + (deltaXAnimationThreshold - diffFromCenter) / 500
-        }
-         
-        return scale
+        .padding(.bottom)
     }
 }
 

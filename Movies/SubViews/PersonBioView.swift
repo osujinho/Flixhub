@@ -42,6 +42,8 @@ struct PersonBioView: View {
                     Text(personDetail.knownFor ?? "N/A")
                 }
                 
+                let deathdate = getDeathdate(date: personDetail.deathday)
+                
                 HStack(alignment: .bottom, spacing: 10) {  /// For dates
                     Text("Born:")
                         .movieFont(style: .label)
@@ -49,12 +51,22 @@ struct PersonBioView: View {
                     
                     Spacer()
                     
-                    Text("Died:")
-                        .movieFont(style: .label)
-                    
-                    let deathdate = getDeathdate(date: personDetail.deathday)
-                    Text(deathdate)
-                        .foregroundColor(deathdate == "Alive" ? .green.opacity(0.8) : .red.opacity(0.8))
+                    if deathdate.lowercased() == "alive" {
+                        HStack(alignment: .bottom) {
+                            Text("Died:")
+                                .movieFont(style: .label)
+                            Text(deathdate)
+                                .foregroundColor(.green.opacity(0.8))
+                        }
+                    }
+                }
+                if deathdate.lowercased() != "alive" {
+                    HStack(alignment: .bottom, spacing: 10) {
+                        Text("Died:")
+                            .movieFont(style: .label)
+                        Text(deathdate)
+                            .foregroundColor(.red.opacity(0.8))
+                    }
                 }
             } /// End of information vstack
             .movieFont(style: .body)

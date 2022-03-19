@@ -6,9 +6,6 @@
 //
 
 import Foundation
-import UIKit
-
-
 
 // string to date
 func getDate(date: String?, forYear: Bool) -> String {
@@ -22,7 +19,7 @@ func getDate(date: String?, forYear: Bool) -> String {
     
     // convert date back to string in year format
     let newDateFormater = DateFormatter()
-    newDateFormater.dateFormat = forYear ? "yyyy" : "MMM dd yyyy"
+    newDateFormater.dateFormat = forYear ? "yyyy" : "dd MMM yyyy"
     
     return newDateFormater.string(from: oldDate)
 }
@@ -38,7 +35,7 @@ func getDeathdate(date: String?) -> String {
     
     // convert date back to string in year format
     let newDateFormater = DateFormatter()
-    newDateFormater.dateFormat = "MMM dd yyyy"
+    newDateFormater.dateFormat = "dd MMM yyyy"
     
     return newDateFormater.string(from: oldDate)
 }
@@ -72,3 +69,8 @@ func getGender(genderNumber: Int?) -> String {
     }
 }
 
+func tmdbRating(rating: Double?) -> String {
+    guard let rating = rating else { return "NR" }
+    
+    return String(rating)
+}

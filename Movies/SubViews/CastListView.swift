@@ -10,7 +10,7 @@ import SwiftUI
 struct CastListView: View {
     @Binding var synopsisExpanded: Bool
     @Binding var creditsOption: CreditsOption
-    let directors: [Crew]
+    let mainCrew: [Crew]
     let casts: [Cast]
     
     var body: some View {
@@ -61,7 +61,7 @@ struct CastListView: View {
                                 }
                                 .padding(.leading, 10)
                             case .crews:
-                                ForEach(directors, id: \.self) { director in
+                                ForEach(mainCrew, id: \.self) { director in
                                     NavigationLink(destination:
                                                     PersonDetailView(
                                                         personID: String ( director.id ),

@@ -25,7 +25,7 @@ struct PersonMediaRowView: View {
                     .movieFont(style: .name)
                 
                 HStack(alignment: .bottom, spacing: 20) {
-                    Text("Media:")
+                    Text("Media")
                         .movieFont(style: .label)
                     
                     let type = mediaType.listLabel

@@ -14,26 +14,41 @@ struct BrowseView: View {
         NavigationView {
             VStack {
                 ScrollView {
-                    // Upcoming
-                    CarouselView(categoryName: "Upcoming", categoryNameBackgroundColor: .orange, movies: viewModel.upcoming.results, isPoster: true)
+                    // Now Playing
+                    CarouselView(
+                        categoryName: "Now Showing",
+                        movies: viewModel.nowPlaying.results,
+                        totalPages: viewModel.nowPlaying.total_pages
+                    )
                     
-                    // Now playing
-                    CarouselView(categoryName: "Now Playing", categoryNameBackgroundColor: .green, movies: viewModel.nowPlaying.results, isPoster: false)
+                    // Upcoming
+                    CarouselView(
+                        categoryName: "Upcoming",
+                        movies: viewModel.upcoming.results,
+                        totalPages: viewModel.upcoming.total_pages
+                    )
                     
                     // Popular
-                    CarouselView(categoryName: "Popular", categoryNameBackgroundColor: .blue, movies: viewModel.popular.results, isPoster: false)
+                    CarouselView(
+                        categoryName: "Popular",
+                        movies: viewModel.popular.results,
+                        totalPages: viewModel.popular.total_pages
+                    )
                     
                     // Top Rated
-                    CarouselView(categoryName: "Top Rated", categoryNameBackgroundColor: .yellow, movies: viewModel.topRated.results, isPoster: false)
+                    CarouselView(
+                        categoryName: "Top Rated",
+                        movies: viewModel.topRated.results,
+                        totalPages: viewModel.topRated.total_pages
+                    )
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    HStack(alignment: .lastTextBaseline, spacing: 10) {
-                        Text("Flixhub")
-                            .movieFont(style: .appTitle)
-                            .foregroundColor(.blue.opacity(0.8))
-                    }
+                    Image("icon")
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(10)
                 }
             }
         }

@@ -9,49 +9,66 @@ import SwiftUI
 
 struct PosterView: View {
     let imagePath: String?
-    let titleOrDate: String?
-    let isPoster: Bool
+    let title: String
+    let rating: Double?
+    
+    let gradient = LinearGradient(
+        gradient: Gradient(stops: [
+            .init(color: .black, location: 0),
+            .init(color: .clear, location: 0.4)
+        ]),
+        startPoint: .bottom,
+        endPoint: .top
+    )
     
     var body: some View {
-        
-        let gradient = LinearGradient(
-            gradient: Gradient(stops: [
-                .init(color: .black, location: 0),
-                .init(color: .clear, location: 0.4)
-            ]),
-            startPoint: .bottom,
-            endPoint: .top
-        )
-        
-        UrlImageView(path: imagePath, defaultImage: isPoster ? .poster : .backdrop)
-            //.frame(width: isPoster ? 120 : 200)
-            .frame(width: isPoster ? carouselPosterSize.width : carouselBackdropSize.width)
+        UrlImageView(path: imagePath, defaultImage: .poster)
+            .scaledToFill()
+            .frame(width: 120, height: 180)
             .overlay(
                 ZStack(alignment: .bottom) {
-                    UrlImageView(path: imagePath, defaultImage: isPoster ? .poster : .backdrop)
-                        //.frame(width: isPoster ? 120 : 200)
-                        .frame(width: isPoster ? carouselPosterSize.width : carouselBackdropSize.width)
+                    UrlImageView(path: imagePath, defaultImage: .poster)
+                        .scaledToFill()
+                        .frame(width: 120, height: 180)
                         .blur(radius: 20) /// blur the image
                         .padding(-20) /// expand the blur a bit to cover the edges
+                        .padding(.bottom, 10)
                         .clipped() /// prevent blur overflow
                         .mask(gradient) /// mask the blurred image using the gradient's alpha values
                     
                     gradient /// also add the gradient as an overlay (this time, the purple will show up)
                     
-                    HStack {
+                    VStack{
                         Spacer()
-                        VStack(alignment: .leading) {
-                            Text((isPoster ? getDate(date: titleOrDate, forYear: false) : titleOrDate) ?? "")
-                                .font(.system(size: isPoster ? 12 : 18, weight: .bold))
-                                .opacity(isPoster ? 0.75 : 1)
-                                .padding(.bottom, 1)
+                        HStack {
+                            RatingView(rating: rating, frameSize: 30)
+                                .padding(.leading, 5)
+                            Spacer()
                         }
-                        Spacer()
                     }
-                    .foregroundColor(.white)
-                    .padding(.bottom, 2)
+                    .padding(.bottom, -18)
                 }
             )
-            .cornerRadius(10)
+            .padding(.bottom, 70)
+            .background(posterLabelColor)
+            .overlay(
+                VStack {
+                    Spacer()
+                    
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(title)
+                                .font(.caption2)
+                                .foregroundColor(.white)
+                                .multilineTextAlignment(.leading)
+                                .padding(.horizontal, 5)
+                            Spacer()
+                        }
+                    }
+                    .background(posterLabelColor)
+                }
+                .padding(.bottom, 8)
+            )
+            .cornerRadius(5)
     }
 }

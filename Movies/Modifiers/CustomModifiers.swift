@@ -9,12 +9,18 @@ import SwiftUI
 
 let screen = UIScreen.main.bounds
 
-let personDetailProfilePictureSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.25, screen.height * 0.15)
-let listPosterSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.26, screen.height * 0.18)
-let detailPosterSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.20, screen.height * 0.15)
+let posterLabelColor = (Color(red: 3 / 255.0, green: 37 / 255.0, blue: 65 / 255.0))
 
-let carouselPosterSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.22, screen.height * 0.18)
-let carouselBackdropSize: (width: CGFloat, height: CGFloat) = (screen.width * 0.4, screen.height * 0.15)
+let personDetailProfilePictureSize = (width: screen.width * 0.25, height: screen.height * 0.15)
+let listPosterSize = (width: screen.width * 0.26, height: screen.height * 0.18)
+let detailPosterSize = (width: screen.width * 0.20, height: screen.height * 0.15)
+
+let carouselPosterSize = (width: CGFloat(110), height: CGFloat(200))
+let carouselBackdropSize = (width: CGFloat(160), height: CGFloat(170))
+
+let posterSize = (width: CGFloat(110), height: CGFloat(130))
+let backdropSize = (width: CGFloat(160), height: CGFloat(100))
+
 let trailerHeight: CGFloat = screen.height * 0.35
 let biographyExpandedHeight: CGFloat = screen.height * 0.2
 
@@ -58,49 +64,22 @@ enum FontStyle {
     }
 }
 
-/// Circle text used in detail view for the rating
-struct CircleTextViewModifier: ViewModifier {
-    
+struct RatedAndRatingViewModifier: ViewModifier {
+    let borderColor: Color
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 14, weight: .bold))
-            .foregroundColor(.black)
-            .padding(12)
-            .background(Color.white)
-            .clipShape(Circle())
-            .padding(6)
-            .background(Circle()
-                .stroke(Color.white.opacity(0.7), lineWidth: 2)
-            )
-    }
-}
-
-extension View {
-    func circleTextViewModifier() -> some View {
-        self.modifier(CircleTextViewModifier())
-    }
-}
-
-/// Squate Text used in detail view for the Rated text
-struct SquareTextViewModifier: ViewModifier {
-    
-    func body(content: Content) -> some View {
-        content
-            .font(.system(size: 13, weight: .bold))
-            .foregroundColor(.black)
-            .padding(8)
-            .background(Color.white)
-            .clipShape(Rectangle())
-            .padding(6)
+            .movieFont(style: .body)
+            .foregroundColor(borderColor)
+            .frame(width: 45, height: 18)
             .background(Rectangle()
-                .stroke(Color.white.opacity(0.7), lineWidth: 2)
+                .stroke(borderColor.opacity(0.8), lineWidth: 2)
             )
     }
 }
 
 extension View {
-    func squareTextViewModifier() -> some View {
-        self.modifier(SquareTextViewModifier())
+    func ratedAndRatingViewModifier(borderColor: Color) -> some View {
+        self.modifier(RatedAndRatingViewModifier(borderColor: borderColor))
     }
 }
 
@@ -124,4 +103,23 @@ extension View {
     }
 }
 
-
+struct DetailInfoGridView: View {
+    let gridCollections: [GridCollection]
+    
+    let columns = [GridItem(.adaptive(minimum: 125, maximum: 190))]
+    
+    var body: some View {
+        LazyVGrid(columns: columns, alignment: .leading, spacing: 5) {
+            ForEach(gridCollections, id: \.self) { item in
+                HStack(alignment: .bottom, spacing: 10) {
+                    Text(item.label)
+                        .movieFont(style: .label)
+                        .foregroundColor(.white)
+                    Text(item.info)
+                        .movieFont(style: .body)
+                        .foregroundColor(.white.opacity(0.7))
+                }
+            }
+        }
+    }
+}

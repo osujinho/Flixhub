@@ -41,10 +41,19 @@ import SwiftUI
     }
     
     var mainCrew: [Crew] {
-        var topCrewMembers: [Crew] = []
-        topCrewMembers.append(contentsOf: showDetail.credits.crew.filter { $0.job.lowercased().contains("producer") })
-        topCrewMembers.append(contentsOf: showDetail.credits.crew.filter { $0.job.lowercased() == "screenplay" })
-        return topCrewMembers
+        let desiredCrew: Set = ["producer", "screenplay", "story", "director"]
+        return showDetail.credits.crew.filter{ desiredCrew.contains( $0.job.lowercased() ) }
+    }
+    
+    var gridCollections: [GridCollection] {
+        [
+            GridCollection(label: "Type", info: showDetail.type?.capitalized ?? "N/A"),
+            GridCollection(label: "Status", info: showDetail.status?.capitalized ?? "N/A"),
+            GridCollection(label: "From", info: getDate(date: showDetail.firstAirDate ,forYear: false)),
+            GridCollection(label: "To", info: getDate(date: showDetail.lastAirDate ,forYear: false)),
+            GridCollection(label: "Seasons", info: unwrapNumbersToString(showDetail.seasons)),
+            GridCollection(label: "Episodes", info: unwrapNumbersToString(showDetail.episodes))
+        ]
     }
     
     private let networkManager = NetworkManager.networkManager

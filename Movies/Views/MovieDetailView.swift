@@ -68,7 +68,7 @@ struct MovieDetailView: View {
                             CastListView(
                                 synopsisExpanded: $viewModel.synopsisExpanded,
                                 creditsOption: $viewModel.creditsOption,
-                                directors: viewModel.director,
+                                mainCrew: viewModel.mainCrew,
                                 casts: viewModel.tmdbDetail.credits.cast
                             )
                         }

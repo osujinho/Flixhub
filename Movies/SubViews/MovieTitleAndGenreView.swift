@@ -47,35 +47,38 @@ struct MovieTitleAndGenreView: View {
                         }
                     }
                     
-                    HStack(alignment: .bottom, spacing: 30) { /// For the runtime and year
-                        Text(stringToTime(strTime: movieDetail.runtime))
-                        Text(isUpcoming ?
-                             getDate(date: movieDetail.releaseDate, forYear: false) :
-                                getDate(date: movieDetail.releaseDate, forYear: true)
-                        )
-                    } /// End of  runtime and year stack
-                    .movieFont(style: .label)
-                    .foregroundColor(.white.opacity(0.7))
-                    .padding(.bottom, 2)
-                    
-                    HStack(spacing: 30) { /// For the rating and Rated
-                        HStack(alignment: .bottom, spacing: 10) {
-                            Text("Rated:")
-                                .movieFont(style: .label)
-                            Text(ratingAndRated.rated)
-                                .foregroundColor(.blue)
-                        }
+                    HStack(alignment: .bottom) { /// To hold movie info
+                        VStack(alignment: .leading, spacing: 10) { /// for leading items
+                            HStack(alignment: .bottom, spacing: 10) { /// For rated
+                                Text("Rated")
+                                    .movieFont(style: .label)
+                                Text(ratingAndRated.rated)
+                                    .ratedAndRatingViewModifier(borderColor: .blue)
+                            }
+                            
+                            Text(stringToTime(strTime: movieDetail.runtime))
+                        } /// End of leading vstack
                         
-                        HStack(alignment: .bottom, spacing: 10) {
-                            Text("Rating:")
-                                .movieFont(style: .label)
-                            Text(ratingAndRated.rating)
-                                .foregroundColor(.red.opacity(0.8))
-                        }
-                    } /// End of rating and rated stack
+                        Spacer()
+                            .frame(maxWidth: 80)
+                        
+                        VStack(alignment: .leading, spacing: 10) { /// For trailing items
+                            HStack(alignment: .bottom, spacing: 10) {
+                                Text("Rating")
+                                    .movieFont(style: .label)
+                                Text(ratingAndRated.rating)
+                                    .ratedAndRatingViewModifier(borderColor: .red)
+                            }
+                            
+                            Text( getDate(date: movieDetail.releaseDate, forYear: false) )
+                            
+                        }/// End of trailing vstack
+                        
+                        
+                    } /// End of movie info HStack
                     .movieFont(style: .body)
                     .padding(.bottom, 5)
-                    
+//
                     HStack(alignment: .lastTextBaseline) { /// Stack for the genres
                         ForEach(movieDetail.genres, id: \.self) { genre in
                             Text(genre.name.capitalized)

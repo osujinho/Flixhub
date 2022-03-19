@@ -74,7 +74,15 @@ struct SearchView: View {
                     }
                 }
             }
-            .navigationTitle("Search Movies")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    HStack(alignment: .lastTextBaseline, spacing: 10) {
+                        Text("Search Movies")
+                            .movieFont(style: .appTitle)
+                            .foregroundColor(.blue.opacity(0.8))
+                    }
+                }
+            }
             .navigationBarHidden(viewModel.searchSuccessful ? true : false)
             .alert(isPresented: $viewModel.hasError) {
                 Alert(

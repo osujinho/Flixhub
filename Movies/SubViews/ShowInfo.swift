@@ -11,6 +11,7 @@ struct ShowInfo: View {
     @Binding var playTrailer: Bool
     @Binding var synopsisExpanded: Bool
     let showDetail: ShowDetail
+    let gridCollections: [GridCollection]
     
     var body: some View {
         HStack {
@@ -24,9 +25,8 @@ struct ShowInfo: View {
                     HStack(alignment: .bottom) {
                         VStack {
                             Text(showDetail.name.uppercased())   /// Title
-                                .movieFont(style: .title)
+                                .movieFont(style: .name)
                                 .foregroundColor(.white)
-                                .padding(.bottom, 5)
                                 .lineLimit(nil)
                         } /// Embed in a VStack so it can expand
                         
@@ -44,55 +44,10 @@ struct ShowInfo: View {
                             .foregroundColor(.blue)
                         }
                     } /// End of title block HStack
+                    .padding(.bottom, -5)
                     
-                    HStack(alignment: .bottom) { /// For type and status
-                        
-                        
-                        HStack(spacing: 20) {
-                            Text("Type:")
-                                .movieFont(style: .label)
-                            Text(showDetail.type?.capitalized ?? "N/A")
-                        }
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 20) {
-                            Text("Status:")
-                                .movieFont(style: .label)
-                            Text(showDetail.status?.capitalized ?? "N/A")
-                        }
-                    }
-                    
-                    HStack(alignment: .bottom) {  /// For dates
-                        HStack(spacing: 10) {
-                            Text("Aired:")
-                                .movieFont(style: .label)
-                            Text(getDate(date: showDetail.firstAirDate ,forYear: false))
-                        }
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 10) {
-                            Text("Ended:")
-                                .movieFont(style: .label)
-                            Text(getDate(date: showDetail.lastAirDate ,forYear: false))
-                        }
-                    }
-                    
-                    HStack(alignment: .bottom) {  /// For Seasons and Episodes
-                        HStack(spacing: 20) {
-                            Text("Seasons:")
-                                .movieFont(style: .label)
-                            Text(unwrapNumbersToString(showDetail.seasons))
-                        }
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 20) {
-                            Text("Episodes:")
-                                .movieFont(style: .label)
-                            Text(unwrapNumbersToString(showDetail.episodes))
-                        }
+                    VStack { /// For infor Grid
+                        DetailInfoGridView(gridCollections: gridCollections)
                     }
                     .padding(.bottom, 5)
                     
