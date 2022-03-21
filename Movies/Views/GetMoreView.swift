@@ -101,6 +101,7 @@ struct GetMoreView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear{
             viewModel.movies = movies
             viewModel.totalPages = totalPages
