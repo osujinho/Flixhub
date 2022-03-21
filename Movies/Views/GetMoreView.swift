@@ -150,4 +150,3 @@ struct GetMoreView: View {
     }
 }
 
-// Implement Infinite scroll

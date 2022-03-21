@@ -23,7 +23,11 @@ import SwiftUI
         status: nil,
         type: nil,
         videos: Video(results: [VideoResults]()),
-        credits: Credit(cast: [Cast](), crew: [Crew]())
+        credits: Credit(cast: [Cast](), crew: [Crew]()),
+        images: MovieImages(
+            backdrops: [MovieImage](),
+            posters: [MovieImage]()
+        )
     )
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true

@@ -17,8 +17,17 @@ struct ShowInfo: View {
         HStack {
             HStack(alignment: .bottom) { /// Container for all
                 if !synopsisExpanded {
-                    UrlImageView(path: showDetail.poster, defaultImage: .poster)
-                        .frame(width: detailPosterSize.width, height: detailPosterSize.height)
+                    NavigationLink(destination:
+                                    MovieGallery(
+                                        images: showDetail.images.posters,
+                                        isPoster: true)
+                    ){
+                        UrlImageView(path: showDetail.poster, defaultImage: .poster)
+                            .frame(width: detailPosterSize.width)
+                            .cornerRadius(5)
+                            .padding(.bottom, -2)
+                        
+                    }
                 }
                 
                 VStack(alignment: .leading) { /// For the Texts

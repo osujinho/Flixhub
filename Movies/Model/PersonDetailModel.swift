@@ -17,14 +17,19 @@ struct PersonDetail: Hashable, Decodable {
     let profile: String?
     let biography: String?
     let credits: PersonCredit
+    let images: ProfileImages
     
     enum CodingKeys: String, CodingKey {
-        case name, biography, gender, birthday, deathday
+        case name, biography, gender, birthday, deathday, images
         case knownFor = "known_for_department"
         case birthPlace = "place_of_birth"
         case profile = "profile_path"
         case credits = "combined_credits"
     }
+}
+
+struct ProfileImages: Hashable, Decodable {
+    let profiles: [MovieImage]
 }
 
 struct PersonCredit: Hashable, Decodable {

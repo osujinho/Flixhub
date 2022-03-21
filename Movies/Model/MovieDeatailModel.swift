@@ -20,6 +20,7 @@ struct TMDBDetail: Hashable, Decodable {
     let imdbID: String
     let credits: Credit
     let videos: Video
+    let images: MovieImages
     
     enum CodingKeys: String, CodingKey {
         case backdrop = "backdrop_path"
@@ -28,7 +29,7 @@ struct TMDBDetail: Hashable, Decodable {
         case tmdbID = "id"
         case plot = "overview"
         case imdbID = "imdb_id"
-        case genres, title, runtime, credits, videos
+        case genres, title, runtime, credits, videos, images
     }
 }
 
@@ -82,5 +83,20 @@ struct OMDBDetail: Hashable, Decodable {
     enum CodingKeys: String, CodingKey {
         case rated = "Rated"
         case rating = "imdbRating"
+    }
+}
+
+struct MovieImages: Hashable, Decodable {
+    let backdrops: [MovieImage]
+    let posters: [MovieImage]
+}
+
+struct MovieImage: Hashable, Decodable {
+    let rating: Double?
+    let path: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case rating = "vote_average"
+        case path = "file_path"
     }
 }

@@ -21,7 +21,8 @@ import SwiftUI  /// Need for animation
         runtime: 0,
         imdbID: "",
         credits: Credit(cast: [Cast](), crew: [Crew]()),
-        videos: Video(results: [VideoResults]())
+        videos: Video(results: [VideoResults]()),
+        images: MovieImages(backdrops: [MovieImage](), posters: [MovieImage]())
     )
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true

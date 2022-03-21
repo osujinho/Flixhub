@@ -18,9 +18,18 @@ struct MovieTitleAndGenreView: View {
         HStack {
             HStack(alignment: .bottom) { /// Container for alll
                 if !playTrailer {
-                    UrlImageView(path: movieDetail.poster, defaultImage: .poster)
-                        .frame(width: detailPosterSize.width)
-                        .padding(.bottom, -2)
+                    NavigationLink(destination:
+                                    MovieGallery(
+                                        images: movieDetail.images.posters,
+                                        isPoster: true)
+                    ){
+                        UrlImageView(path: movieDetail.poster, defaultImage: .poster)
+                            .frame(width: detailPosterSize.width)
+                            .cornerRadius(5)
+                            .padding(.bottom, -2)
+                        
+                    }
+                    
                 }
                 
                 VStack(alignment: .leading) { /// For the Texts

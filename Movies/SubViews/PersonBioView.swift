@@ -14,9 +14,16 @@ struct PersonBioView: View {
     
     var body: some View {
         HStack(alignment: .lastTextBaseline) { /// Display heading including profile picture
-            UrlImageView(path: profile, defaultImage: .profile)
-                .frame(width: personDetailProfilePictureSize.width, height: personDetailProfilePictureSize.height)
-                .cornerRadius(10)
+            NavigationLink(destination:
+                            MovieGallery(
+                                images: personDetail.images.profiles,
+                                isPoster: true)
+            ){
+                UrlImageView(path: profile, defaultImage: .profile)
+                    .frame(width: personDetailProfilePictureSize.width, height: personDetailProfilePictureSize.height)
+                    .cornerRadius(5)
+                
+            }
             
             VStack(alignment: .leading, spacing: 5) {  /// Information stack
                 HStack { /// For the name

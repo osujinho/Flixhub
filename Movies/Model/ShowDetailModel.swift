@@ -22,9 +22,10 @@ struct ShowDetail: Hashable, Decodable {
     let type: String?
     let videos: Video
     let credits: Credit
+    let images: MovieImages
     
     enum CodingKeys: String, CodingKey {
-        case name, genres, status, videos, credits, type
+        case name, genres, status, videos, credits, type, images
         case firstAirDate = "first_air_date"
         case lastAirDate = "last_air_date"
         case creators = "created_by"

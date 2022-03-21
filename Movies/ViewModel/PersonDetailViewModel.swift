@@ -20,7 +20,8 @@ import Foundation
         credits: PersonCredit(
             cast: [CastForPerson](),
             crew: [CrewForPerson]()
-        )
+        ),
+        images: ProfileImages(profiles: [MovieImage]())
     )
     @Published private(set) var errorMessage: String = ""
     @Published var hasError: Bool = false
