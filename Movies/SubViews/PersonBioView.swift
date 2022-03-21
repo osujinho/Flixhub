@@ -70,7 +70,6 @@ struct PersonBioView: View {
                 }
             } /// End of information vstack
             .movieFont(style: .body)
-            .foregroundColor(.white)
             
             Spacer()  /// To push everything to align the correct way
         } /// end of mother Hstack

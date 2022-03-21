@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B30F133827E636A600FE7641 /* ImageBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30F133727E636A600FE7641 /* ImageBackground.swift */; };
 		B33A341027BC663800EB05D9 /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33A340F27BC663800EB05D9 /* CustomViews.swift */; };
 		B33A341227BC722A00EB05D9 /* CastListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33A341127BC722A00EB05D9 /* CastListView.swift */; };
 		B33A341427BC869100EB05D9 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33A341327BC869100EB05D9 /* BrowseView.swift */; };
@@ -65,6 +66,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B30F133727E636A600FE7641 /* ImageBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBackground.swift; sourceTree = "<group>"; };
 		B33A340F27BC663800EB05D9 /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 		B33A341127BC722A00EB05D9 /* CastListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastListView.swift; sourceTree = "<group>"; };
 		B33A341327BC869100EB05D9 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				B368F64927E0F81100E03E4D /* PersonMediaRowView.swift */,
 				B3ED333627E52908001A6DCF /* GetMoreRowView.swift */,
 				B3ED333A27E55A82001A6DCF /* RatingView.swift */,
+				B30F133727E636A600FE7641 /* ImageBackground.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				B368F63027DB005F00E03E4D /* SearchBarView.swift in Sources */,
 				B3ED333527E504A9001A6DCF /* GenreManager.swift in Sources */,
 				B3C9CA7027C05E1700BC9DA9 /* SearchView.swift in Sources */,
+				B30F133827E636A600FE7641 /* ImageBackground.swift in Sources */,
 				B368F64827DFBF2B00E03E4D /* PersonBioView.swift in Sources */,
 				B368F63E27DF814B00E03E4D /* ShowDetailViewModel.swift in Sources */,
 				B368F61627D2D93000E03E4D /* SynopsisOrBiographyView.swift in Sources */,

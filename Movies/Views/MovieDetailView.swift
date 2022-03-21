@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MovieDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject private var viewModel = MovieDetailViewModel()
+    @StateObject private var viewModel: MovieDetailViewModel
     
     let isUpcoming: Bool
     let movieID: String
@@ -17,6 +17,7 @@ struct MovieDetailView: View {
     let imagePath: String?
     
     init(isUpcoming: Bool = false, movieID: String, movieTitle: String, imagePath: String?) {
+        self._viewModel = StateObject(wrappedValue: MovieDetailViewModel())
         self.isUpcoming = isUpcoming
         self.movieID = movieID
         self.movieTitle = movieTitle
@@ -25,7 +26,7 @@ struct MovieDetailView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.black, .black.opacity(0.7)]), startPoint: .top, endPoint: .bottom)
+            Color("background").edgesIgnoringSafeArea(.all)
             
             Group {
                 if viewModel.isLoading {
@@ -81,6 +82,7 @@ struct MovieDetailView: View {
             }
         }
         .edgesIgnoringSafeArea(.top)
+        .background(Color("background"))
         .task {
             await viewModel.getMovieDetail(id: movieID)
         }
@@ -93,7 +95,7 @@ struct MovieDetailView: View {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.black) /// Fix after implementing Both dark and light mode
+                        .foregroundColor(.black)
                 })
             }
         }

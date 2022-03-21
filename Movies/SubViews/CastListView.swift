@@ -13,13 +13,21 @@ struct CastListView: View {
     let mainCrew: [Crew]
     let casts: [Cast]
     
+    init(synopsisExpanded: Binding<Bool>, creditsOption: Binding<CreditsOption>, mainCrew: [Crew], casts: [Cast]) {
+        UIScrollView.appearance().backgroundColor = UIColor(named: "background")
+        self._synopsisExpanded = synopsisExpanded
+        self._creditsOption = creditsOption
+        self.mainCrew = mainCrew
+        self.casts = casts
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .bottom) {
                 Text("Cast")
                     .movieFont(style: .stackHeader)
                     .padding(.horizontal, 10)
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                 
                 if synopsisExpanded {
                     Button(action: {

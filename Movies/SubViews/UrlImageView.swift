@@ -29,8 +29,9 @@ struct UrlImageView: View {
     }
     
     var body: some View {
-        /// Still looking up Image for the given path
-        Group {            switch path {
+        /// looking up Image for the given path
+        Group {
+            switch path {
             case _ where (path == nil):
                 Image(defaultImage.rawValue)
                     .resizable()

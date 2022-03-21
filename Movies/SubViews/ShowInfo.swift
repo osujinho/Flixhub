@@ -26,7 +26,6 @@ struct ShowInfo: View {
                         VStack {
                             Text(showDetail.name.uppercased())   /// Title
                                 .movieFont(style: .name)
-                                .foregroundColor(.white)
                                 .lineLimit(nil)
                         } /// Embed in a VStack so it can expand
                         
@@ -59,7 +58,6 @@ struct ShowInfo: View {
                     } /// End of stack for Genres
                 } /// End of Texts VStack
                 .movieFont(style: .body)
-                .foregroundColor(.white)
                 Spacer()  /// To make items aligned leading in a HStack
         
             } /// End of container for all

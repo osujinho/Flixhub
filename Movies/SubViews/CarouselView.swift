@@ -10,6 +10,7 @@ import SwiftUI
 struct CarouselView: View {
      
     let categoryName: String
+    let movieType: MovieType
     let movies: [TMDBResult]
     let totalPages: Int
      
@@ -23,6 +24,7 @@ struct CarouselView: View {
                 NavigationLink(destination:
                                 GetMoreView(
                                     header: categoryName,
+                                    movieType: movieType,
                                     movies: movies,
                                     totalPages: totalPages
                                 )

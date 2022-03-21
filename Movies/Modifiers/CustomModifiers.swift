@@ -89,10 +89,10 @@ struct GenreTextViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .movieFont(style: .petite)
-            .foregroundColor(.white.opacity(0.7))
+            .foregroundColor(.secondary)
             .padding(5)
             .background(Rectangle()
-                .stroke(Color.white.opacity(0.7), lineWidth: 2)
+                .stroke(.secondary, lineWidth: 2)
             )
     }
 }
@@ -114,10 +114,10 @@ struct DetailInfoGridView: View {
                 HStack(alignment: .bottom, spacing: 10) {
                     Text(item.label)
                         .movieFont(style: .label)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                     Text(item.info)
                         .movieFont(style: .body)
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(.secondary)
                 }
             }
         }

@@ -17,7 +17,7 @@ struct SearchBarView: View {
                 .movieFont(style: .body)
                 .padding(7)
                 .padding(.horizontal, 25)
-                .background(Color(.systemGray6))
+                .background(Color("background").opacity(0.5))
                 .cornerRadius(8)
                 .overlay(
                     HStack {

@@ -8,7 +8,14 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var viewModel = BrowseViewModel()
+    @StateObject private var viewModel: BrowseViewModel
+    
+    init() {
+        self._viewModel = StateObject(wrappedValue: BrowseViewModel())
+        
+        // Fix tab color here
+        UITabBar.appearance().backgroundColor = UIColor(named: "tabColor")
+    }
     
     var body: some View {
         VStack {
@@ -25,7 +32,6 @@ struct MainView: View {
                             Label("Search", systemImage: "magnifyingglass")
                         }
                 }
-                .background(Color.black)
             }
         }
         .task {
@@ -39,7 +45,6 @@ struct MainView: View {
                 title: Text("Error Loading Movies"),
                 message: Text(viewModel.errorMessage),
                 dismissButton: .destructive(Text("Retry")) {
-                    // Use Task to run async method
                     Task {
                         await viewModel.fetchMovies(type: .upcoming, value: "1")
                         await viewModel.fetchMovies(type: .nowPlaying, value: "1")

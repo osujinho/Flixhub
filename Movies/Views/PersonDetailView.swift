@@ -9,15 +9,25 @@ import SwiftUI
 
 struct PersonDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject private var viewModel = PersonDetailViewModel()
+    @StateObject private var viewModel: PersonDetailViewModel
     
     let personID: String
     let name: String
     let profile: String?
     
+    init(personID: String, name: String, profile: String?) {
+        self._viewModel = StateObject(wrappedValue: PersonDetailViewModel())
+        self.personID = personID
+        self.name = name
+        self.profile = profile
+        
+        UITableViewCell.appearance().backgroundColor = UIColor(named: "background")
+        UITableView.appearance().backgroundColor = UIColor(named: "background")
+    }
+    
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.black, .black.opacity(0.7)]), startPoint: .top, endPoint: .bottom)
+            Color("background").edgesIgnoringSafeArea(.all)
             
             if viewModel.isLoading {
                 LoadingView(
@@ -80,6 +90,7 @@ struct PersonDetailView: View {
                                             charcterOrJob: movie.0.character
                                         )
                                     }
+                                    .listRowBackground(Color.clear)
                                 }
                                 
                             case .castShows:
@@ -99,6 +110,7 @@ struct PersonDetailView: View {
                                             charcterOrJob: show.0.character
                                         )
                                     }
+                                    .listRowBackground(Color.clear)
                                 }
                                 
                             case .crewMovies:
@@ -118,6 +130,7 @@ struct PersonDetailView: View {
                                             charcterOrJob: movie.0.job
                                         )
                                     }
+                                    .listRowBackground(Color.clear)
                                 }
                                 
                             case .crewShows:
@@ -137,9 +150,10 @@ struct PersonDetailView: View {
                                             charcterOrJob: show.0.job
                                         )
                                     }
+                                    .listRowBackground(Color.clear)
                                 }
-                            }
-                        }
+                            } /// End of switch
+                        } /// End of lists
                         .if(viewModel.biographyIsExpanded) { view in
                             view
                                 .frame(height: biographyExpandedHeight)
@@ -150,6 +164,7 @@ struct PersonDetailView: View {
             }
         }
         .edgesIgnoringSafeArea(.top)
+        .background(Color("background"))
         .task {
             await viewModel.getDetail(castId: personID)
         }

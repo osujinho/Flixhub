@@ -22,11 +22,11 @@ class URLManager {
     private init() { }
     
     private let baseURL = "https://api.themoviedb.org/3/"
-    let omdpKey = UrlItem(key: "apikey", value: "4324aa3d")
-    let tmdbKey = UrlItem(key: "api_key", value: "20273c51e3e2e33ccf30874850c5e3b5")
-    let language = UrlItem(key: "language", value: "en-US")
-    let videoAndCredits = UrlItem(key: "append_to_response", value: "credits,videos")
-    let combinedCredits = UrlItem(key: "append_to_response", value: "combined_credits")
+    private let omdpKey = UrlItem(key: "apikey", value: "4324aa3d")
+    private let tmdbKey = UrlItem(key: "api_key", value: "20273c51e3e2e33ccf30874850c5e3b5")
+    private let language = UrlItem(key: "language", value: "en-US")
+    private let videoAndCredits = UrlItem(key: "append_to_response", value: "credits,videos")
+    private let combinedCredits = UrlItem(key: "append_to_response", value: "combined_credits")
     
     private func getURL(type: MovieType, id: String = "") -> String {
         switch type {

@@ -9,15 +9,22 @@ import SwiftUI
 
 struct ShowDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject private var viewModel = ShowDetailViewModel()
+    @StateObject private var viewModel: ShowDetailViewModel
     
     let showId: String
     let showName: String
     let imagePath: String?
     
+    init(showId: String, showName: String, imagePath: String?) {
+        self._viewModel = StateObject(wrappedValue: ShowDetailViewModel())
+        self.showId = showId
+        self.showName = showName
+        self.imagePath = imagePath
+    }
+    
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.black, .black.opacity(0.7)]), startPoint: .top, endPoint: .bottom)
+            Color("background").edgesIgnoringSafeArea(.all)
             
             Group {
                 if viewModel.isLoading {
@@ -66,6 +73,7 @@ struct ShowDetailView: View {
             } /// End og group
         } /// End of ZStack
         .edgesIgnoringSafeArea(.top)
+        .background(Color("background"))
         .task {
             await viewModel.getShowDetail(id: showId)
         }

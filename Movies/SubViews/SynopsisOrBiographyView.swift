@@ -16,13 +16,11 @@ struct SynopsisOrBiographyView: View {
         VStack(alignment: .leading) {
             Text(label)
                 .movieFont(style: .title)
-                .foregroundColor(.white)
                 .padding(.bottom, 5)
             if let synopsis = synopsis {
                 if !isExpanded {
                     VStack(alignment: .leading) {
                         Text(synopsis)
-                            .foregroundColor(.white.opacity(0.7))
                             .lineLimit( 2)
                             .padding(.bottom, 8)
                         Button(action: {
@@ -37,7 +35,6 @@ struct SynopsisOrBiographyView: View {
                 } else {
                     ScrollView {
                         Text(synopsis)
-                            .foregroundColor(.white.opacity(0.7))
                     }
                 }
             } else {

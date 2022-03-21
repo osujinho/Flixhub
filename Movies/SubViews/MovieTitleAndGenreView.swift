@@ -86,7 +86,6 @@ struct MovieTitleAndGenreView: View {
                         }
                     } /// End of stack for Genres
                 } /// End of Texts VStack
-                .foregroundColor(.white)
                 Spacer()  /// To make items aligned leading in a HStack
         
             } /// End of container for all
