@@ -15,9 +15,9 @@ struct BrowseView: View {
             ZStack {
                 Color("background").edgesIgnoringSafeArea(.all)
                 
-                VStack {
-                    ScrollView {
-                        // Now Playing
+                ScrollView {
+                    // Now Playing
+                    LazyVStack {
                         CarouselView(
                             categoryName: "Now Showing",
                             movieType: .nowPlaying,

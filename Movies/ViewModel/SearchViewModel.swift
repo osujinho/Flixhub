@@ -11,14 +11,9 @@ import Foundation
     @Published private(set) var searchResult = Search(results: [SearchResult]())
     @Published private(set) var errorMessage: String = ""
     @Published var hasError: Bool = false
-    @Published var searchText: String = "" {
-        didSet {
-            if !searchText.isEmpty {
-                Task { await searchMovie() }
-            }
-        }
-    }
-    @Published var searchSuccessful: Bool = false
+    @Published var searchText: String = ""
+    @Published private(set) var searchSuccessful: Bool = false
+    @Published private(set) var isSearching: Bool = false
     @Published var searchMediaType: SearchMediaType = .movie
     
     var movies: [(SearchResult.CommonData, SearchResult.MovieData)] {
@@ -44,23 +39,36 @@ import Foundation
     
     private let networkManager = NetworkManager.networkManager
     private let urlManager = URLManager.urlManager
+    private var searchTask: Task<Void, Never>?
     
     func searchMovie() async {
-        self.hasError = false
-        self.searchSuccessful = false
+        self.searchTask?.cancel()
         
-        let url = urlManager.buildURL(movieType: .search, value: searchText)
-        
-        do {
-            // load JSON Object
-            searchResult = try await networkManager.makeCall(url: url)
-            searchSuccessful = true
-        } catch {
-            // Error in case data could not be loaded
-            errorMessage = error.localizedDescription
-            self.hasError = true
+        if self.searchText.isEmpty {
+            isSearching = false
+            return
+        } else {
+            searchTask = Task {
+                self.hasError = false
+                self.searchSuccessful = false
+                self.isSearching = true
+                
+                let url = urlManager.buildURL(movieType: .search, value: searchText)
+                
+                do {
+                    // load JSON Object
+                    searchResult = try await networkManager.makeCall(url: url)
+                } catch {
+                    // Error in case data could not be loaded
+                    errorMessage = error.localizedDescription
+                    self.hasError = true
+                }
+                
+                if !Task.isCancelled {
+                    self.searchSuccessful = true
+                    self.isSearching = false
+                }
+            }
         }
     }
 }
-
-

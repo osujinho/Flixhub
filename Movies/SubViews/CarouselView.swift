@@ -36,7 +36,7 @@ struct CarouselView: View {
             }.padding(.horizontal)
              
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .bottom, spacing: 5) {
+                LazyHStack(alignment: .bottom, spacing: 5) {
                     ForEach(movies, id: \.self) { movie in
                         NavigationLink( destination:
                                             MovieDetailView(

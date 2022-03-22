@@ -24,6 +24,11 @@ struct SearchView: View {
                 
                 VStack {
                     SearchBarView(searchText: $viewModel.searchText)
+                        .onReceive(viewModel.$searchText.debounce(for: 0.8, scheduler: RunLoop.main)) { searchText in
+                          Task {
+                            await viewModel.searchMovie()
+                          }
+                        }
                     
                     EnumPickerView("Type", selection: $viewModel.searchMediaType)
                     
@@ -83,10 +88,15 @@ struct SearchView: View {
                                     }
                                     .listRowBackground(Color.clear)
                                 }
-                            }
+                            } /// End of switch
+                        }
+                    } /// End of list
+                    .overlay{
+                        if viewModel.isSearching {
+                            ProgressView()
                         }
                     }
-                }
+                } /// End of VStack
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
