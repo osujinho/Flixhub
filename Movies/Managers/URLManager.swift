@@ -73,3 +73,21 @@ class URLManager {
         return url.absoluteString
     }
 }
+
+
+//VStack(alignment: .leading, spacing: 3) {
+//    if !viewModel.searchText.isEmpty {
+//        switch viewModel.searchMediaType {
+//        case .movie:
+//            
+//        case .show:
+//            
+//        case .person:
+//            
+//        } /// End of switch
+//    }
+//    
+//    if viewModel.isSearching {
+//        ProgressView()
+//    }
+//} /// End of VStack

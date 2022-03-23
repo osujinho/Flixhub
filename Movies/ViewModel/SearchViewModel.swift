@@ -12,7 +12,6 @@ import Foundation
     @Published private(set) var errorMessage: String = ""
     @Published var hasError: Bool = false
     @Published var searchText: String = ""
-    @Published private(set) var searchSuccessful: Bool = false
     @Published private(set) var isSearching: Bool = false
     @Published var searchMediaType: SearchMediaType = .movie
     
@@ -50,7 +49,6 @@ import Foundation
         } else {
             searchTask = Task {
                 self.hasError = false
-                self.searchSuccessful = false
                 self.isSearching = true
                 
                 let url = urlManager.buildURL(movieType: .search, value: searchText)
@@ -65,7 +63,6 @@ import Foundation
                 }
                 
                 if !Task.isCancelled {
-                    self.searchSuccessful = true
                     self.isSearching = false
                 }
             }

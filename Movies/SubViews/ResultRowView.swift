@@ -27,13 +27,13 @@ struct ResultRowView: View {
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
             UrlImageView(path: poster, defaultImage: .poster)
-                .scaledToFit()
-                .frame(width: screen.width * 0.25, height: screen.height * 0.15)
+                .frame(width: screen.width * 0.25)
                 .cornerRadius(10)
             
             VStack(alignment: .leading, spacing: 10) {
                 Text(title.uppercased())
                     .movieFont(style: .name)
+                    .multilineTextAlignment(.leading)
                 
                 // For Showingg the date or department
                 HStack(alignment: .bottom, spacing: 20) {

@@ -63,3 +63,19 @@ enum SearchMediaType: Pickable {
         }
     }
 }
+
+enum MediaDetailOptions: Pickable {
+    case about, casts, crew, recommended, similar
+
+    var id: MediaDetailOptions { self }
+
+    var description: String {
+        switch self {
+        case .about: return "About"
+        case .casts: return "Casts"
+        case .crew: return "Featured Crews"
+        case .recommended: return "Recommended"
+        case .similar: return "Similar"
+        }
+    }
+}

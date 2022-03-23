@@ -47,3 +47,31 @@ extension EnumPickerView where Label == Text {
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white, .font: UIFont(name: "Sony Sketch EF Bold", size: 15) as Any], for: .selected)
     }
 }
+
+struct CustomPickerView<Enum: Pickable>: View {
+    @Binding private var selection: Enum
+    
+    init(selection: Binding<Enum>) {
+        self._selection = selection
+    }
+    
+    var body: some View {
+        HStack(alignment: .bottom, spacing: 20) {
+            ForEach(Array(Enum.allCases)) { value in
+                let width = value.description.widthOfString(usingFont: UIFont.systemFont(ofSize: 12))
+                Text(value.description).tag(value)
+                    .font(.system(size: 12))
+                    
+                    .padding(.bottom, 10)
+                    .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .gray)
+                    .overlay(
+                        Rectangle()
+                            .frame(width: 0.9 * width, height: 3)
+                            .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .clear),
+                        alignment: .bottom
+                    )
+                    .onTapGesture { self.selection = value }
+            }
+        }
+    }
+}

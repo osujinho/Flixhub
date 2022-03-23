@@ -22,6 +22,7 @@ struct PersonMediaRowView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 Text(titleOrName.uppercased())
+                    .multilineTextAlignment(.leading)
                     .movieFont(style: .name)
                 
                 HStack(alignment: .bottom, spacing: 20) {
@@ -47,6 +48,7 @@ struct PersonMediaRowView: View {
                             .movieFont(style: .label)
                         
                         Text(charcterOrJob ?? "N/A")
+                            .multilineTextAlignment(.leading)
                     }
                 case .castShows:
                     HStack(alignment: .bottom, spacing: 20) {
@@ -60,6 +62,7 @@ struct PersonMediaRowView: View {
                         Text("Character")
                             .movieFont(style: .label)
                         Text(charcterOrJob ?? "N/A")
+                            .multilineTextAlignment(.leading)
                     }
                 case .crewMovies:
                     HStack(alignment: .bottom, spacing: 20) {
@@ -74,6 +77,7 @@ struct PersonMediaRowView: View {
                             .movieFont(style: .label)
                         
                         Text(charcterOrJob ?? "N/A")
+                            .multilineTextAlignment(.leading)
                     }
                 case .crewShows:
                     HStack(alignment: .bottom, spacing: 20) {
@@ -87,6 +91,7 @@ struct PersonMediaRowView: View {
                         Text("Job")
                             .movieFont(style: .label)
                         Text(charcterOrJob ?? "N/A")
+                            .multilineTextAlignment(.leading)
                     }
                 }
             }

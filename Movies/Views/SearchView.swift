@@ -12,9 +12,6 @@ struct SearchView: View {
     
     init() {
         self._viewModel = StateObject(wrappedValue: SearchViewModel())
-        
-        UITableViewCell.appearance().backgroundColor = UIColor(named: "background")
-        UITableView.appearance().backgroundColor = UIColor(named: "background")
     }
     
     var body: some View {
@@ -30,7 +27,7 @@ struct SearchView: View {
                           }
                         }
                     
-                    EnumPickerView("Type", selection: $viewModel.searchMediaType)
+                    CustomPickerView(selection: $viewModel.searchMediaType)
                     
                     List {
                         if !viewModel.searchText.isEmpty {
@@ -107,7 +104,6 @@ struct SearchView: View {
                     }
                 }
             }
-            .navigationBarHidden(viewModel.searchSuccessful ? true : false)
             .alert(isPresented: $viewModel.hasError) {
                 Alert(
                     title: Text("Movie Search Error"),
