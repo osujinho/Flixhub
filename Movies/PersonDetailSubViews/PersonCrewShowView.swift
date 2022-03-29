@@ -10,17 +10,17 @@ import SwiftUI
 struct PersonCrewShowView: View {
     @State private var showGridView = false
     let columns = [GridItem(.adaptive(minimum: 110, maximum: 130))]
-    let shows: [CrewShow]
+    let shows: [(commonData: CrewForPerson.CommonData, showData: PersonShowData)]
     
     var body: some View {
         if showGridView {
             ScrollView {
                 LazyVGrid(columns: columns, alignment: .center, spacing: 5, pinnedViews: .sectionHeaders) {
                     Section(header: GridViewToggle(showGridView: $showGridView)){
-                        ForEach(shows, id: \.id) { show in
+                        ForEach(shows, id: \.commonData.id) { show in
                             NavigationLink(destination:
                                             ShowDetailView(
-                                                showId: String( show.commonData.id ),
+                                                showId: String( show.commonData.tmdbID ),
                                                 showName: show.showData.name,
                                                 imagePath: show.commonData.poster
                                             )
@@ -39,10 +39,10 @@ struct PersonCrewShowView: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 5, pinnedViews: .sectionHeaders) {
                     Section(header: GridViewToggle(showGridView: $showGridView)) {
-                        ForEach(shows, id: \.id) { show in
+                        ForEach(shows, id: \.commonData.id) { show in
                             NavigationLink(destination:
                                             ShowDetailView(
-                                                showId: String( show.commonData.id ),
+                                                showId: String( show.commonData.tmdbID ),
                                                 showName: show.showData.name,
                                                 imagePath: show.commonData.poster
                                             )

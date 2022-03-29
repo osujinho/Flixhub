@@ -61,8 +61,9 @@ enum CastForPerson: Hashable, Decodable {
     case movie(CommonData, PersonMovieData)
     case tv(CommonData, PersonShowData)
     
-    struct CommonData: Hashable, Decodable {
-        let id: Int
+    struct CommonData: Identifiable, Hashable, Decodable {
+        var id = UUID()
+        let tmdbID: Int
         let genres: [Int]
         let poster: String?
         let character: String?
@@ -70,11 +71,12 @@ enum CastForPerson: Hashable, Decodable {
         let type: String
         
         enum CodingKeys: String, CodingKey {
-            case id, character
+            case character
             case poster = "poster_path"
             case type = "media_type"
             case rating = "vote_average"
             case genres = "genre_ids"
+            case tmdbID = "id"
         }
     }
 }
@@ -83,8 +85,9 @@ enum CrewForPerson: Hashable, Decodable {
     case movie(CommonData, PersonMovieData)
     case tv(CommonData, PersonShowData)
     
-    struct CommonData: Hashable, Decodable {
-        let id: Int
+    struct CommonData: Hashable, Decodable, Identifiable {
+        var id = UUID()
+        let tmdbID: Int
         let genres: [Int]
         let poster: String?
         let rating: Double?
@@ -92,11 +95,12 @@ enum CrewForPerson: Hashable, Decodable {
         let job: String?
         
         enum CodingKeys: String, CodingKey {
-            case id, job
+            case job
             case poster = "poster_path"
             case type = "media_type"
             case rating = "vote_average"
             case genres = "genre_ids"
+            case tmdbID = "id"
         }
     }
 }
@@ -179,28 +183,4 @@ extension CrewForPerson {
             self = .tv(commonData, showData)
         }
     }
-}
-
-struct CastMovie: Identifiable, Hashable {
-    var id = UUID()
-    let commonData: CastForPerson.CommonData
-    let movieData: PersonMovieData
-}
-
-struct CastShow: Identifiable, Hashable {
-    var id = UUID()
-    let commonData: CastForPerson.CommonData
-    let showData: PersonShowData
-}
-
-struct CrewMovie: Identifiable, Hashable {
-    var id = UUID()
-    let commonData: CrewForPerson.CommonData
-    let movieData: PersonMovieData
-}
-
-struct CrewShow: Identifiable, Hashable {
-    var id = UUID()
-    let commonData: CrewForPerson.CommonData
-    let showData: PersonShowData
 }

@@ -10,17 +10,17 @@ import SwiftUI
 struct PersonCrewMovieView: View {
     @State private var showGridView = false
     let columns = [GridItem(.adaptive(minimum: 110, maximum: 130))]
-    let movies: [CrewMovie]
+    let movies: [(commonData: CrewForPerson.CommonData, movieData: PersonMovieData)]
     
     var body: some View {
         if showGridView {
             ScrollView {
                 LazyVGrid(columns: columns, alignment: .center, spacing: 5, pinnedViews: .sectionHeaders) {
                     Section(header: GridViewToggle(showGridView: $showGridView)){
-                        ForEach(movies, id: \.id) { movie in
+                        ForEach(movies, id: \.commonData.id) { movie in
                             NavigationLink(destination:
                                             MovieDetailView(
-                                                movieID: String( movie.commonData.id ),
+                                                movieID: String( movie.commonData.tmdbID ),
                                                 movieTitle: movie.movieData.title,
                                                 imagePath: movie.commonData.poster
                                             )
@@ -39,10 +39,10 @@ struct PersonCrewMovieView: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 5, pinnedViews: .sectionHeaders) {
                     Section(header: GridViewToggle(showGridView: $showGridView)) {
-                        ForEach(movies, id: \.id) { movie in
+                        ForEach(movies, id: \.commonData.id) { movie in
                             NavigationLink(destination:
                                             MovieDetailView(
-                                                movieID: String( movie.commonData.id ),
+                                                movieID: String( movie.commonData.tmdbID ),
                                                 movieTitle: movie.movieData.title,
                                                 imagePath: movie.commonData.poster
                                             )
