@@ -32,38 +32,18 @@ struct ResultRowView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 Text(title.uppercased())
-                    .movieFont(style: .name)
+                    .movieFont(style: .bold, size: listRowTitleSize)
                     .multilineTextAlignment(.leading)
                 
                 // For Showingg the date or department
-                HStack(alignment: .bottom, spacing: 20) {
-                    switch mediaType {
-                    case .movie:
-                        Text("Released:")
-                            .movieFont(style: .label)
-                        
-                        Text(getDate(date: date, forYear: false))
-                    case .show:
-                        Text("Aired:")
-                            .movieFont(style: .label)
-                        
-                        Text(getDate(date: date,forYear: false))
-                    case .person:
-                        Text("Known For:")
-                            .movieFont(style: .label)
-                        
-                        Text(knownFor ?? "N/A")
-                    }
+                switch mediaType {
+                case .movie: LabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
+                case .show: LabelAndInfoView(label: "aired", info: getDate(date: date,forYear: false))
+                case .person: LabelAndInfoView(label: "known for", info: knownFor ?? "N/A")
                 }
                 
-                HStack(alignment: .bottom, spacing: 20) {
-                    Text("Media:")
-                        .movieFont(style: .label)
-                    
-                    Text(mediaType.listRowLabel.uppercased())
-                }
+                LabelAndInfoView(label: "media", info: mediaType.listRowLabel.uppercased())
             }
-            .movieFont(style: .body)
         }
     }
 }

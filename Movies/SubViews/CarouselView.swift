@@ -18,7 +18,7 @@ struct CarouselView: View {
         VStack {
             HStack {
                 Text(categoryName)
-                    .movieFont(style: .label)
+                    .movieFont(style: .bold, size: browseLabelSize)
                 Spacer()
                 
                 NavigationLink(destination:

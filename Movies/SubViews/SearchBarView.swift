@@ -14,7 +14,7 @@ struct SearchBarView: View {
     var body: some View {
         HStack {
             TextField("Search movies...", text: $searchText)
-                .movieFont(style: .body)
+                .movieFont(style: .regular, size: bodySize)
                 .padding(7)
                 .padding(.horizontal, 25)
                 .background(Color("background").opacity(0.5))

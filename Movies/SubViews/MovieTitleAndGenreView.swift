@@ -20,8 +20,7 @@ struct MovieTitleAndGenreView: View {
                 if !playTrailer {
                     NavigationLink(destination:
                                     MovieGallery(
-                                        images: movieDetail.images.posters,
-                                        isPoster: true)
+                                        images: movieDetail.images.posters, defaultImage: .poster)
                     ){
                         UrlImageView(path: movieDetail.poster, defaultImage: .poster)
                             .frame(width: detailPosterSize.width)
@@ -36,7 +35,7 @@ struct MovieTitleAndGenreView: View {
                     HStack {
                         VStack {
                             Text(movieDetail.title.uppercased())   /// Title
-                                .movieFont(style: .title)
+                                .movieFont(style: .bold, size: movieAndShowTitleSize)
                                 .padding(.bottom, 5)
                                 .lineLimit(nil)
                         } /// Embed in a VStack so it can expand
@@ -58,12 +57,12 @@ struct MovieTitleAndGenreView: View {
                     
                     HStack(alignment: .bottom) { /// To hold movie info
                         VStack(alignment: .leading, spacing: 10) { /// for leading items
-                            HStack(alignment: .bottom, spacing: 10) { /// For rated
-                                Text("Rated")
-                                    .movieFont(style: .label)
-                                Text(ratingAndRated.rated)
-                                    .ratedAndRatingViewModifier(borderColor: .blue)
-                            }
+                            /// For rated
+                            RatedAndRatingView(
+                                label: "rated",
+                                info: ratingAndRated.rated,
+                                forRating: false
+                            )
                             
                             Text(stringToTime(strTime: movieDetail.runtime))
                         } /// End of leading vstack
@@ -72,12 +71,12 @@ struct MovieTitleAndGenreView: View {
                             .frame(maxWidth: 80)
                         
                         VStack(alignment: .leading, spacing: 10) { /// For trailing items
-                            HStack(alignment: .bottom, spacing: 10) {
-                                Text("Rating")
-                                    .movieFont(style: .label)
-                                Text(ratingAndRated.rating)
-                                    .ratedAndRatingViewModifier(borderColor: .red)
-                            }
+                           /// For rating
+                            RatedAndRatingView(
+                                label: "rating",
+                                info: ratingAndRated.rating,
+                                forRating: true
+                            )
                             
                             Text( getDate(date: movieDetail.releaseDate, forYear: false) )
                             
@@ -85,7 +84,7 @@ struct MovieTitleAndGenreView: View {
                         
                         
                     } /// End of movie info HStack
-                    .movieFont(style: .body)
+                    .movieFont(style: .regular, size: bodySize)
                     .padding(.bottom, 5)
 //
                     HStack(alignment: .lastTextBaseline) { /// Stack for the genres

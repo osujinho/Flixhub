@@ -73,5 +73,7 @@ struct CustomPickerView<Enum: Pickable>: View {
                     .onTapGesture { self.selection = value }
             }
         }
+        .background(Color("background"))
+        .padding(.leading, 10)
     }
 }

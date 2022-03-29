@@ -26,14 +26,14 @@ struct GetMoreRowView: View {
                 Spacer()
                 
                 Text(movie.title.uppercased())
-                    .movieFont(style: .name)
+                    .movieFont(style: .bold, size: listRowTitleSize)
                 
                 Text(getDate(date: movie.date ,forYear: false))
-                    .movieFont(style: .label)
+                    .movieFont(style: .regular, size: labelSize)
                 
                 HStack(alignment: .bottom) {
                     Text(genreManager.getGenre(genreID: movie.genreIds).joined(separator: ", "))
-                        .movieFont(style: .petite)
+                        .movieFont(style: .light, size: petiteSize)
                         .opacity(0.7)
                 }
             }

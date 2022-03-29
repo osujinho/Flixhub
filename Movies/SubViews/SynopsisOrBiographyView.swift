@@ -15,7 +15,7 @@ struct SynopsisOrBiographyView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(label)
-                .movieFont(style: .title)
+                .movieFont(style: .bold, size: stackHeaderSize)
                 .padding(.bottom, 5)
             if let synopsis = synopsis {
                 if !isExpanded {
@@ -41,7 +41,7 @@ struct SynopsisOrBiographyView: View {
                 Text("N/A")
             }
         }
-        .movieFont(style: .body)
+        .movieFont(style: .regular, size: bodySize)
         .padding(.horizontal, 10)
         .padding(.vertical, 10)
     }

@@ -26,14 +26,14 @@ struct CastProfileView: View {
             VStack(spacing: 0) {
                 // Name
                 Text(name)
-                    .movieFont(style: .label)
+                    .movieFont(style: .regular, size: bodySize)
                     .foregroundColor(.primary)
                     .lineLimit(nil)
                     .padding(.bottom, 1)
                 
                 // Movie Role
                 Text(movieRole)
-                    .movieFont(style: .petite)
+                    .movieFont(style: .light, size: petiteSize)
                     .foregroundColor(.secondary)
                     .lineLimit(nil)
             }

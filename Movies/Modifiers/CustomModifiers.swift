@@ -24,51 +24,11 @@ let backdropSize = (width: CGFloat(160), height: CGFloat(100))
 let trailerHeight: CGFloat = screen.height * 0.35
 let biographyExpandedHeight: CGFloat = screen.height * 0.2
 
-/// Font for the App
-struct MovieFont: ViewModifier {
-    let style: FontStyle
-    
-    func body(content: Content) -> some View {
-        content
-            .font(Font.custom(style.name, size: style.size))
-    }
-}
-
-extension View {
-    func movieFont(style: FontStyle) -> some View {
-        self.modifier(MovieFont(style: style))
-    }
-}
-
-enum FontStyle {
-    case label, body, petite, name, title, appTitle, stackHeader
-    
-    var name: String {
-        switch self {
-        case .label, .name, .stackHeader: return "Sony Sketch EF Bold"
-        case .body, .petite: return "Sony Sketch EF"
-        case .title, .appTitle: return "Sony Sketch EF Bold"
-        }
-    }
-    
-    var size: CGFloat {
-        switch self {
-        case .label: return 16
-        case .body: return 14
-        case .petite: return 12
-        case .name: return 22
-        case .title: return 27
-        case .appTitle: return 37
-        case .stackHeader: return 24
-        }
-    }
-}
-
 struct RatedAndRatingViewModifier: ViewModifier {
     let borderColor: Color
     func body(content: Content) -> some View {
         content
-            .movieFont(style: .body)
+            .movieFont(style: .regular, size: genreSize)
             .foregroundColor(borderColor)
             .frame(width: 45, height: 18)
             .background(Rectangle()
@@ -88,7 +48,7 @@ struct GenreTextViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .movieFont(style: .petite)
+            .movieFont(style: .light, size: genreSize)
             .foregroundColor(.secondary)
             .padding(5)
             .background(Rectangle()
@@ -113,10 +73,10 @@ struct DetailInfoGridView: View {
             ForEach(gridCollections, id: \.self) { item in
                 HStack(alignment: .bottom, spacing: 10) {
                     Text(item.label)
-                        .movieFont(style: .label)
+                        .movieFont(style: .bold, size: browseLabelSize)
                         .foregroundColor(.primary)
                     Text(item.info)
-                        .movieFont(style: .body)
+                        .movieFont(style: .regular, size: bodySize)
                         .foregroundColor(.secondary)
                 }
             }

@@ -19,8 +19,7 @@ struct ShowInfo: View {
                 if !synopsisExpanded {
                     NavigationLink(destination:
                                     MovieGallery(
-                                        images: showDetail.images.posters,
-                                        isPoster: true)
+                                        images: showDetail.images.posters, defaultImage: .poster)
                     ){
                         UrlImageView(path: showDetail.poster, defaultImage: .poster)
                             .frame(width: detailPosterSize.width)
@@ -34,7 +33,7 @@ struct ShowInfo: View {
                     HStack(alignment: .bottom) {
                         VStack {
                             Text(showDetail.name.uppercased())   /// Title
-                                .movieFont(style: .name)
+                                .movieFont(style: .bold, size: movieAndShowTitleSize)
                                 .lineLimit(nil)
                         } /// Embed in a VStack so it can expand
                         
@@ -66,7 +65,7 @@ struct ShowInfo: View {
                         }
                     } /// End of stack for Genres
                 } /// End of Texts VStack
-                .movieFont(style: .body)
+                .movieFont(style: .regular, size: bodySize)
                 Spacer()  /// To make items aligned leading in a HStack
         
             } /// End of container for all

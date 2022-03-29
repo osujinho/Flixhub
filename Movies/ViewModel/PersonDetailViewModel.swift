@@ -27,33 +27,34 @@ import Foundation
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true
     @Published var personCreditsOption: PersonCreditsOption = .castMovies
+    @Published var personDetailOption: PersonDetailOptions = .about
     @Published var biographyIsExpanded: Bool = false
     
-    var castMovies: [(CastForPerson.CommonData, PersonMovieData)] {
+    var castMovies: [CastMovie] {
         personDetail.credits.cast.compactMap { movie in
             guard case let .movie(commonData, movieData) = movie else { return nil }
-            return (commonData, movieData)
+            return CastMovie(commonData: commonData, movieData: movieData)
         }
     }
     
-    var castShows: [(CastForPerson.CommonData, PersonShowData)] {
+    var castShows: [CastShow] {
         personDetail.credits.cast.compactMap { show in
             guard case let .tv(commonData, showData) = show else { return nil }
-            return (commonData, showData)
+            return CastShow(commonData: commonData, showData: showData)
         }
     }
     
-    var crewMovies: [(CrewForPerson.CommonData, PersonMovieData)] {
+    var crewMovies: [CrewMovie] {
         personDetail.credits.crew.compactMap { movie in
             guard case let .movie(commonData, movieData) = movie else { return nil }
-            return(commonData, movieData)
+            return CrewMovie(commonData: commonData, movieData: movieData)
         }
     }
     
-    var crewShows: [(CrewForPerson.CommonData, PersonShowData)] {
+    var crewShows: [CrewShow] {
         personDetail.credits.crew.compactMap { show in
             guard case let .tv(commonData, showData) = show else { return nil }
-            return(commonData, showData)
+            return CrewShow(commonData: commonData, showData: showData)
         }
     }
     

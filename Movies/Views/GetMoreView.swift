@@ -18,10 +18,6 @@ struct GetMoreView: View {
     
     let columns = [GridItem(.adaptive(minimum: 110, maximum: 130))]
     
-    private var axes: Axis.Set {
-        return viewModel.isLoading ? [] : .vertical
-        }
-    
     init(header: String, movieType: MovieType, movies: [TMDBResult], totalPages: Int) {
         self._viewModel = StateObject(wrappedValue: GetMoreViewModel())
         self.header = header
@@ -121,7 +117,7 @@ struct GetMoreView: View {
             
             ToolbarItem(placement: .principal) {
                 Text(header)
-                    .movieFont(style: .name)
+                    .movieFont(style: .bold, size: inlineNavSize)
             }
             
             ToolbarItem(placement: .navigationBarTrailing) {

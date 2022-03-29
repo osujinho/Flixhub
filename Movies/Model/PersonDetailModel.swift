@@ -63,14 +63,18 @@ enum CastForPerson: Hashable, Decodable {
     
     struct CommonData: Hashable, Decodable {
         let id: Int
+        let genres: [Int]
         let poster: String?
         let character: String?
+        let rating: Double?
         let type: String
         
         enum CodingKeys: String, CodingKey {
             case id, character
             case poster = "poster_path"
             case type = "media_type"
+            case rating = "vote_average"
+            case genres = "genre_ids"
         }
     }
 }
@@ -81,7 +85,9 @@ enum CrewForPerson: Hashable, Decodable {
     
     struct CommonData: Hashable, Decodable {
         let id: Int
+        let genres: [Int]
         let poster: String?
+        let rating: Double?
         let type: String
         let job: String?
         
@@ -89,6 +95,8 @@ enum CrewForPerson: Hashable, Decodable {
             case id, job
             case poster = "poster_path"
             case type = "media_type"
+            case rating = "vote_average"
+            case genres = "genre_ids"
         }
     }
 }
@@ -171,4 +179,28 @@ extension CrewForPerson {
             self = .tv(commonData, showData)
         }
     }
+}
+
+struct CastMovie: Identifiable, Hashable {
+    var id = UUID()
+    let commonData: CastForPerson.CommonData
+    let movieData: PersonMovieData
+}
+
+struct CastShow: Identifiable, Hashable {
+    var id = UUID()
+    let commonData: CastForPerson.CommonData
+    let showData: PersonShowData
+}
+
+struct CrewMovie: Identifiable, Hashable {
+    var id = UUID()
+    let commonData: CrewForPerson.CommonData
+    let movieData: PersonMovieData
+}
+
+struct CrewShow: Identifiable, Hashable {
+    var id = UUID()
+    let commonData: CrewForPerson.CommonData
+    let showData: PersonShowData
 }

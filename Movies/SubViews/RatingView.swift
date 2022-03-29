@@ -65,7 +65,7 @@ struct RatingView: View {
             
             Text(ratingString)
                 .foregroundColor(.white)
-                .font(.system(size: 13, weight: .bold))
+                .movieFont(style: .bold, size: posterRatingSize)
         }
         .frame(width: CGFloat( frameSize ), height: CGFloat( frameSize ))
         .padding(4)

@@ -24,6 +24,7 @@ func getDate(date: String?, forYear: Bool) -> String {
     return newDateFormater.string(from: oldDate)
 }
 
+// get death date in string
 func getDeathdate(date: String?) -> String {
     guard let date = date else { return "Alive" }
     
@@ -38,6 +39,23 @@ func getDeathdate(date: String?) -> String {
     newDateFormater.dateFormat = "dd MMM yyyy"
     
     return newDateFormater.string(from: oldDate)
+}
+
+// Get age in strings
+func getAge(birthDate: String?) -> String {
+    guard let birthDate = birthDate else { return "N/A" }
+    
+    let birthdayFormat = DateFormatter()
+    birthdayFormat.dateFormat = "yyyy-MM-dd"
+    
+    guard let birthdayDate = birthdayFormat.date(from: birthDate) else {  return "N/A"}
+    
+    let today = Date()
+    let calender = Calendar.current
+    
+    let ageComponents = calender.dateComponents([.year], from: birthdayDate, to: today)
+    guard let age = ageComponents.year else { return "N/A" }
+    return String(age) + " years"
 }
 
 // string to time

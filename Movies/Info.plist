@@ -11,8 +11,8 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>SonySketch.ttf</string>
-		<string>SonySketch-Bold.ttf</string>
+		<string>arial-rounded-mt.ttf</string>
+		<string>arial-rounded-mt-light.ttf</string>
 	</array>
 </dict>
 </plist>

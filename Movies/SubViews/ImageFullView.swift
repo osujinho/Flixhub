@@ -1,32 +1,26 @@
 //
-//  DetailOptionsView.swift
+//  ImageFullView.swift
 //  Flixhub
 //
-//  Created by Michael Osuji on 3/21/22.
+//  Created by Michael Osuji on 3/27/22.
 //
 
 import SwiftUI
 
-struct MovieGallery: View {
+struct ImageFullView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    let images: [MovieImage]
+    let path: String?
     let defaultImage: DefaultImage
     
     var body: some View {
         ZStack {
             Color("background").edgesIgnoringSafeArea([.all])
             
-            TabView{
-                ForEach(images, id: \.self){ image in
-                    UrlImageView(path: image.path, defaultImage: defaultImage)
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity)
-                        .cornerRadius(5)
-                        .padding(.horizontal, 10)
-                    
-                }
-            }
-            .tabViewStyle(PageTabViewStyle())
+            UrlImageView(path: path, defaultImage: defaultImage)
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
+                .cornerRadius(5)
+                .padding(.horizontal, 10)
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -37,7 +31,7 @@ struct MovieGallery: View {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.black)
+                        .foregroundColor(.black) /// Fix after implementing Both dark and light mode
                 })
             }
         }

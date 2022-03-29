@@ -99,7 +99,7 @@ struct SearchView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     HStack(alignment: .lastTextBaseline, spacing: 10) {
                         Text("Search Movies")
-                            .movieFont(style: .appTitle)
+                            .movieFont(style: .bold, size: navTitleSize)
                             .foregroundColor(.primary)
                     }
                 }

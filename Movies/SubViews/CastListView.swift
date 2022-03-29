@@ -25,7 +25,7 @@ struct CastListView: View {
         VStack(spacing: 0) {
             HStack(alignment: .bottom) {
                 Text("Cast")
-                    .movieFont(style: .stackHeader)
+                    .movieFont(style: .bold, size: stackHeaderSize)
                     .padding(.horizontal, 10)
                     .foregroundColor(.primary)
                 
