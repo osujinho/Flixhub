@@ -27,7 +27,7 @@ struct SearchView: View {
                           }
                         }
                     
-                    CustomPickerView(selection: $viewModel.searchMediaType)
+                    CustomPickerView(selection: $viewModel.searchMediaType, backgroundColor: "background")
                     
                     List {
                         if !viewModel.searchText.isEmpty {
@@ -36,10 +36,10 @@ struct SearchView: View {
                                 ForEach(viewModel.movies, id: \.0.id) { movie in
                                     NavigationLink(destination:
                                                     MovieDetailView(
-                                                        isUpcoming: false,
                                                         movieID: String( movie.0.id ),
                                                         movieTitle: movie.1.title,
-                                                        imagePath: movie.1.poster
+                                                        imagePath: movie.1.poster,
+                                                        fromSearch: true
                                                     )
                                     ) {
                                         ResultRowView(
@@ -56,7 +56,8 @@ struct SearchView: View {
                                                     ShowDetailView(
                                                         showId: String( show.0.id ),
                                                         showName: show.1.name,
-                                                        imagePath: show.1.poster
+                                                        imagePath: show.1.poster,
+                                                        fromSearch: true
                                                     )
                                                    
                                     ) {
@@ -88,6 +89,7 @@ struct SearchView: View {
                             } /// End of switch
                         }
                     } /// End of list
+                    .listStyle(PlainListStyle())
                     .overlay{
                         if viewModel.isSearching {
                             ProgressView()

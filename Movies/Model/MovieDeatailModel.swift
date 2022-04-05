@@ -14,10 +14,19 @@ struct TMDBDetail: Hashable, Decodable {
     let releaseDate: String?
     let tmdbID: Int
     let title: String
+    let originalTitle: String?
+    let originalLanguage: String?
     let genres: [Genre]
     let plot: String?
     let runtime: Int?
     let imdbID: String
+    let status: String?
+    let rating: Double?
+    let budget: Int?
+    let revenue: Int?
+    let countries: [Name]
+    let companies: [Name]
+    let spokenLanguages: [SpokenLanguage]
     let credits: Credit
     let videos: Video
     let images: MovieImages
@@ -28,8 +37,14 @@ struct TMDBDetail: Hashable, Decodable {
         case releaseDate = "release_date"
         case tmdbID = "id"
         case plot = "overview"
+        case rating = "vote_average"
         case imdbID = "imdb_id"
-        case genres, title, runtime, credits, videos, images
+        case originalTitle = "original_title"
+        case countries = "production_countries"
+        case companies = "production_companies"
+        case originalLanguage = "original_language"
+        case spokenLanguages = "spoken_languages"
+        case genres, title, runtime, credits, videos, images, status, budget, revenue
     }
 }
 
@@ -73,16 +88,25 @@ struct VideoResults: Hashable, Decodable {
     let key: String
     let site: String
     let type: String
+    let name: String?
 }
 
 /// For getting OMDB Api
 struct OMDBDetail: Hashable, Decodable {
     let rated: String
     let rating: String
+    let awards: String?
+    let boxOffice: String?
+    let dvd: String?
+    let ratings: [Ratings]
     
     enum CodingKeys: String, CodingKey {
         case rated = "Rated"
         case rating = "imdbRating"
+        case awards = "Awards"
+        case boxOffice = "BoxOffice"
+        case dvd = "DVD"
+        case ratings = "Ratings"
     }
 }
 
@@ -98,5 +122,39 @@ struct MovieImage: Hashable, Decodable {
     enum CodingKeys: String, CodingKey {
         case rating = "vote_average"
         case path = "file_path"
+    }
+}
+
+struct Name: Hashable, Decodable {
+    let name: String?
+}
+
+struct Ratings: Hashable, Decodable {
+    let source: String
+    let value: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case source = "Source"
+        case value = "Value"
+    }
+}
+
+struct RecommendAndSimilar: Hashable, Decodable {
+    let pages: Int
+    let results: [TMDBResult]
+    
+    private enum CodingKeys: String, CodingKey {
+        case pages = "total_pages"
+        case results
+    }
+}
+
+struct SpokenLanguage: Hashable, Decodable {
+    let name: String?
+    let code: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case name = "english_name"
+        case code = "iso_639_1"
     }
 }

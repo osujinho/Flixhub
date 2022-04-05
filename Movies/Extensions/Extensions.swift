@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-typealias Func = () -> Void
-
 // An extension to create the URL
 extension URL {
     

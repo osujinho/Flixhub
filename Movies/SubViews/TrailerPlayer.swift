@@ -10,7 +10,6 @@ import YouTubePlayerKit
 
 struct TrailerPlayer: View {
     @Binding var playTrailer: Bool
-    @Binding var synopsisExpanded: Bool
     let videoID: String
     let backdrop: String?
     
@@ -30,7 +29,7 @@ struct TrailerPlayer: View {
                     .font(.system(size: 35, weight: .bold))
                     .foregroundColor(.red)
                 } /// End of ZStack
-                .frame(height: trailerHeight)
+                .frame(height: screen.height * 0.35)
             } else {
                 VStack {
                     YouTubePlayerView(

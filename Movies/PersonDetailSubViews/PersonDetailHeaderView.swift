@@ -27,7 +27,7 @@ struct PersonDetailHeaderView: View {
                 Text("•")
                     .font(.system(size: 30))
                 Text(getGender(genderNumber: detail.gender))
-            }.movieFont(style: .regular, size: personDetailHeaderSize)
+            }
         }
         .movieFont(style: .regular, size: personDetailHeaderSize)
     }

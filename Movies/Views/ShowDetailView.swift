@@ -14,12 +14,14 @@ struct ShowDetailView: View {
     let showId: String
     let showName: String
     let imagePath: String?
+    let fromSearch: Bool
     
-    init(showId: String, showName: String, imagePath: String?) {
+    init(showId: String, showName: String, imagePath: String?, fromSearch: Bool = false) {
         self._viewModel = StateObject(wrappedValue: ShowDetailViewModel())
         self.showId = showId
         self.showName = showName
         self.imagePath = imagePath
+        self.fromSearch = fromSearch
     }
     
     var body: some View {
@@ -32,47 +34,69 @@ struct ShowDetailView: View {
                         heading: "Loading details on \(showName)",
                         poster: imagePath
                     )
-                        .transition(.scale)
+                    .transition(.scale)
                 } else {
-                    VStack(spacing: 0) {
-                        TrailerPlayer(
-                            playTrailer: $viewModel.playTrailer,
-                            synopsisExpanded: $viewModel.synopsisExpanded,
-                            videoID: viewModel.youtubeKey,
-                            backdrop: viewModel.showDetail.backdrop
-                        )
-                        .scaledToFit()
-                        
-                        VStack {
-                            ShowInfo(
-                                playTrailer: $viewModel.playTrailer,
-                                synopsisExpanded: $viewModel.synopsisExpanded,
-                                showDetail: viewModel.showDetail,
-                                gridCollections: viewModel.gridCollections
-                            )
-                            
-                            SynopsisOrBiographyView(
-                                isExpanded: $viewModel.synopsisExpanded,
-                                synopsis: viewModel.showDetail.synopsis,
-                                label: "Synopsis"
-                            )
-                            
-                            CastListView(
-                                synopsisExpanded: $viewModel.synopsisExpanded,
-                                creditsOption: $viewModel.creditsOption,
-                                mainCrew: viewModel.mainCrew,
-                                casts: viewModel.showDetail.credits.cast
-                            )
+                    GeometryReader { proxy in
+                        ScrollView {
+                            LazyVStack(alignment: .leading, pinnedViews: .sectionHeaders) {
+                                // Top View
+                                ShowDetailHeaderView(
+                                    detail: viewModel.showDetail,
+                                    topPaddingSize: proxy.safeAreaInsets.top
+                                )
+                                
+                                // Sticky header
+                                Section(header:
+                                            CustomPickerView(
+                                                selection: $viewModel.showDetailOption,
+                                                backgroundColor: "tabColor"
+                                            )
+                                ) {
+                                    switch viewModel.showDetailOption {
+                                    case .about:
+                                        ShowAboutView(
+                                            detail: viewModel.showDetail,
+                                            rated: viewModel.rated,
+                                            runtime: viewModel.runtimes,
+                                            spokenLanguage: viewModel.spokenLanguages,
+                                            inProduction: viewModel.inProduction
+                                        )
+                                    case .casts:
+                                        CastView(casts: viewModel.showDetail.credits.cast)
+                                    case .crew:
+                                        FeaturedCrewView(crews: viewModel.mainCrew)
+                                    case .media:
+                                        MediaScrollView(
+                                            posters: viewModel.showDetail.images.posters,
+                                            videos: viewModel.videos,
+                                            backdrops: viewModel.showDetail.images.backdrops)
+                                    case .seasons:
+                                        ShowSeasonsView(seasons: viewModel.showDetail.seasons)
+                                    case .recommended:
+                                        RecommendAndSimilarShowView(
+                                            viewModel: MoreShowsViewModel(),
+                                            showType: .recommendShow,
+                                            totalPages: viewModel.recommendShows.total_pages,
+                                            shows: viewModel.recommendShows.results
+                                        )
+                                    case .similar:
+                                        RecommendAndSimilarShowView(
+                                            viewModel: MoreShowsViewModel(),
+                                            showType: .similarShow,
+                                            totalPages: viewModel.similarShows.total_pages,
+                                            shows: viewModel.similarShows.results
+                                        )
+                                    }
+                                }
+                                .frame(alignment: .leading)
+                                .padding(.horizontal, 10)
+                            }
                         }
-                        .frame(maxWidth: UIScreen.main.bounds.width)
-                        
-                        Spacer()
-                    }
-                    .transition(.slide)
+                        .transition(.slide)
+                    } /// End of geometry reader
                 } /// End of else block
             } /// End og group
         } /// End of ZStack
-        .edgesIgnoringSafeArea(.top)
         .background(Color("background"))
         .task {
             await viewModel.getShowDetail(id: showId)
@@ -80,14 +104,20 @@ struct ShowDetailView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }, label: {
+                NavigationLink(destination:
+                        Group {
+                            if fromSearch {
+                                SearchView()
+                            } else {
+                                BrowseView(viewModel: BrowseViewModel())
+                            }
+                        }
+                ) {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.black) /// Fix after implementing Both dark and light mode
-                })
+                        .foregroundColor(.black)
+                }
             }
         }
         .alert(isPresented: $viewModel.hasError) {
@@ -104,3 +134,4 @@ struct ShowDetailView: View {
         }
     }
 }
+

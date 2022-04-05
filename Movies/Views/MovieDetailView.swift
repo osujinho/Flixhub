@@ -11,17 +11,17 @@ struct MovieDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject private var viewModel: MovieDetailViewModel
     
-    let isUpcoming: Bool
     let movieID: String
     let movieTitle: String
     let imagePath: String?
+    let fromSearch: Bool
     
-    init(isUpcoming: Bool = false, movieID: String, movieTitle: String, imagePath: String?) {
+    init(movieID: String, movieTitle: String, imagePath: String?, fromSearch: Bool = false) {
         self._viewModel = StateObject(wrappedValue: MovieDetailViewModel())
-        self.isUpcoming = isUpcoming
         self.movieID = movieID
         self.movieTitle = movieTitle
         self.imagePath = imagePath
+        self.fromSearch = fromSearch
     }
     
     var body: some View {
@@ -36,52 +36,63 @@ struct MovieDetailView: View {
                     )
                     .transition(.scale)
                 } else {
-                    VStack(spacing: 0) {
-                        TrailerPlayer(
-                            playTrailer: $viewModel.playTrailer,
-                            synopsisExpanded: $viewModel.synopsisExpanded,
-                            videoID: viewModel.youtubeKey,
-                            backdrop: viewModel.tmdbDetail.backdrop
-                        )
-                        .scaledToFit()
-                        .if(viewModel.playTrailer) { view in
-                            view
-                                .padding(.top, -50)
-                                .padding(.bottom, 25)
+                    GeometryReader{ proxy in
+                        ScrollView {
+                            LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
+                                // top View
+                                MovieDetailTopView(
+                                    playTrailer: $viewModel.playTrailer,
+                                    videoID: viewModel.youtubeKey,
+                                    movieDetail: viewModel.tmdbDetail,
+                                    rated: viewModel.omdbDetail.rated
+                                )
+                                .padding(.top, -proxy.safeAreaInsets.top)
+                                
+                                // header
+                                Section(header:
+                                            CustomPickerView(selection: $viewModel.mediaOptions, backgroundColor: "tabColor")
+                                ) {
+                                    switch viewModel.mediaOptions {
+                                    case .about:
+                                        MovieAboutView(
+                                            tmdbDetail: viewModel.tmdbDetail,
+                                            ombdDetail: viewModel.omdbDetail,
+                                            spokenLanguages: viewModel.spokenLanguages)
+                                    case .casts:
+                                        CastView(casts: viewModel.tmdbDetail.credits.cast)
+                                            .multilineTextAlignment(.leading)
+                                    case .crew:
+                                        FeaturedCrewView(crews: viewModel.featuredCrews)
+                                    case .media:
+                                        MediaScrollView(
+                                            posters: viewModel.tmdbDetail.images.posters,
+                                            videos: viewModel.videos,
+                                            backdrops: viewModel.tmdbDetail.images.backdrops)
+                                    case .recommended:
+                                        RecommendAndSimilarView(
+                                            viewModel: GetMoreViewModel(),
+                                            movieType: .recommendMovies,
+                                            totalPages: viewModel.recommendedMovies.pages,
+                                            results: viewModel.recommendedMovies.results
+                                        )
+                                    case .similar:
+                                        RecommendAndSimilarView(
+                                            viewModel: GetMoreViewModel(),
+                                            movieType: .similarMovie,
+                                            totalPages: viewModel.similarMovies.pages,
+                                            results: viewModel.similarMovies.results
+                                        )
+                                    }
+                                }
+                                .frame(alignment: .leading)
+                                .padding(.horizontal, 10)
+                            }
                         }
-                        
-                        VStack {
-                            
-                            MovieTitleAndGenreView(
-                                playTrailer: $viewModel.playTrailer,
-                                synopsisExpanded: $viewModel.synopsisExpanded,
-                                movieDetail: viewModel.tmdbDetail,
-                                ratingAndRated: viewModel.omdbDetail,
-                                isUpcoming: isUpcoming
-                            )
-                            
-                            SynopsisOrBiographyView(
-                                isExpanded: $viewModel.synopsisExpanded,
-                                synopsis: viewModel.tmdbDetail.plot,
-                                label: "Synopsis"
-                            )
-                            
-                            CastListView(
-                                synopsisExpanded: $viewModel.synopsisExpanded,
-                                creditsOption: $viewModel.creditsOption,
-                                mainCrew: viewModel.mainCrew,
-                                casts: viewModel.tmdbDetail.credits.cast
-                            )
-                        }
-                        .frame(maxWidth: screen.width)
-                        
-                        Spacer()
                     }
                     .transition(.slide)
                 }
             }
         }
-        .edgesIgnoringSafeArea(.top)
         .background(Color("background"))
         .task {
             await viewModel.getMovieDetail(id: movieID)
@@ -89,14 +100,20 @@ struct MovieDetailView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }, label: {
+                NavigationLink(destination:
+                        Group {
+                            if fromSearch {
+                                SearchView()
+                            } else {
+                                BrowseView(viewModel: BrowseViewModel())
+                            }
+                        }
+                ) {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.black)
-                })
+                }
             }
         }
         .alert(isPresented: $viewModel.hasError) {

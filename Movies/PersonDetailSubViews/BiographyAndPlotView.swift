@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BiographyView: View {
+struct BiographyAndPlotView: View {
     @State private var isExpanded = false
     let biography: String?
     let label: String
@@ -15,8 +15,10 @@ struct BiographyView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(label.capitalized)
-                .movieFont(style: .bold, size: stackHeaderSize)
+                .movieFont(style: .bold, size: labelSize)
+                .foregroundColor(.secondary)
                 .padding(.bottom, 5)
+            
             if let biography = biography {
                 VStack(alignment: .leading) {
                     Text(biography)

@@ -13,19 +13,19 @@ struct PersonAboutView: View {
     var body: some View {
         VStack(alignment: .leading) {
             // For Birth year
-            LabelAndInfoView(label: "born", info: getDate(date: detail.birthday ,forYear: false))
+            DetailLabelAndInfoView(label: "born", info: getDate(date: detail.birthday ,forYear: false))
             
             // For place of birth
-            LabelAndInfoView(label: "from", info: detail.birthPlace ?? "N/A")
+            DetailLabelAndInfoView(label: "from", info: detail.birthPlace ?? "N/A")
             
             // For Deathday if available
             let deathdate = getDeathdate(date: detail.deathday)
             if deathdate.lowercased() != "alive" {
-                LabelAndInfoView(label: "died", info: deathdate)
+                DetailLabelAndInfoView(label: "died", info: deathdate)
             }
             
             // Biography view
-            BiographyView(
+            BiographyAndPlotView(
                 biography: detail.biography,
                 label: "biography")
             
@@ -41,14 +41,15 @@ struct PersonImageScrollView: View {
     let images: [MovieImage]
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text("Images")
-                    .font(.system(size: 13, weight: .bold))
+                    .movieFont(style: .bold, size: labelSize)
+                    .foregroundColor(.secondary)
                 Spacer()
                 
                 NavigationLink(destination:
-                                MovieGallery(
+                                ImageGallery(
                                     images: images,
                                     defaultImage: .profile)
                 ){

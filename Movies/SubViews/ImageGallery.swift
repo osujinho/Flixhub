@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MovieGallery: View {
+struct ImageGallery: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let images: [MovieImage]
     let defaultImage: DefaultImage

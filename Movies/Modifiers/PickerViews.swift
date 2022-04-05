@@ -9,71 +9,74 @@ import SwiftUI
 
 typealias Pickable = CaseIterable & Identifiable & Hashable & CustomStringConvertible
 
-struct EnumPickerView<Enum: Pickable, Label : View>: View {
-    private let label: Label
-    @Binding private var selection: Enum
-    
-    init(selection: Binding<Enum>, label: Label) {
-        self._selection = selection
-        self.label = label
-    }
-    
-    var body: some View {
-        HStack {
-            Picker(selection: $selection, label: label) {
-                ForEach(Array(Enum.allCases)) { value in
-                    HStack {
-                        Text(value.description).tag(value)
-                    }
-                }
-            }.pickerStyle(SegmentedPickerStyle())
-        }
-        .padding(.horizontal, 10)
-    }
-}
-
-extension EnumPickerView where Label == Text {
-    init(_ titleKey: LocalizedStringKey, selection: Binding<Enum>) {
-        label = Text(titleKey)
-        _selection = selection
-    }
-
-    init<S: StringProtocol>(_ title: S, selection: Binding<Enum>) {
-        label = Text(title)
-        _selection = selection
-        
-        UISegmentedControl.appearance().selectedSegmentTintColor = .systemGreen
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.systemBlue, .font: UIFont(name: "Sony Sketch EF", size: 13) as Any], for: .normal)
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white, .font: UIFont(name: "Sony Sketch EF Bold", size: 15) as Any], for: .selected)
-    }
-}
-
 struct CustomPickerView<Enum: Pickable>: View {
     @Binding private var selection: Enum
+    //@Binding private var showGridToggle: Bool
+    let backgroundColor: String
     
-    init(selection: Binding<Enum>) {
+    init(selection: Binding<Enum>, backgroundColor: String) {
         self._selection = selection
+        self.backgroundColor = backgroundColor
+        //self._showGridToggle = showGridToggle
+        
+        UITableViewCell.appearance().backgroundColor = UIColor(named: backgroundColor)
+        UITableView.appearance().backgroundColor = UIColor(named: backgroundColor)
     }
     
     var body: some View {
-        HStack(alignment: .bottom, spacing: 20) {
-            ForEach(Array(Enum.allCases)) { value in
-                let width = value.description.widthOfString(usingFont: UIFont.systemFont(ofSize: 12))
-                Text(value.description).tag(value)
-                    .font(.system(size: 12))
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(alignment: .bottom, spacing: 20) {
+                ForEach(Array(Enum.allCases)) { value in
+                    let width = value.description.widthOfString(usingFont: UIFont.systemFont(ofSize: 12))
+                    Text(value.description).tag(value)
+                        .font(.system(size: 12))
                     
-                    .padding(.bottom, 10)
-                    .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .gray)
-                    .overlay(
-                        Rectangle()
-                            .frame(width: 0.9 * width, height: 3)
-                            .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .clear),
-                        alignment: .bottom
-                    )
-                    .onTapGesture { self.selection = value }
+                        .padding(.bottom, 10)
+                        .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .gray)
+                        .overlay(
+                            Rectangle()
+                                .frame(width: 0.9 * width, height: 3)
+                                .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .clear),
+                            alignment: .bottom
+                        )
+                        .onTapGesture { self.selection = value }
+                }
             }
+            .padding(.leading, 10)
+//            .if(showGridToggle){ view in
+//                view
+//                    .padding(.bottom, 30)
+//                    .overlay(
+//                        GridViewToggle(
+//                    )
+//            }
+            
         }
-        .background(Color("background"))
-        .padding(.leading, 10)
+        .padding(.vertical, 10)
+        .frame(maxWidth: .infinity)
+        .background(Color(backgroundColor))
     }
 }
+
+struct GridViewToggle: View {
+    @Binding var showGridView: Bool
+    
+    var body: some View {
+        HStack{
+            Spacer()
+            
+            Button(action: {
+                withAnimation {
+                    showGridView.toggle()
+                }
+            }, label: {
+                Image(systemName: showGridView ? "list.bullet.circle.fill" : "circle.grid.3x3.circle.fill")
+                    .renderingMode(.template)
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.primary) /// Fix after implementing Both dark and light mode
+            })
+        }
+    }
+}
+
+// , showGridToggle: Binding<Bool>

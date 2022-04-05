@@ -13,7 +13,7 @@ struct UrlItem {
 }
 
 enum MovieType: CaseIterable {
-    case upcoming, nowPlaying, topRated, popular, movieDetail, omdb, search, personDetail, showDetail, similar, recommended
+    case upcoming, nowPlaying, topRated, popular, movieDetail, omdb, search, personDetail, showDetail, similarMovie, recommendMovies, showRatings, similarShow, recommendShow
 }
 
 class URLManager {
@@ -40,8 +40,11 @@ class URLManager {
         case .search: return baseURL.appending("search/multi")
         case .personDetail: return baseURL.appending("person/\(id)")
         case .showDetail: return baseURL.appending("tv/\(id)")
-        case .similar: return baseURL.appending("movie/\(id)/similar")
-        case .recommended: return baseURL.appending("movie/\(id)/recommendations")
+        case .similarMovie: return baseURL.appending("movie/\(id)/similar")
+        case .recommendMovies: return baseURL.appending("movie/\(id)/recommendations")
+        case .showRatings: return baseURL.appending("tv/\(id)/content_ratings")
+        case .similarShow: return baseURL.appending("tv/\(id)/similar")
+        case .recommendShow: return baseURL.appending("tv/\(id)/recommendations")
         }
     }
     
@@ -54,8 +57,9 @@ class URLManager {
         case .personDetail: return [tmdbKey, language, combinedCredits, getImages]
         case .search: return [tmdbKey, UrlItem(key: "query", value: value)]
         case .showDetail: return [tmdbKey, language, videoAndCredits, getImages]
-        case .recommended, .similar: return [tmdbKey, language, UrlItem(key: "page", value: value)]
-            
+        case .recommendMovies, .similarMovie: return [tmdbKey, language, UrlItem(key: "page", value: value)]
+        case .showRatings: return [tmdbKey, language]
+        case .similarShow, .recommendShow: return [tmdbKey, language, UrlItem(key: "page", value: value)]
         }
     }
     

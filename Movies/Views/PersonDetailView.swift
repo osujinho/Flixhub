@@ -37,11 +37,15 @@ struct PersonDetailView: View {
                     .transition(.scale)
             } else {
                 ScrollView {
-                    PersonDetailHeaderView(detail: viewModel.personDetail)
-                        .padding(.top, 80)
-                    
                     LazyVStack(alignment: .leading, pinnedViews: .sectionHeaders) {
-                        Section(header: CustomPickerView(selection: $viewModel.personDetailOption)) {
+                        VStack { PersonDetailHeaderView(detail: viewModel.personDetail) }
+                            .frame(maxWidth: .infinity)
+                            .background(Color("tabColor"))
+                        
+                        Section(header:
+                                    CustomPickerView(selection: $viewModel.personDetailOption, backgroundColor: "tabColor")
+                        ) {
+                            
                             switch viewModel.personDetailOption {
                             case .about:
                                 PersonAboutView(detail: viewModel.personDetail)
@@ -59,12 +63,12 @@ struct PersonDetailView: View {
                 }
             }
         }
-        .edgesIgnoringSafeArea(.top)
         .background(Color("background"))
         .task {
             await viewModel.getDetail(castId: personID)
         }
         .navigationBarBackButtonHidden(true)
+        .navigationViewStyle(.stack)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {

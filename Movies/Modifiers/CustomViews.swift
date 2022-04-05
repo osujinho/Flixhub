@@ -20,66 +20,57 @@ struct RoundedCornersShape: Shape {
     }
 }
 
-struct GridViewToggle: View {
-    @Binding var showGridView: Bool
+struct DetailLabelAndInfoView: View {
+    let label: String
+    let info: String
+    let widthPercent: Double = 0.5
+    
+    init(label: String, info: String) {
+        self.label = label
+        self.info = info
+    }
     
     var body: some View {
-        HStack{
-            Spacer()
-            
-            Button(action: {
-                withAnimation {
-                    showGridView.toggle()
-                }
-            }, label: {
-                Image(systemName: showGridView ? "list.bullet.circle.fill" : "circle.grid.3x3.circle.fill")
-                    .renderingMode(.template)
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.primary) /// Fix after implementing Both dark and light mode
-            })
+        let labelWidth = label.widthOfString(usingFont: UIFont.systemFont(ofSize: 16, weight: .bold))
+        let spacingSize = (screen.width * widthPercent) - labelWidth
+        
+        HStack(alignment: .top, spacing: spacingSize) {
+            Text(label.capitalized)
+                .movieFont(style: .bold, size: labelSize)
+                .foregroundColor(.secondary)
+            Text(info)
+                .movieFont(style: .regular, size: bodySize)
+                .multilineTextAlignment(.leading)
         }
     }
 }
 
-struct LabelAndInfoView: View {
+struct RowLabelAndInfoView: View {
     let label: String
     let info: String
     let forMedia: Bool
-    let spacingSize: CGFloat
+    let widthPercent: Double = 0.2
     
-    init(label: String, info: String, forMedia: Bool = false, spacingSize: CGFloat = 20) {
+    init(label: String, info: String, forMedia: Bool = false) {
         self.label = label
         self.info = info
         self.forMedia = forMedia
-        self.spacingSize = spacingSize
     }
     
     var body: some View {
+        let labelWidth = label.widthOfString(usingFont: UIFont.systemFont(ofSize: 16, weight: .bold))
+        let spacingSize = (screen.width * widthPercent) - labelWidth
+        
         HStack(alignment: .bottom, spacing: spacingSize) {
             Text(label.capitalized)
                 .movieFont(style: .bold, size: labelSize)
-            Text(info)
+            Text(info.capitalized)
                 .movieFont(style: .regular, size: bodySize)
                 .multilineTextAlignment(.leading)
                 .if(forMedia) { view in
                     view
                         .foregroundColor(info.lowercased() == "movies" ? .blue.opacity(0.8) : .yellow.opacity(0.8))
                 }
-        }
-    }
-}
-
-struct RatedAndRatingView: View {
-    let label: String
-    let info: String
-    let forRating: Bool
-    
-    var body: some View {
-        HStack(alignment: .bottom, spacing: 10) {
-            Text(label.capitalized)
-                .movieFont(style: .bold, size: labelSize)
-            Text(info)
-                .ratedAndRatingViewModifier(borderColor: forRating ? .red : .blue)
         }
     }
 }

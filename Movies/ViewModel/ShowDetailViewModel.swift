@@ -9,55 +9,78 @@ import SwiftUI
 
 @MainActor class ShowDetailViewModel: ObservableObject {
     @Published private(set) var errorMessage: String = ""
-    @Published private(set) var showDetail = ShowDetail(
-        name: "",
-        firstAirDate: nil,
-        lastAirDate: nil,
-        creators: [ShowCreator](),
-        genres: [Genre](),
-        backdrop: nil,
-        poster: nil,
-        episodes: nil,
-        seasons: nil,
-        synopsis: nil,
-        status: nil,
-        type: nil,
-        videos: Video(results: [VideoResults]()),
-        credits: Credit(cast: [Cast](), crew: [Crew]()),
-        images: MovieImages(
-            backdrops: [MovieImage](),
-            posters: [MovieImage]()
-        )
-    )
+    @Published private(set) var showDetail = ShowDetail(id: 0, name: "", originalName: "", firstAirDate: nil, lastAirDate: nil, inProduction: nil, runtime: nil, creators: [], genres: [], backdrop: nil, lastEpisode: nil, nextEpisode: nil, poster: nil, totalEpisodes: nil, totalSeasons: nil, networks: [], companies: [], countries: [], spokenLanguages: [], synopsis: nil, status: nil, type: nil, originalLanguage: nil, seasons: [], videos: Video(results: []), credits: Credit(cast: [], crew: []), images: MovieImages(backdrops: [], posters: []), rating: nil)
+    @Published private(set) var similarShows = RecommendAndSimilarShow(results: [], total_pages: 0)
+    @Published private(set) var recommendShows = RecommendAndSimilarShow(results: [], total_pages: 0)
+    @Published private(set) var showRatings = ShowRatings(results: [])
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true
     @Published var playTrailer: Bool = false
-    @Published var synopsisExpanded: Bool = false
-    @Published var creditsOption: CreditsOption = .casts
+    @Published var showDetailOption: ShowDetailOption = .about
     
-    var youtubeKey: String {
-        if let video = showDetail.videos.results.first(where: {
-            $0.site.lowercased() == "youtube" && $0.type.lowercased() == "trailer"
-        }) {
-            return video.key
+    var videos: [(name: String?, key: String)] {
+        var youtubeVideos: [(name: String?, key: String)] = []
+        let videos = showDetail.videos.results.filter { $0.site.lowercased() == "youtube" }
+        for video in videos {
+            youtubeVideos.append((video.name, video.key))
         }
-        return ""
+        return youtubeVideos
     }
     
-    var mainCrew: [Crew] {
+    var mainCrew: [String : (id: Int, profile: String?, job: String)] {
+        var crews: [String : (id: Int, profile: String?, job: String)] = [:]
         let desiredCrew: Set = ["producer", "screenplay", "story", "director"]
-        return showDetail.credits.crew.filter{ desiredCrew.contains( $0.job.lowercased() ) }
+        
+        let selectedCrews =  showDetail.credits.crew.filter{ desiredCrew.contains( $0.job.lowercased() ) }
+        
+        for creator in showDetail.creators {
+            crews.updateValue((creator.id, creator.profile, "Creator"), forKey: creator.name)
+        }
+        
+        for crew in selectedCrews {
+            if crews[crew.name] != nil {
+                if let value = crews[crew.name] {
+                    let job = value.job.appending(", \(crew.job.capitalized)")
+                    crews.updateValue((value.id, value.profile, job), forKey: crew.name)
+                }
+            } else {
+                crews[crew.name] = (crew.id, crew.profile_path, crew.job)
+            }
+        }
+        return crews
     }
     
-    var gridCollections: [GridCollection] {
-        [
-            GridCollection(label: "Type", info: showDetail.type?.capitalized ?? "N/A"),
-            GridCollection(label: "Status", info: showDetail.status?.capitalized ?? "N/A"),
-            GridCollection(label: "From", info: getDate(date: showDetail.firstAirDate ,forYear: false)),
-            GridCollection(label: "To", info: getDate(date: showDetail.lastAirDate ,forYear: false)),
-            GridCollection(label: "Seasons", info: unwrapNumbersToString(showDetail.seasons)),
-            GridCollection(label: "Episodes", info: unwrapNumbersToString(showDetail.episodes))
-        ]
+    var runtimes: String {
+        guard let showRuntimes = showDetail.runtime else { return "N/A" }
+        
+        return showRuntimes.map { String($0).appending(" mins") }.joined(separator: ", ")
+    }
+    
+    var spokenLanguages: String {
+        var languages: [String] = []
+        let container = showDetail.spokenLanguages
+        
+        for language in container {
+            if let name = language.name {
+                languages.append(name)
+            } else {
+                languages.append(getLanguage(code: language.code))
+            }
+        }
+        return languages.joined(separator: ", ")
+    }
+    
+    var inProduction: String {
+        if let production = showDetail.inProduction {
+            return production ? "Yes" : "No"
+        }
+        return "N/A"
+    }
+    
+    var rated: String {
+        let usRating = showRatings.results.filter{ $0.countryCode.lowercased() == "us" }
+        
+        return usRating.compactMap{ $0.rating }.joined(separator: ", ")
     }
     
     private let networkManager = NetworkManager.networkManager
@@ -68,9 +91,15 @@ import SwiftUI
         self.isLoading = true
         
         let url = urlManager.buildURL(movieType: .showDetail, id: id)
+        let ratingURL = urlManager.buildURL(movieType: .showRatings, id: id)
+        let recommendURL = urlManager.buildURL(movieType: .recommendShow, id: id, value: "1")
+        let similarURL = urlManager.buildURL(movieType: .similarShow, id: id, value: "1")
         
         do {
             showDetail = try await networkManager.makeCall(url: url)
+            similarShows = try await networkManager.makeCall(url: similarURL)
+            showRatings = try await networkManager.makeCall(url: ratingURL)
+            recommendShows = try await networkManager.makeCall(url: recommendURL)
             
             /// Slow the switching of screen
             DispatchQueue.main.asyncAfter(deadline: .now()) {

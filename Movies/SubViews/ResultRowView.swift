@@ -9,15 +9,16 @@ import SwiftUI
 
 struct ResultRowView: View {
     let poster: String?
-    let mediaType: SearchMediaType
+    let resultType: SearchMediaType
     let title: String
     let name: String
     let date: String?
     let knownFor: String?
+    let posterWidth: Double = 110
     
     init(poster: String?, mediaType: SearchMediaType, title: String = "", name: String = "", date: String? = nil, knownFor: String? = nil) {
         self.poster = poster
-        self.mediaType = mediaType
+        self.resultType = mediaType
         self.title = title
         self.name = name
         self.date = date
@@ -27,23 +28,24 @@ struct ResultRowView: View {
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
             UrlImageView(path: poster, defaultImage: .poster)
-                .frame(width: screen.width * 0.25)
+                .frame(width: CGFloat(posterWidth), height: CGFloat(posterWidth * 1.5))
                 .cornerRadius(10)
             
             VStack(alignment: .leading, spacing: 10) {
                 Text(title.uppercased())
                     .movieFont(style: .bold, size: listRowTitleSize)
-                    .multilineTextAlignment(.leading)
                 
                 // For Showingg the date or department
-                switch mediaType {
-                case .movie: LabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
-                case .show: LabelAndInfoView(label: "aired", info: getDate(date: date,forYear: false))
-                case .person: LabelAndInfoView(label: "known for", info: knownFor ?? "N/A")
+                switch resultType {
+                case .movie: RowLabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
+                case .show: RowLabelAndInfoView(label: "aired", info: getDate(date: date,forYear: false))
+                case .person: RowLabelAndInfoView(label: "known for", info: knownFor ?? "N/A")
                 }
                 
-                LabelAndInfoView(label: "media", info: mediaType.listRowLabel.uppercased())
+                RowLabelAndInfoView(label: "media", info: resultType.listRowLabel.uppercased())
             }
+            .multilineTextAlignment(.leading)
+            Spacer()
         }
     }
 }

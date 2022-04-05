@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 @MainActor class GetMoreViewModel: ObservableObject {
     @Published var movies: [TMDBResult] = []
@@ -64,6 +63,9 @@ import Combine
                 case .topRated:
                     let topRated: TopRated = try await networkManager.makeCall(url: url)
                     movies.append(contentsOf: topRated.results)
+                case .recommendMovies, .similarMovie:
+                    let recommendAndSimilar: RecommendAndSimilar = try await networkManager.makeCall(url: url)
+                    movies.append(contentsOf: recommendAndSimilar.results)
                     
                 default:
                     self.isLoading = false

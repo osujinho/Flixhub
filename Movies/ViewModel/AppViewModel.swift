@@ -87,6 +87,37 @@ func getGender(genderNumber: Int?) -> String {
     }
 }
 
+func getLanguage(code: String?) -> String {
+    guard let languageCode = code else { return "N/A"}
+    
+    let usLocale = Locale(identifier: "en-US")
+    if let languageName = usLocale.localizedString(forLanguageCode: languageCode) {
+        return languageName
+    }
+    return "N/A"
+}
+
+func getCountry(countryCode: String) -> String {
+    let usLocale = Locale(identifier: "en-US")
+    if let countryName = usLocale.localizedString(forRegionCode: countryCode) {
+        return countryName
+    }
+    return "N/A"
+}
+
+func getMoney(amount: Int?) -> String {
+    guard let amount = amount else { return "N/A" }
+    if amount <= 0 { return "N/A" }
+    
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .currency
+    formatter.maximumFractionDigits = 0
+    if let stringAmount = formatter.string(from: NSNumber(value: amount)) {
+        return stringAmount
+    }
+    return "N/A"
+}
+
 func tmdbRating(rating: Double?) -> String {
     guard let rating = rating else { return "NR" }
     

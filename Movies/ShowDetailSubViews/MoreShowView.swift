@@ -1,28 +1,28 @@
 //
-//  GetMoreView.swift
-//  Movies
+//  MoreShowsView.swift
+//  Flixhub
 //
-//  Created by Michael Osuji on 3/18/22.
+//  Created by Michael Osuji on 4/4/22.
 //
 
 import SwiftUI
 
-struct GetMoreView: View {
+struct MoreShowsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @StateObject private var viewModel: GetMoreViewModel
+    @StateObject private var viewModel: MoreShowsViewModel
     
     let header: String
-    let movieType: MovieType
-    let movies: [TMDBResult]
+    let showType: MovieType
+    let shows: [ShowResult]
     let totalPages: Int
     
     let columns = [GridItem(.adaptive(minimum: 110, maximum: 130))]
     
-    init(header: String, movieType: MovieType, movies: [TMDBResult], totalPages: Int) {
-        self._viewModel = StateObject(wrappedValue: GetMoreViewModel())
+    init(header: String, showType: MovieType, shows: [ShowResult], totalPages: Int) {
+        self._viewModel = StateObject(wrappedValue: MoreShowsViewModel())
         self.header = header
-        self.movieType = movieType
-        self.movies = movies
+        self.showType = showType
+        self.shows = shows
         self.totalPages = totalPages
         
         UITableViewCell.appearance().backgroundColor = UIColor(named: "background")
@@ -38,27 +38,26 @@ struct GetMoreView: View {
                     if viewModel.presentGridView {
                         ScrollView {
                             LazyVGrid(columns: columns, alignment: .center, spacing: 5) {
-                                ForEach(viewModel.movies, id: \.self){ movie in
+                                ForEach(viewModel.shows, id: \.self) { show in
                                     NavigationLink(destination:
-                                                    MovieDetailView(
-                                                        movieID: String( movie.tmdbID ),
-                                                        movieTitle: movie.title,
-                                                        imagePath: movie.poster
+                                                    ShowDetailView(
+                                                        showId: String( show.id ),
+                                                        showName: show.name,
+                                                        imagePath: show.poster
                                                     )
                                     ) {
                                         PosterView(
-                                            imagePath: movie.poster,
-                                            title: movie.title,
-                                            rating: movie.tmdbRating
+                                            imagePath: show.poster,
+                                            title: show.name,
+                                            rating: show.rating
                                         )
                                     }
                                     .task {
-                                        viewModel.currentMovie = movie
-                                        await viewModel.loadMoreMovieIfNeeded(currentMovie: movie)
+                                        viewModel.currentShow = show
+                                        await viewModel.loadMoreShowIfNeeded(currentShow: show)
                                     }
                                 }
                             }
-                            
                         }
                         .simultaneousGesture(
                             DragGesture( minimumDistance: viewModel.isLoading ? 0 : .infinity ),
@@ -68,19 +67,19 @@ struct GetMoreView: View {
                         .padding(.horizontal, 10)
                     } else {
                         List{
-                            ForEach(viewModel.movies, id: \.self){ movie in
+                            ForEach(viewModel.shows, id: \.self) { show in
                                 NavigationLink(destination:
-                                                MovieDetailView(
-                                                    movieID: String( movie.tmdbID ),
-                                                    movieTitle: movie.title,
-                                                    imagePath: movie.poster
+                                                ShowDetailView(
+                                                    showId: String( show.id ),
+                                                    showName: show.name,
+                                                    imagePath: show.poster
                                                 )
                                 ) {
-                                    GetMoreRowView(movie: movie)
+                                    MoreShowRowView(show: show)
                                 }
                                 .task {
-                                    viewModel.currentMovie = movie
-                                    await viewModel.loadMoreMovieIfNeeded(currentMovie: movie)
+                                    viewModel.currentShow = show
+                                    await viewModel.loadMoreShowIfNeeded(currentShow: show)
                                 }
                                 .listRowBackground(Color.clear)
                             }
@@ -88,7 +87,6 @@ struct GetMoreView: View {
                         .transition(.move(edge: .bottom))
                     }
                 }
-                
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(idealWidth: .infinity, maxWidth: .infinity, alignment: .center)
@@ -98,9 +96,9 @@ struct GetMoreView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear{
-            viewModel.movies = movies
+            viewModel.shows = shows
             viewModel.totalPages = totalPages
-            viewModel.movieType = movieType
+            viewModel.showType = showType
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -138,11 +136,10 @@ struct GetMoreView: View {
                 message: Text(viewModel.errorMessage),
                 dismissButton: .destructive(Text("Retry")) {
                     Task {
-                        await viewModel.loadMoreMovieIfNeeded(currentMovie: viewModel.currentMovie)
+                        await viewModel.loadMoreShowIfNeeded(currentShow: viewModel.currentShow)
                     }
                 }
             )
         }
     }
 }
-

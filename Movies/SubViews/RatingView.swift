@@ -73,3 +73,4 @@ struct RatingView: View {
         .clipShape(Circle())
     }
 }
+

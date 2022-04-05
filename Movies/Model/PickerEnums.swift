@@ -65,7 +65,7 @@ enum SearchMediaType: Pickable {
 }
 
 enum MediaDetailOptions: Pickable {
-    case about, casts, crew, recommended, similar
+    case about, casts, crew, media, recommended, similar
 
     var id: MediaDetailOptions { self }
 
@@ -74,6 +74,7 @@ enum MediaDetailOptions: Pickable {
         case .about: return "About"
         case .casts: return "Casts"
         case .crew: return "Featured Crews"
+        case .media: return "Media"
         case .recommended: return "Recommended"
         case .similar: return "Similar"
         }
@@ -92,6 +93,24 @@ enum PersonDetailOptions: Pickable {
         case .shows: return "Cast Shows"
         case .crewMovies: return "Crew Movies"
         case .crewShows: return "Crew Shows"
+        }
+    }
+}
+
+enum ShowDetailOption: Pickable {
+    case about, seasons, casts, crew, media, recommended, similar
+
+    var id: ShowDetailOption { self }
+
+    var description: String {
+        switch self {
+        case .about: return "About"
+        case .seasons: return "Seasons"
+        case .casts: return "Casts"
+        case .crew: return "Featured Crews"
+        case .media: return "Media"
+        case .recommended: return "Recommended"
+        case .similar: return "Similar"
         }
     }
 }

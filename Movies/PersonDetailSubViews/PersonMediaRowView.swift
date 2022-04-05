@@ -36,25 +36,24 @@ struct PersonMediaRowView: View {
                 }
                 
                 let type = mediaType.listLabel
-                LabelAndInfoView(label: "media", info: type, forMedia: true)
+                RowLabelAndInfoView(label: "media", info: type, forMedia: true)
                 
                 switch mediaType {
                 case .castMovies:
-                    LabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
-                    
-                    LabelAndInfoView(label: "character", info: charcterOrJob ?? "N/A")
+                    RowLabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
+                    RowLabelAndInfoView(label: "character", info: charcterOrJob ?? "N/A")
                 case .castShows:
-                    LabelAndInfoView(label: "First Aired", info: getDate(date: date, forYear: false))
+                    RowLabelAndInfoView(label: "First Aired", info: getDate(date: date, forYear: false))
                     
-                    LabelAndInfoView(label: "character", info: charcterOrJob ?? "N/A")
+                    RowLabelAndInfoView(label: "character", info: charcterOrJob ?? "N/A")
                 case .crewMovies:
-                    LabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
+                    RowLabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
                     
-                    LabelAndInfoView(label: "job", info: charcterOrJob ?? "N/A")
+                    RowLabelAndInfoView(label: "job", info: charcterOrJob ?? "N/A")
                 case .crewShows:
-                    LabelAndInfoView(label: "First Aired", info: getDate(date: date, forYear: false))
+                    RowLabelAndInfoView(label: "First Aired", info: getDate(date: date, forYear: false))
                    
-                    LabelAndInfoView(label: "job", info: charcterOrJob ?? "N/A")
+                    RowLabelAndInfoView(label: "job", info: charcterOrJob ?? "N/A")
                 } /// End of switch
                 
                 /// For genres
