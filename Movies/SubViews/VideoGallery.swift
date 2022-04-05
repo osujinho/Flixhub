@@ -10,7 +10,7 @@ import YouTubePlayerKit
 
 struct VideoGallery: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    let videos: [(name: String?, key: String)]
+    let videos: [VideoResults]
     
     var body: some View {
         ZStack {
@@ -18,7 +18,7 @@ struct VideoGallery: View {
             
             ScrollView {
                 LazyVStack(alignment: .leading) {
-                    ForEach(videos, id: \.key) { video in
+                    ForEach(videos.filter{ $0.site.lowercased() == "youtube" }, id: \.self) { video in
                         VStack(alignment: .leading) {
                             YouTubePlayerView(
                                 YouTubePlayer(

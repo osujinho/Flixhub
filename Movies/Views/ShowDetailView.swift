@@ -14,14 +14,12 @@ struct ShowDetailView: View {
     let showId: String
     let showName: String
     let imagePath: String?
-    let fromSearch: Bool
     
-    init(showId: String, showName: String, imagePath: String?, fromSearch: Bool = false) {
+    init(showId: String, showName: String, imagePath: String?) {
         self._viewModel = StateObject(wrappedValue: ShowDetailViewModel())
         self.showId = showId
         self.showName = showName
         self.imagePath = imagePath
-        self.fromSearch = fromSearch
     }
     
     var body: some View {
@@ -38,12 +36,13 @@ struct ShowDetailView: View {
                 } else {
                     GeometryReader { proxy in
                         ScrollView {
-                            LazyVStack(alignment: .leading, pinnedViews: .sectionHeaders) {
+                            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
                                 // Top View
                                 ShowDetailHeaderView(
                                     detail: viewModel.showDetail,
                                     topPaddingSize: proxy.safeAreaInsets.top
                                 )
+                                .background(Color("tabColor"))
                                 
                                 // Sticky header
                                 Section(header:
@@ -68,7 +67,7 @@ struct ShowDetailView: View {
                                     case .media:
                                         MediaScrollView(
                                             posters: viewModel.showDetail.images.posters,
-                                            videos: viewModel.videos,
+                                            videos: viewModel.showDetail.videos.results,
                                             backdrops: viewModel.showDetail.images.backdrops)
                                     case .seasons:
                                         ShowSeasonsView(seasons: viewModel.showDetail.seasons)
@@ -86,10 +85,10 @@ struct ShowDetailView: View {
                                             totalPages: viewModel.similarShows.total_pages,
                                             shows: viewModel.similarShows.results
                                         )
+                                        
                                     }
                                 }
                                 .frame(alignment: .leading)
-                                .padding(.horizontal, 10)
                             }
                         }
                         .transition(.slide)
@@ -104,20 +103,14 @@ struct ShowDetailView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                NavigationLink(destination:
-                        Group {
-                            if fromSearch {
-                                SearchView()
-                            } else {
-                                BrowseView(viewModel: BrowseViewModel())
-                            }
-                        }
-                ) {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.black)
-                }
+                        .foregroundColor(.black) /// Fix after implementing Both dark and light mode
+                })
             }
         }
         .alert(isPresented: $viewModel.hasError) {

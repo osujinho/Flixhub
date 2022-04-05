@@ -42,6 +42,7 @@ struct DetailLabelAndInfoView: View {
                 .movieFont(style: .regular, size: bodySize)
                 .multilineTextAlignment(.leading)
         }
+        .padding(.horizontal)
     }
 }
 
@@ -74,3 +75,5 @@ struct RowLabelAndInfoView: View {
         }
     }
 }
+
+

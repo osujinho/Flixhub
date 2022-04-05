@@ -14,14 +14,12 @@ struct MovieDetailView: View {
     let movieID: String
     let movieTitle: String
     let imagePath: String?
-    let fromSearch: Bool
     
-    init(movieID: String, movieTitle: String, imagePath: String?, fromSearch: Bool = false) {
+    init(movieID: String, movieTitle: String, imagePath: String?) {
         self._viewModel = StateObject(wrappedValue: MovieDetailViewModel())
         self.movieID = movieID
         self.movieTitle = movieTitle
         self.imagePath = imagePath
-        self.fromSearch = fromSearch
     }
     
     var body: some View {
@@ -66,7 +64,7 @@ struct MovieDetailView: View {
                                     case .media:
                                         MediaScrollView(
                                             posters: viewModel.tmdbDetail.images.posters,
-                                            videos: viewModel.videos,
+                                            videos: viewModel.tmdbDetail.videos.results,
                                             backdrops: viewModel.tmdbDetail.images.backdrops)
                                     case .recommended:
                                         RecommendAndSimilarView(
@@ -100,20 +98,14 @@ struct MovieDetailView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                NavigationLink(destination:
-                        Group {
-                            if fromSearch {
-                                SearchView()
-                            } else {
-                                BrowseView(viewModel: BrowseViewModel())
-                            }
-                        }
-                ) {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.black)
-                }
+                        .foregroundColor(.black) /// Fix after implementing Both dark and light mode
+                })
             }
         }
         .alert(isPresented: $viewModel.hasError) {

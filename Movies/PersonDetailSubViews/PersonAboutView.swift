@@ -32,7 +32,6 @@ struct PersonAboutView: View {
             // Image scrollView
             PersonImageScrollView(images: detail.images.profiles)
         } /// End of Mother VStack
-        .padding(.leading, 10)
         .padding(.top, 10)
     }
 }
@@ -71,6 +70,7 @@ struct PersonImageScrollView: View {
                         }
                     }
                 }
+                .padding(.leading)
             }
         }
     }

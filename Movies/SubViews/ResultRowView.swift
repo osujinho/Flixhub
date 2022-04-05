@@ -31,7 +31,7 @@ struct ResultRowView: View {
                 .frame(width: CGFloat(posterWidth), height: CGFloat(posterWidth * 1.5))
                 .cornerRadius(10)
             
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(title.uppercased())
                     .movieFont(style: .bold, size: listRowTitleSize)
                 

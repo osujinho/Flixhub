@@ -29,6 +29,8 @@ struct PersonDetailHeaderView: View {
                 Text(getGender(genderNumber: detail.gender))
             }
         }
+        .frame(maxWidth: .infinity)
         .movieFont(style: .regular, size: personDetailHeaderSize)
+        .padding(.top, 40)
     }
 }

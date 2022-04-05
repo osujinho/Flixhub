@@ -27,15 +27,6 @@ import SwiftUI  /// Need for animation
         return ""
     }
     
-    var videos: [(name: String?, key: String)] {
-        var youtubeVideos: [(name: String?, key: String)] = []
-        let videos = tmdbDetail.videos.results.filter { $0.site.lowercased() == "youtube" }
-        for video in videos {
-            youtubeVideos.append((video.name, video.key))
-        }
-        return youtubeVideos
-    }
-    
     var featuredCrews: [String : (id: Int, profile: String?, job: String)] {
         var crews: [String : (id: Int, profile: String?, job: String)] = [:]
         

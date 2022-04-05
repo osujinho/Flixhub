@@ -16,27 +16,23 @@ struct PersonMediaRowView: View {
     let rating: Double?
     let genres: [Int]?
     let genreManager = GenreManager.genreManager
+    let posterWidth: Double = 100
     
     var body: some View {
-        HStack(alignment: .bottom, spacing: 10) {
+        HStack(alignment: .bottom, spacing: 25) {
             UrlImageView(path: poster, defaultImage: .poster)
-                .frame(width: 110, height: 170)
+                .frame(width: CGFloat(posterWidth), height: CGFloat(posterWidth * 1.5))
                 .cornerRadius(10)
+                .overlay(
+                    RatingView(rating: rating, frameSize: 30)
+                        .offset(x: 50, y: -50)
+                )
             
             VStack(alignment: .leading, spacing: 5) {
                 
-                HStack(alignment: .bottom) {
-                    Text(titleOrName.uppercased())
-                        .multilineTextAlignment(.leading)
-                        .movieFont(style: .bold, size: personNameSize)
-                    
-                    Spacer()
-                    
-                    RatingView(rating: rating, frameSize: 35)
-                }
-                
-                let type = mediaType.listLabel
-                RowLabelAndInfoView(label: "media", info: type, forMedia: true)
+                Text(titleOrName.uppercased())
+                    .multilineTextAlignment(.leading)
+                    .movieFont(style: .bold, size: listRowTitleSize)
                 
                 switch mediaType {
                 case .castMovies:
@@ -59,10 +55,10 @@ struct PersonMediaRowView: View {
                 /// For genres
                 HStack(alignment: .bottom) {
                     Text(genreManager.getGenre(genreID: genres).joined(separator: ", "))
+                        .movieFont(style: .regular, size: bodySize)
                 }
             }
+            .foregroundColor(.primary)
         }
-        .movieFont(style: .regular, size: bodySize)
-        .padding(.horizontal, 10)
     }
 }

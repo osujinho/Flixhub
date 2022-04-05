@@ -18,15 +18,6 @@ import SwiftUI
     @Published var playTrailer: Bool = false
     @Published var showDetailOption: ShowDetailOption = .about
     
-    var videos: [(name: String?, key: String)] {
-        var youtubeVideos: [(name: String?, key: String)] = []
-        let videos = showDetail.videos.results.filter { $0.site.lowercased() == "youtube" }
-        for video in videos {
-            youtubeVideos.append((video.name, video.key))
-        }
-        return youtubeVideos
-    }
-    
     var mainCrew: [String : (id: Int, profile: String?, job: String)] {
         var crews: [String : (id: Int, profile: String?, job: String)] = [:]
         let desiredCrew: Set = ["producer", "screenplay", "story", "director"]

@@ -38,8 +38,7 @@ struct SearchView: View {
                                                     MovieDetailView(
                                                         movieID: String( movie.0.id ),
                                                         movieTitle: movie.1.title,
-                                                        imagePath: movie.1.poster,
-                                                        fromSearch: true
+                                                        imagePath: movie.1.poster
                                                     )
                                     ) {
                                         ResultRowView(
@@ -56,8 +55,7 @@ struct SearchView: View {
                                                     ShowDetailView(
                                                         showId: String( show.0.id ),
                                                         showName: show.1.name,
-                                                        imagePath: show.1.poster,
-                                                        fromSearch: true
+                                                        imagePath: show.1.poster
                                                     )
                                                    
                                     ) {

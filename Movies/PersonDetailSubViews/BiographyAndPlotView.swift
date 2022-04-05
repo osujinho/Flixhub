@@ -39,5 +39,6 @@ struct BiographyAndPlotView: View {
         }
         .movieFont(style: .regular, size: bodySize)
         .padding(.vertical, 10)
+        .padding(.horizontal)
     }
 }

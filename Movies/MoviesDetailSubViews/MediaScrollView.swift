@@ -10,11 +10,12 @@ import YouTubePlayerKit
 
 struct MediaScrollView: View {
     let posters: [MovieImage]
-    let videos: [(name: String?, key: String)]
+    let videos: [VideoResults]
     let backdrops: [MovieImage]
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 25) {
+            
             // For videos
             VStack(alignment: .leading) {
                 HStack {
@@ -32,7 +33,7 @@ struct MediaScrollView: View {
                 }.padding(.horizontal)
                 
                 TabView{
-                    ForEach(videos, id: \.key) { video in
+                    ForEach(videos.filter{ $0.site.lowercased() == "youtube" }, id: \.self) { video in
                         VStack(alignment: .leading) {
                             YouTubePlayerView(
                                 YouTubePlayer(
@@ -117,6 +118,7 @@ struct MediaScrollView: View {
                     }
                 }
             }
+            .padding(.bottom, 25)
         }
     }
 }

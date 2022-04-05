@@ -36,27 +36,29 @@ struct PersonDetailView: View {
                 )
                     .transition(.scale)
             } else {
-                ScrollView {
-                    LazyVStack(alignment: .leading, pinnedViews: .sectionHeaders) {
-                        VStack { PersonDetailHeaderView(detail: viewModel.personDetail) }
-                            .frame(maxWidth: .infinity)
-                            .background(Color("tabColor"))
-                        
-                        Section(header:
-                                    CustomPickerView(selection: $viewModel.personDetailOption, backgroundColor: "tabColor")
-                        ) {
+                GeometryReader { proxy in
+                    ScrollView {
+                        LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
+                            PersonDetailHeaderView(detail: viewModel.personDetail)
+                                .background(Color("tabColor"))
+                                .padding(.top, -proxy.safeAreaInsets.top)
                             
-                            switch viewModel.personDetailOption {
-                            case .about:
-                                PersonAboutView(detail: viewModel.personDetail)
-                            case .movies:
-                                PersonCastMovieView(movies: viewModel.castMovies)
-                            case .shows:
-                                PersonCastShowView(shows: viewModel.castShows)
-                            case .crewMovies:
-                                PersonCrewMovieView(movies: viewModel.crewMovies)
-                            case .crewShows:
-                                PersonCrewShowView(shows: viewModel.crewShows)
+                            Section(header:
+                                        CustomPickerView(selection: $viewModel.personDetailOption, backgroundColor: "tabColor")
+                            ) {
+                                
+                                switch viewModel.personDetailOption {
+                                case .about:
+                                    PersonAboutView(detail: viewModel.personDetail)
+                                case .movies:
+                                    PersonCastMovieView(movies: viewModel.castMovies)
+                                case .shows:
+                                    PersonCastShowView(shows: viewModel.castShows)
+                                case .crewMovies:
+                                    PersonCrewMovieView(movies: viewModel.crewMovies)
+                                case .crewShows:
+                                    PersonCrewShowView(shows: viewModel.crewShows)
+                                }
                             }
                         }
                     }
