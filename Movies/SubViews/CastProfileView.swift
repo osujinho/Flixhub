@@ -23,11 +23,13 @@ struct CastProfileView: View {
                 // Name
                 Text(name)
                     .movieFont(style: .regular, size: labelSize)
+                    .multilineTextAlignment(.leading)
                     .foregroundColor(.primary)
                 
                 // Movie Role
                 Text(role)
                     .movieFont(style: .regular, size: bodySize)
+                    .multilineTextAlignment(.leading)
                     .foregroundColor(.secondary)
             }
             Spacer()

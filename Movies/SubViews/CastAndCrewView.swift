@@ -28,6 +28,7 @@ struct CastView: View {
                 }
             }
         }
+        .padding(.bottom)
     }
 }
 
@@ -54,5 +55,6 @@ struct FeaturedCrewView: View {
                 }
             }
         }
+       .padding(.bottom)
     }
 }

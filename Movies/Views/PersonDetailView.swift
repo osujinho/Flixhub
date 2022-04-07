@@ -20,9 +20,6 @@ struct PersonDetailView: View {
         self.personID = personID
         self.name = name
         self.profile = profile
-        
-        UITableViewCell.appearance().backgroundColor = UIColor(named: "background")
-        UITableView.appearance().backgroundColor = UIColor(named: "background")
     }
     
     var body: some View {
@@ -39,15 +36,13 @@ struct PersonDetailView: View {
                 GeometryReader { proxy in
                     ScrollView {
                         LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
-                            PersonDetailHeaderView(detail: viewModel.personDetail)
-                                .background(Color("tabColor"))
-                                .padding(.top, -proxy.safeAreaInsets.top)
+                            PersonDetailHeaderView(detail: viewModel.personDetail, image: viewModel.backgroundImage, safeTop: proxy.safeAreaInsets.top)
                             
                             Section(header:
-                                        CustomPickerView(selection: $viewModel.personDetailOption, backgroundColor: "tabColor")
+                                        CustomPickerView(selection: $viewModel.personDetailOption, backgroundColor: "pickerColor")
                                             .padding(.bottom)
                             ) {
-                                
+
                                 switch viewModel.personDetailOption {
                                 case .about:
                                     PersonAboutView(detail: viewModel.personDetail, taggedImages: viewModel.taggedImages)

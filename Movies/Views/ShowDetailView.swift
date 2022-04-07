@@ -42,14 +42,15 @@ struct ShowDetailView: View {
                                     detail: viewModel.showDetail,
                                     topPaddingSize: proxy.safeAreaInsets.top
                                 )
-                                .background(Color("tabColor"))
+                                .background(Color("pickerColor"))
                                 
                                 // Sticky header
                                 Section(header:
                                             CustomPickerView(
                                                 selection: $viewModel.showDetailOption,
-                                                backgroundColor: "tabColor"
+                                                backgroundColor: "pickerColor"
                                             )
+                                            .padding(.bottom)
                                 ) {
                                     switch viewModel.showDetailOption {
                                     case .about:

@@ -24,9 +24,6 @@ struct GetMoreView: View {
         self.movieType = movieType
         self.movies = movies
         self.totalPages = totalPages
-        
-        UITableViewCell.appearance().backgroundColor = UIColor(named: "background")
-        UITableView.appearance().backgroundColor = UIColor(named: "background")
     }
     
     var body: some View {
@@ -67,7 +64,7 @@ struct GetMoreView: View {
                         .transition(.move(edge: .bottom))
                         .padding(.horizontal, 10)
                     } else {
-                        List{
+                        List {
                             ForEach(viewModel.movies, id: \.self){ movie in
                                 NavigationLink(destination:
                                                 MovieDetailView(
@@ -85,6 +82,7 @@ struct GetMoreView: View {
                                 .listRowBackground(Color.clear)
                             }
                         }
+                        .listStyle(PlainListStyle())
                         .transition(.move(edge: .bottom))
                     }
                 }

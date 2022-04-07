@@ -22,26 +22,32 @@ struct ImageBackgroundView: View {
     let backdropWidth = screen.width
 
     var body: some View {
+        let backdropHeight = (backdropWidth * 0.5625)
         if imagePath != nil {
-            UrlImageView(path: imagePath, defaultImage: .backdrop)
-                .frame(width: backdropWidth, height: backdropWidth * 0.5625 )
-                .overlay(
-                    ZStack(alignment: .bottom) {
-                        UrlImageView(path: imagePath, defaultImage: .backdrop)
-                            .frame(width: backdropWidth, height: backdropWidth * 0.5625 )
-                            .blur(radius: 20)
-                            .padding(-20)
-                            .padding(.bottom, 10)
-                            .clipped()
-                            .mask(gradient)
-                        
-                        gradient
-                    }
-                )
+            VStack(spacing: 0) {
+                UrlImageView(path: imagePath, defaultImage: .backdrop)
+                    .frame(width: backdropWidth, height: backdropHeight )
+                    .overlay(
+                        ZStack(alignment: .bottom) {
+                            UrlImageView(path: imagePath, defaultImage: .backdrop)
+                                .frame(width: backdropWidth, height: backdropHeight )
+                                .blur(radius: 20)
+                                .padding(-20)
+                                .padding(.bottom, 10)
+                                .clipped()
+                                .mask(gradient)
+                            
+                            gradient
+                        }
+                    )
+                Rectangle()
+                    .fill(Color("pickerColor"))
+                    .frame(width: backdropWidth, height: 60)
+            }
         } else {
             Rectangle()
                 .fill(gradient)
-                .frame(width: backdropWidth, height: backdropWidth * 0.5625 )
+                .frame(width: backdropWidth, height: backdropHeight)
         }
     }
 }

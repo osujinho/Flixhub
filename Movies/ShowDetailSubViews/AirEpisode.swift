@@ -36,10 +36,10 @@ struct AirEpisode: View {
                         .foregroundColor(.primary.opacity(0.7))
                     
                     HStack{
-                        Text("Season \(episode.seasonNumber)")
+                        Text("Se \(episode.seasonNumber)")
                         Text("•")
                             .font(.system(size: 30))
-                        Text("Episode \(episode.episodeNumber)")
+                        Text("Ep \(episode.episodeNumber)")
                     }
                     .foregroundColor(.secondary)
                 }
@@ -47,5 +47,6 @@ struct AirEpisode: View {
             }
             .movieFont(style: .regular, size: petiteSize)
         }
+        .padding(.horizontal)
     }
 }

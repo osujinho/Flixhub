@@ -71,6 +71,10 @@ import Foundation
         return paths
     }
     
+    var backgroundImage: String? {
+        self.taggedImages.isEmpty ? nil : taggedImages[0]
+    }
+    
     private let networkManager = NetworkManager.networkManager
     private let urlManager = URLManager.urlManager
     

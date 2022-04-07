@@ -42,7 +42,7 @@ struct CustomPickerView<Enum: Pickable>: View {
                         .onTapGesture { self.selection = value }
                 }
             }
-            .padding(.leading, 10)
+            .padding(.horizontal)
 //            .if(showGridToggle){ view in
 //                view
 //                    .padding(.bottom, 30)

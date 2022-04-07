@@ -66,7 +66,7 @@ struct MoreShowsView: View {
                         .transition(.move(edge: .bottom))
                         .padding(.horizontal, 10)
                     } else {
-                        List{
+                        List {
                             ForEach(viewModel.shows, id: \.self) { show in
                                 NavigationLink(destination:
                                                 ShowDetailView(
@@ -84,6 +84,7 @@ struct MoreShowsView: View {
                                 .listRowBackground(Color.clear)
                             }
                         }
+                        .listStyle(PlainListStyle())
                         .transition(.move(edge: .bottom))
                     }
                 }

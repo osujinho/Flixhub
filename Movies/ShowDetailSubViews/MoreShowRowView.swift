@@ -10,21 +10,19 @@ import SwiftUI
 struct MoreShowRowView: View {
     let show: ShowResult
     let genreManager = GenreManager.genreManager
+    let posterWidth: Double = 100
     
     var body: some View {
-        HStack(alignment: .bottom, spacing: 10) {
+        HStack(alignment: .bottom, spacing: 20) {
             UrlImageView(path: show.poster, defaultImage: .poster)
-                .scaledToFill()
-                .frame(width: 110, height: 170)
+                .frame(width: CGFloat(posterWidth), height: CGFloat(posterWidth * 1.5))
                 .cornerRadius(10)
+                .overlay(
+                    RatingView(rating: show.rating, frameSize: 30)
+                        .offset(x: 50, y: -50)
+                )
             
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    RatingView(rating: show.rating, frameSize: 35)
-                        .padding(.top, 5)
-                }
-                Spacer()
-                
+            VStack(alignment: .leading, spacing: 5) {
                 Text(show.name.uppercased())
                     .movieFont(style: .bold, size: listRowTitleSize)
                 
@@ -37,6 +35,8 @@ struct MoreShowRowView: View {
                         .opacity(0.7)
                 }
             }
+            .foregroundColor(.primary)
         }
+        .padding(.horizontal)
     }
 }

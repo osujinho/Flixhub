@@ -20,8 +20,6 @@ struct MovieDetailView: View {
         self.movieID = movieID
         self.movieTitle = movieTitle
         self.imagePath = imagePath
-        
-        UINavigationBar.appearance().backgroundColor = UIColor(named: "pickerColor")
     }
     
     var body: some View {
@@ -61,7 +59,6 @@ struct MovieDetailView: View {
                                             spokenLanguages: viewModel.spokenLanguages)
                                     case .casts:
                                         CastView(casts: viewModel.tmdbDetail.credits.cast)
-                                            .multilineTextAlignment(.leading)
                                     case .crew:
                                         FeaturedCrewView(crews: viewModel.featuredCrews)
                                     case .media:

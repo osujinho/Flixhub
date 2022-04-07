@@ -80,6 +80,7 @@ struct RecommendAndSimilarView: View {
                 .transition(.move(edge: .bottom))
             }
         }
+        .padding(.bottom)
         .onAppear{
             viewModel.movies = results
             viewModel.totalPages = totalPages

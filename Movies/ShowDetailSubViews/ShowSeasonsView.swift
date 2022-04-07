@@ -34,7 +34,9 @@ struct ShowSeasonsView: View {
                     .movieFont(style: .regular, size: labelSize)
                     Spacer()
                 }
+                .padding(.horizontal)
             }
         }
+        .padding(.vertical)
     }
 }

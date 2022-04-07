@@ -34,10 +34,10 @@ struct MovieDetailTopView: View {
                 rated: rated,
                 detail: movieDetail)
         }
-        .background(
-            ImageBackgroundView(imagePath: movieDetail.backdrop)
-                .scaledToFill()
-        )
+//        .background(
+//            ImageBackgroundView(imagePath: movieDetail.backdrop)
+//                .scaledToFill()
+//        )
     }
 }
 
