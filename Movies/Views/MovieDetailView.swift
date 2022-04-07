@@ -20,6 +20,8 @@ struct MovieDetailView: View {
         self.movieID = movieID
         self.movieTitle = movieTitle
         self.imagePath = imagePath
+        
+        UINavigationBar.appearance().backgroundColor = UIColor(named: "pickerColor")
     }
     
     var body: some View {
@@ -48,7 +50,8 @@ struct MovieDetailView: View {
                                 
                                 // header
                                 Section(header:
-                                            CustomPickerView(selection: $viewModel.mediaOptions, backgroundColor: "tabColor")
+                                            CustomPickerView(selection: $viewModel.mediaOptions, backgroundColor: "pickerColor")
+                                    .padding(.bottom)
                                 ) {
                                     switch viewModel.mediaOptions {
                                     case .about:
@@ -63,9 +66,9 @@ struct MovieDetailView: View {
                                         FeaturedCrewView(crews: viewModel.featuredCrews)
                                     case .media:
                                         MediaScrollView(
-                                            posters: viewModel.tmdbDetail.images.posters,
+                                            posters: viewModel.tmdbDetail.images.posters.map{ $0.path },
                                             videos: viewModel.tmdbDetail.videos.results,
-                                            backdrops: viewModel.tmdbDetail.images.backdrops)
+                                            backdrops: viewModel.tmdbDetail.images.backdrops.map{ $0.path })
                                     case .recommended:
                                         RecommendAndSimilarView(
                                             viewModel: GetMoreViewModel(),
@@ -83,7 +86,6 @@ struct MovieDetailView: View {
                                     }
                                 }
                                 .frame(alignment: .leading)
-                                .padding(.horizontal, 10)
                             }
                         }
                     }

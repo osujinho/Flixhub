@@ -59,6 +59,7 @@ struct PersonMediaRowView: View {
                 }
             }
             .foregroundColor(.primary)
-        }
+        } /// End of HStack
+        .padding(.bottom, 10)
     }
 }

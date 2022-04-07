@@ -66,9 +66,9 @@ struct ShowDetailView: View {
                                         FeaturedCrewView(crews: viewModel.mainCrew)
                                     case .media:
                                         MediaScrollView(
-                                            posters: viewModel.showDetail.images.posters,
+                                            posters: viewModel.showDetail.images.posters.map{ $0.path },
                                             videos: viewModel.showDetail.videos.results,
-                                            backdrops: viewModel.showDetail.images.backdrops)
+                                            backdrops: viewModel.showDetail.images.backdrops.map{ $0.path })
                                     case .seasons:
                                         ShowSeasonsView(seasons: viewModel.showDetail.seasons)
                                     case .recommended:

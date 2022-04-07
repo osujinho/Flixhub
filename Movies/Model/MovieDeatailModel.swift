@@ -94,7 +94,6 @@ struct VideoResults: Hashable, Decodable {
 /// For getting OMDB Api
 struct OMDBDetail: Hashable, Decodable {
     let rated: String
-    let rating: String
     let awards: String?
     let boxOffice: String?
     let dvd: String?
@@ -102,7 +101,6 @@ struct OMDBDetail: Hashable, Decodable {
     
     enum CodingKeys: String, CodingKey {
         case rated = "Rated"
-        case rating = "imdbRating"
         case awards = "Awards"
         case boxOffice = "BoxOffice"
         case dvd = "DVD"

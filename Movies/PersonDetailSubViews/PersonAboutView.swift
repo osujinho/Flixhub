@@ -9,9 +9,10 @@ import SwiftUI
 
 struct PersonAboutView: View {
     let detail: PersonDetail
+    let taggedImages: [String?]
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 20) {
             // For Birth year
             DetailLabelAndInfoView(label: "born", info: getDate(date: detail.birthday ,forYear: false))
             
@@ -30,49 +31,12 @@ struct PersonAboutView: View {
                 label: "biography")
             
             // Image scrollView
-            PersonImageScrollView(images: detail.images.profiles)
+            PersonPosterScrollView(images: detail.images.profiles.map{ $0.path })
+            
+            PersonBackdropScrollView(images: taggedImages)
+            
         } /// End of Mother VStack
         .padding(.top, 10)
+        .padding(.bottom, 20)
     }
 }
-
-struct PersonImageScrollView: View {
-    let images: [MovieImage]
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("Images")
-                    .movieFont(style: .bold, size: labelSize)
-                    .foregroundColor(.secondary)
-                Spacer()
-                
-                NavigationLink(destination:
-                                ImageGallery(
-                                    images: images,
-                                    defaultImage: .profile)
-                ){
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 10))
-                }
-                
-            }.padding(.horizontal)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(alignment: .bottom, spacing: 10) {
-                    ForEach(images, id: \.self) { image in
-                        NavigationLink(destination:
-                                        ImageFullView(path: image.path, defaultImage: .profile)
-                        ){
-                            UrlImageView(path: image.path, defaultImage: .profile)
-                                .frame(width: 100, height: 140)
-                                .cornerRadius(10)
-                        }
-                    }
-                }
-                .padding(.leading)
-            }
-        }
-    }
-}
-

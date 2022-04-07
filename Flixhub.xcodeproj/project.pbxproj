@@ -63,6 +63,11 @@
 		B3AD41D727FB733200BF71F8 /* MoreShowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AD41D627FB733200BF71F8 /* MoreShowView.swift */; };
 		B3AD41D927FB77A900BF71F8 /* MoreShowRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AD41D827FB77A900BF71F8 /* MoreShowRowView.swift */; };
 		B3AD41DB27FB7EAA00BF71F8 /* RecommendAndSimilarShowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AD41DA27FB7EAA00BF71F8 /* RecommendAndSimilarShowView.swift */; };
+		B3AD41DD27FD044C00BF71F8 /* PersonImageViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AD41DC27FD044C00BF71F8 /* PersonImageViews.swift */; };
+		B3AD41DF27FD052500BF71F8 /* PersonMoreImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AD41DE27FD052500BF71F8 /* PersonMoreImageModel.swift */; };
+		B3AD41E127FD0F1D00BF71F8 /* ImageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AD41E027FD0F1D00BF71F8 /* ImageBackgroundView.swift */; };
+		B3AD41E527FD304500BF71F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AD41E427FD304500BF71F8 /* AppDelegate.swift */; };
+		B3AD41E727FD418200BF71F8 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AD41E627FD418200BF71F8 /* NavigationBarModifier.swift */; };
 		B3B0A67427B2E0BE00810587 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0A67327B2E0BE00810587 /* NetworkManager.swift */; };
 		B3B0A67727B2E0E900810587 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0A67627B2E0E900810587 /* Extensions.swift */; };
 		B3C9CA6C27C0161100BC9DA9 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C9CA6B27C0161100BC9DA9 /* URLManager.swift */; };
@@ -143,6 +148,11 @@
 		B3AD41D627FB733200BF71F8 /* MoreShowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreShowView.swift; sourceTree = "<group>"; };
 		B3AD41D827FB77A900BF71F8 /* MoreShowRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreShowRowView.swift; sourceTree = "<group>"; };
 		B3AD41DA27FB7EAA00BF71F8 /* RecommendAndSimilarShowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendAndSimilarShowView.swift; sourceTree = "<group>"; };
+		B3AD41DC27FD044C00BF71F8 /* PersonImageViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonImageViews.swift; sourceTree = "<group>"; };
+		B3AD41DE27FD052500BF71F8 /* PersonMoreImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonMoreImageModel.swift; sourceTree = "<group>"; };
+		B3AD41E027FD0F1D00BF71F8 /* ImageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBackgroundView.swift; sourceTree = "<group>"; };
+		B3AD41E427FD304500BF71F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B3AD41E627FD418200BF71F8 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		B3B0A62727AC9AEB00810587 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B3B0A67327B2E0BE00810587 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		B3B0A67627B2E0E900810587 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -192,6 +202,7 @@
 				B30F133D27EF33BA00FE7641 /* PersonCastShowView.swift */,
 				B30F134427F0D7A300FE7641 /* PersonAboutView.swift */,
 				B30F135127F0F99900FE7641 /* BiographyAndPlotView.swift */,
+				B3AD41DC27FD044C00BF71F8 /* PersonImageViews.swift */,
 			);
 			path = PersonDetailSubViews;
 			sourceTree = "<group>";
@@ -225,6 +236,7 @@
 				B3CF1BAE27A9BD68004CD7F2 /* CustomModifiers.swift */,
 				B33A340F27BC663800EB05D9 /* CustomViews.swift */,
 				B368F64327DFB09800E03E4D /* PickerViews.swift */,
+				B3AD41E627FD418200BF71F8 /* NavigationBarModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -253,6 +265,7 @@
 				B368F63927DE7B1600E03E4D /* PersonDetailModel.swift */,
 				B3F73D2B27E252080066E350 /* PickerEnums.swift */,
 				B3F73D3827E2CB9B0066E350 /* GridCollection.swift */,
+				B3AD41DE27FD052500BF71F8 /* PersonMoreImageModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -294,6 +307,7 @@
 				B3B0A67327B2E0BE00810587 /* NetworkManager.swift */,
 				B368F61F27D6926E00E03E4D /* CacheManager.swift */,
 				B3ED333427E504A9001A6DCF /* GenreManager.swift */,
+				B3AD41E427FD304500BF71F8 /* AppDelegate.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -327,6 +341,7 @@
 				B30F134627F0D86A00FE7641 /* ImageFullView.swift */,
 				B3AD41CD27F791AE00BF71F8 /* CompanyAndCountry.swift */,
 				B3AD41D227FB6C4200BF71F8 /* VideoGallery.swift */,
+				B3AD41E027FD0F1D00BF71F8 /* ImageBackgroundView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -462,10 +477,12 @@
 				B368F63C27DF7D8600E03E4D /* ShowDetailView.swift in Sources */,
 				B3CF1BA327A99C11004CD7F2 /* ContentView.swift in Sources */,
 				B3ED333927E531F5001A6DCF /* GetMoreViewModel.swift in Sources */,
+				B3AD41E127FD0F1D00BF71F8 /* ImageBackgroundView.swift in Sources */,
 				B3AD41CC27F7822D00BF71F8 /* AirEpisode.swift in Sources */,
 				B3AD41D927FB77A900BF71F8 /* MoreShowRowView.swift in Sources */,
 				B3ED333727E52908001A6DCF /* GetMoreRowView.swift in Sources */,
 				B30F133C27EE0D3300FE7641 /* PersonCastMovieView.swift in Sources */,
+				B3AD41E527FD304500BF71F8 /* AppDelegate.swift in Sources */,
 				B3C9CA6E27C04EEA00BC9DA9 /* BrowseViewModel.swift in Sources */,
 				B3B0A67727B2E0E900810587 /* Extensions.swift in Sources */,
 				B368F63227DD529300E03E4D /* SearchModel.swift in Sources */,
@@ -483,6 +500,7 @@
 				B368F62027D6926E00E03E4D /* CacheManager.swift in Sources */,
 				B3C9CA9327C5BA4E00BC9DA9 /* ResultRowView.swift in Sources */,
 				B3AD41D027F7944100BF71F8 /* ShowSeasonsView.swift in Sources */,
+				B3AD41DF27FD052500BF71F8 /* PersonMoreImageModel.swift in Sources */,
 				B3C9CA7227C081D200BC9DA9 /* MovieDetailViewModel.swift in Sources */,
 				B33A341427BC869100EB05D9 /* BrowseView.swift in Sources */,
 				B3AD41C627F7550500BF71F8 /* ShowDetailHeaderView.swift in Sources */,
@@ -491,6 +509,7 @@
 				B3ED333527E504A9001A6DCF /* GenreManager.swift in Sources */,
 				B3C9CA7027C05E1700BC9DA9 /* SearchView.swift in Sources */,
 				B30F133827E636A600FE7641 /* ImageBackground.swift in Sources */,
+				B3AD41E727FD418200BF71F8 /* NavigationBarModifier.swift in Sources */,
 				B368F64827DFBF2B00E03E4D /* PersonDetailHeaderView.swift in Sources */,
 				B30F135227F0F99900FE7641 /* BiographyAndPlotView.swift in Sources */,
 				B30F133A27E8EDDB00FE7641 /* ImageGallery.swift in Sources */,
@@ -503,6 +522,7 @@
 				B3AD41C327F6253A00BF71F8 /* RecommendedAndSimilarView.swift in Sources */,
 				B30F134027F0D00100FE7641 /* PersonCrewMovieView.swift in Sources */,
 				B3AD41D527FB6DDF00BF71F8 /* MoreShowsViewModel.swift in Sources */,
+				B3AD41DD27FD044C00BF71F8 /* PersonImageViews.swift in Sources */,
 				B3ED333B27E55A82001A6DCF /* RatingView.swift in Sources */,
 				B3B0A67427B2E0BE00810587 /* NetworkManager.swift in Sources */,
 				B368F64227DFA9F900E03E4D /* CastProfileView.swift in Sources */,

@@ -13,7 +13,7 @@ struct UrlItem {
 }
 
 enum MovieType: CaseIterable {
-    case upcoming, nowPlaying, topRated, popular, movieDetail, omdb, search, personDetail, showDetail, similarMovie, recommendMovies, showRatings, similarShow, recommendShow
+    case upcoming, nowPlaying, topRated, popular, movieDetail, omdb, search, personDetail, showDetail, similarMovie, recommendMovies, showRatings, similarShow, recommendShow, taggedImages
 }
 
 class URLManager {
@@ -45,21 +45,20 @@ class URLManager {
         case .showRatings: return baseURL.appending("tv/\(id)/content_ratings")
         case .similarShow: return baseURL.appending("tv/\(id)/similar")
         case .recommendShow: return baseURL.appending("tv/\(id)/recommendations")
+        case .taggedImages: return baseURL.appending("person/\(id)/tagged_images")
         }
     }
     
     private func getUrlItems(movieType: MovieType, value: String = "") -> [UrlItem] {
         switch movieType {
-        case .upcoming, .nowPlaying, .topRated, .popular:
+        case .upcoming, .nowPlaying, .topRated, .popular, .recommendMovies, .similarMovie, .similarShow, .recommendShow, .taggedImages:
             return [tmdbKey, language, UrlItem(key: "page", value: value)]
         case .movieDetail: return [tmdbKey, videoAndCredits, getImages]
         case .omdb: return [omdpKey, UrlItem(key: "i", value: value)]
         case .personDetail: return [tmdbKey, language, combinedCredits, getImages]
         case .search: return [tmdbKey, UrlItem(key: "query", value: value)]
         case .showDetail: return [tmdbKey, language, videoAndCredits, getImages]
-        case .recommendMovies, .similarMovie: return [tmdbKey, language, UrlItem(key: "page", value: value)]
         case .showRatings: return [tmdbKey, language]
-        case .similarShow, .recommendShow: return [tmdbKey, language, UrlItem(key: "page", value: value)]
         }
     }
     

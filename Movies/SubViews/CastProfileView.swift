@@ -30,6 +30,8 @@ struct CastProfileView: View {
                     .movieFont(style: .regular, size: bodySize)
                     .foregroundColor(.secondary)
             }
+            Spacer()
         }
+        .padding(.horizontal)
     }
 }

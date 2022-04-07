@@ -45,11 +45,12 @@ struct PersonDetailView: View {
                             
                             Section(header:
                                         CustomPickerView(selection: $viewModel.personDetailOption, backgroundColor: "tabColor")
+                                            .padding(.bottom)
                             ) {
                                 
                                 switch viewModel.personDetailOption {
                                 case .about:
-                                    PersonAboutView(detail: viewModel.personDetail)
+                                    PersonAboutView(detail: viewModel.personDetail, taggedImages: viewModel.taggedImages)
                                 case .movies:
                                     PersonCastMovieView(movies: viewModel.castMovies)
                                 case .shows:

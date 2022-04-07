@@ -14,11 +14,11 @@ struct MovieDetailInfoView: View {
     let detail: TMDBDetail
     
     var body: some View {
-        HStack(alignment: .lastTextBaseline) {
+        HStack(alignment: .lastTextBaseline, spacing: 20) {
             if !playTrailer {
                 NavigationLink(destination:
                                 ImageGallery(
-                                    images: detail.images.posters, defaultImage: .poster)
+                                    images: detail.images.posters.map { $0.path }, defaultImage: .poster)
                 ){
                     UrlImageView(path: detail.poster, defaultImage: .poster)
                         .frame(width: 100, height: 150)
@@ -33,7 +33,6 @@ struct MovieDetailInfoView: View {
                                 Spacer()
                             }
                             .padding(.top, -15)
-                            .padding(.trailing, 5)
                         )
                 }
                 VStack(alignment: .leading) {
@@ -75,7 +74,8 @@ struct MovieDetailInfoView: View {
             }
             Spacer()
         }
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 5)
+        .background(Color("pickerColor"))
     }
 }
 

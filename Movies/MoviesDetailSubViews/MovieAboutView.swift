@@ -28,7 +28,7 @@ struct MovieAboutView: View {
                 
                 DetailLabelAndInfoView(label: "spoken languages", info: spokenLanguages)
                 
-                MovieRatingsView(ratings: ombdDetail.ratings)
+                CriticsRatingView(ratings: ombdDetail.ratings)
             }
             
             // Awards
@@ -55,6 +55,7 @@ struct MovieAboutView: View {
                 CompanyAndCountry(label: "production companies", items: tmdbDetail.companies)
                 CompanyAndCountry(label: "production countries", items: tmdbDetail.countries)
             }
+            .padding(.bottom, 20)
         }
     }
 }

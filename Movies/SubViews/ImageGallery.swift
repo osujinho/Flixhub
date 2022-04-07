@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ImageGallery: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    let images: [MovieImage]
+    let images: [String?]
     let defaultImage: DefaultImage
     
     var body: some View {
@@ -18,7 +18,7 @@ struct ImageGallery: View {
             
             TabView{
                 ForEach(images, id: \.self){ image in
-                    UrlImageView(path: image.path, defaultImage: defaultImage)
+                    UrlImageView(path: image, defaultImage: defaultImage)
                         .scaledToFit()
                         .frame(maxWidth: .infinity)
                         .cornerRadius(5)

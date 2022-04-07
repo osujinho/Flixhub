@@ -23,6 +23,7 @@ import Foundation
         ),
         images: ProfileImages(profiles: [MovieImage]())
     )
+    @Published private var moreImages = MorePersonImage(results: [])
     @Published private(set) var errorMessage: String = ""
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true
@@ -58,6 +59,18 @@ import Foundation
         }
     }
     
+    var taggedImages: [String?] {
+        var paths: [String?] = []
+        let images = moreImages.results.map{ $0.media }.map{ $0.backdrop }
+        
+        for image in images {
+            if !paths.contains(image) {
+                paths.append(image)
+            }
+        }
+        return paths
+    }
+    
     private let networkManager = NetworkManager.networkManager
     private let urlManager = URLManager.urlManager
     
@@ -66,9 +79,11 @@ import Foundation
         self.isLoading = true
         
         let urlString = urlManager.buildURL(movieType: .personDetail, id: castId)
+        let imageURL = urlManager.buildURL(movieType: .taggedImages, id: castId, value: "1")
         
         do {
             personDetail = try await networkManager.makeCall(url: urlString)
+            moreImages = try await networkManager.makeCall(url: imageURL)
             self.isLoading = false
             
         } catch {
