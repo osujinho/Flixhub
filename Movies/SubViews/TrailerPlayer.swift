@@ -41,6 +41,18 @@ struct TrailerPlayer: View {
                             )
                         )
                     )
+                    .overlay(alignment: .bottomLeading) {
+                        Button(action: {     // To Stop the trailer
+                            withAnimation {
+                                playTrailer = false
+                            }
+                        }) {
+                            Image(systemName: "stop.fill")
+                        }
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
+                        .offset(x: 2, y: -15)
+                    }
                 }
             }
         }

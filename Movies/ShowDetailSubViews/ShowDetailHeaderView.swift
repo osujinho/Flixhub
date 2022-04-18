@@ -26,7 +26,7 @@ struct ShowDetailHeaderView: View {
             .tabViewStyle(PageTabViewStyle())
             .animation(.easeInOut, value: 1)
             
-            HStack(alignment: .lastTextBaseline) {
+            HStack(alignment: .lastTextBaseline, spacing: 20) {
                 UrlImageView(path: detail.poster, defaultImage: .poster)
                     .frame(width: 100, height: 150)
                     .cornerRadius(5)
@@ -39,6 +39,7 @@ struct ShowDetailHeaderView: View {
                 VStack(alignment: .leading) {
                     Text(detail.name.capitalized)
                         .movieFont(style: .bold, size: movieAndShowTitleSize)
+                        .multilineTextAlignment(.leading)
                     HStack {
                         Text(getDate(date: detail.firstAirDate,forYear: true))
                         Text("•")
@@ -53,7 +54,7 @@ struct ShowDetailHeaderView: View {
             }
             .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
             .padding(.horizontal, 10)
+            .background(Color("pickerColor"))
         }
     }
 }
-

@@ -42,7 +42,6 @@ struct ShowDetailView: View {
                                     detail: viewModel.showDetail,
                                     topPaddingSize: proxy.safeAreaInsets.top
                                 )
-                                .background(Color("pickerColor"))
                                 
                                 // Sticky header
                                 Section(header:

@@ -11,13 +11,11 @@ typealias Pickable = CaseIterable & Identifiable & Hashable & CustomStringConver
 
 struct CustomPickerView<Enum: Pickable>: View {
     @Binding private var selection: Enum
-    //@Binding private var showGridToggle: Bool
     let backgroundColor: String
     
     init(selection: Binding<Enum>, backgroundColor: String) {
         self._selection = selection
         self.backgroundColor = backgroundColor
-        //self._showGridToggle = showGridToggle
         
         UITableViewCell.appearance().backgroundColor = UIColor(named: backgroundColor)
         UITableView.appearance().backgroundColor = UIColor(named: backgroundColor)
@@ -39,20 +37,16 @@ struct CustomPickerView<Enum: Pickable>: View {
                                 .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .clear),
                             alignment: .bottom
                         )
-                        .onTapGesture { self.selection = value }
+                        .onTapGesture {
+                            self.selection = value
+                        }
+                        .animation(Animation.easeInOut(duration: 0.3), value: selection)
                 }
             }
             .padding(.horizontal)
-//            .if(showGridToggle){ view in
-//                view
-//                    .padding(.bottom, 30)
-//                    .overlay(
-//                        GridViewToggle(
-//                    )
-//            }
             
         }
-        .padding(.vertical, 10)
+        .padding(.vertical)
         .frame(maxWidth: .infinity)
         .background(Color(backgroundColor))
     }
@@ -78,5 +72,3 @@ struct GridViewToggle: View {
         }
     }
 }
-
-// , showGridToggle: Binding<Bool>

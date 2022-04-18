@@ -41,10 +41,10 @@ struct MovieDetailView: View {
                                 MovieDetailTopView(
                                     playTrailer: $viewModel.playTrailer,
                                     videoID: viewModel.youtubeKey,
-                                    movieDetail: viewModel.tmdbDetail,
-                                    rated: viewModel.omdbDetail.rated
+                                    detail: viewModel.tmdbDetail,
+                                    rated: viewModel.omdbDetail.rated,
+                                    topSafeArea: proxy.safeAreaInsets.top
                                 )
-                                .padding(.top, -proxy.safeAreaInsets.top)
                                 
                                 // header
                                 Section(header:

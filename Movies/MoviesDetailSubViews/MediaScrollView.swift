@@ -52,6 +52,8 @@ struct MediaScrollView: View {
                     }
                 }
             }
+            .padding(.top)
+            .padding(.horizontal)
             
             // Top for posters
             VStack(alignment: .leading) {
@@ -69,7 +71,7 @@ struct MediaScrollView: View {
                             .font(.system(size: 10))
                     }
                     
-                }.padding(.horizontal)
+                }
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(alignment: .bottom, spacing: 10) {
@@ -85,6 +87,7 @@ struct MediaScrollView: View {
                     }
                 }
             }
+            .padding(.horizontal)
             
             // For backdrops
             VStack(alignment: .leading) {
@@ -118,7 +121,8 @@ struct MediaScrollView: View {
                     }
                 }
             }
-            .padding(.bottom, 25)
+            .padding(.horizontal)
+            .padding(.bottom)
         }
     }
 }
