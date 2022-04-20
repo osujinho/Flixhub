@@ -26,77 +26,66 @@ struct ShowDetailView: View {
         ZStack {
             Color("background").edgesIgnoringSafeArea(.all)
             
-            Group {
-                if viewModel.isLoading {
-                    LoadingView(
-                        heading: "Loading details on \(showName)",
-                        poster: imagePath
-                    )
-                    .transition(.scale)
-                } else {
-                    GeometryReader { proxy in
-                        ScrollView {
-                            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
-                                // Top View
-                                ShowDetailHeaderView(
+            GeometryReader { proxy in
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
+                        // Top View
+                        ShowDetailHeaderView(
+                            detail: viewModel.showDetail,
+                            topPaddingSize: proxy.safeAreaInsets.top
+                        )
+                        
+                        // Sticky header
+                        Section(header:
+                                    CustomPickerView(
+                                        selection: $viewModel.showDetailOption,
+                                        backgroundColor: "pickerColor"
+                                    )
+                                    .padding(.bottom)
+                        ) {
+                            switch viewModel.showDetailOption {
+                            case .about:
+                                ShowAboutView(
                                     detail: viewModel.showDetail,
-                                    topPaddingSize: proxy.safeAreaInsets.top
+                                    rated: viewModel.rated,
+                                    runtime: viewModel.runtimes,
+                                    spokenLanguage: viewModel.spokenLanguages,
+                                    inProduction: viewModel.inProduction
+                                )
+                            case .casts:
+                                CastView(casts: viewModel.showDetail.credits.cast)
+                            case .crew:
+                                FeaturedCrewView(crews: viewModel.mainCrew)
+                            case .media:
+                                MediaScrollView(
+                                    posters: viewModel.showDetail.images.posters.map{ $0.path },
+                                    videos: viewModel.videoClips,
+                                    backdrops: viewModel.showDetail.images.backdrops.map{ $0.path })
+                            case .seasons:
+                                ShowSeasonsView(seasons: viewModel.showDetail.seasons)
+                            case .recommended:
+                                RecommendAndSimilarShowView(
+                                    viewModel: MoreShowsViewModel(),
+                                    showType: .recommendShow,
+                                    totalPages: viewModel.recommendShows.total_pages,
+                                    shows: viewModel.recommendShows.results
+                                )
+                            case .similar:
+                                RecommendAndSimilarShowView(
+                                    viewModel: MoreShowsViewModel(),
+                                    showType: .similarShow,
+                                    totalPages: viewModel.similarShows.total_pages,
+                                    shows: viewModel.similarShows.results
                                 )
                                 
-                                // Sticky header
-                                Section(header:
-                                            CustomPickerView(
-                                                selection: $viewModel.showDetailOption,
-                                                backgroundColor: "pickerColor"
-                                            )
-                                            .padding(.bottom)
-                                ) {
-                                    switch viewModel.showDetailOption {
-                                    case .about:
-                                        ShowAboutView(
-                                            detail: viewModel.showDetail,
-                                            rated: viewModel.rated,
-                                            runtime: viewModel.runtimes,
-                                            spokenLanguage: viewModel.spokenLanguages,
-                                            inProduction: viewModel.inProduction
-                                        )
-                                    case .casts:
-                                        CastView(casts: viewModel.showDetail.credits.cast)
-                                    case .crew:
-                                        FeaturedCrewView(crews: viewModel.mainCrew)
-                                    case .media:
-                                        MediaScrollView(
-                                            posters: viewModel.showDetail.images.posters.map{ $0.path },
-                                            videos: viewModel.videoClips,
-                                            backdrops: viewModel.showDetail.images.backdrops.map{ $0.path })
-                                    case .seasons:
-                                        ShowSeasonsView(seasons: viewModel.showDetail.seasons)
-                                    case .recommended:
-                                        RecommendAndSimilarShowView(
-                                            viewModel: MoreShowsViewModel(),
-                                            showType: .recommendShow,
-                                            totalPages: viewModel.recommendShows.total_pages,
-                                            shows: viewModel.recommendShows.results
-                                        )
-                                    case .similar:
-                                        RecommendAndSimilarShowView(
-                                            viewModel: MoreShowsViewModel(),
-                                            showType: .similarShow,
-                                            totalPages: viewModel.similarShows.total_pages,
-                                            shows: viewModel.similarShows.results
-                                        )
-                                        
-                                    }
-                                }
-                                .frame(alignment: .leading)
                             }
                         }
-                        .transition(.slide)
-                    } /// End of geometry reader
-                } /// End of else block
-            } /// End og group
+                        .frame(alignment: .leading)
+                    }
+                }
+            } /// End of geometry reader
+            .transition(.slide)
         } /// End of ZStack
-        .background(Color("background"))
         .task {
             await viewModel.getShowDetail(id: showId)
         }

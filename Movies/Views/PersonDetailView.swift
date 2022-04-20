@@ -26,42 +26,34 @@ struct PersonDetailView: View {
         ZStack {
             Color("background").edgesIgnoringSafeArea(.all)
             
-            if viewModel.isLoading {
-                LoadingView(
-                    heading: "Loading details about \(name)",
-                    poster: profile
-                )
-                    .transition(.scale)
-            } else {
-                GeometryReader { proxy in
-                    ScrollView {
-                        LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
-                            PersonDetailHeaderView(detail: viewModel.personDetail, image: viewModel.backgroundImage, safeTop: proxy.safeAreaInsets.top)
-                            
-                            Section(header:
-                                        CustomPickerView(selection: $viewModel.personDetailOption, backgroundColor: "pickerColor")
-                                            .padding(.bottom)
-                            ) {
+            GeometryReader { proxy in
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
+                        PersonDetailHeaderView(detail: viewModel.personDetail, image: viewModel.backgroundImage, safeTop: proxy.safeAreaInsets.top)
+                        
+                        Section(header:
+                                    CustomPickerView(selection: $viewModel.personDetailOption, backgroundColor: "pickerColor")
+                                        .padding(.bottom)
+                        ) {
 
-                                switch viewModel.personDetailOption {
-                                case .about:
-                                    PersonAboutView(detail: viewModel.personDetail, taggedImages: viewModel.taggedImages)
-                                case .movies:
-                                    PersonCastMovieView(movies: viewModel.castMovies)
-                                case .shows:
-                                    PersonCastShowView(shows: viewModel.castShows)
-                                case .crewMovies:
-                                    PersonCrewMovieView(movies: viewModel.crewMovies)
-                                case .crewShows:
-                                    PersonCrewShowView(shows: viewModel.crewShows)
-                                }
+                            switch viewModel.personDetailOption {
+                            case .about:
+                                PersonAboutView(detail: viewModel.personDetail, taggedImages: viewModel.taggedImages)
+                            case .movies:
+                                PersonCastMovieView(movies: viewModel.castMovies)
+                            case .shows:
+                                PersonCastShowView(shows: viewModel.castShows)
+                            case .crewMovies:
+                                PersonCrewMovieView(movies: viewModel.crewMovies)
+                            case .crewShows:
+                                PersonCrewShowView(shows: viewModel.crewShows)
                             }
                         }
                     }
                 }
             }
+            .transition(.slide)
         }
-        .background(Color("background"))
         .task {
             await viewModel.getDetail(castId: personID)
         }

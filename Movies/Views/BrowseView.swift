@@ -59,16 +59,6 @@ struct BrowseView: View {
                         .cornerRadius(10)
                 }
             }
-//            .onAppear {
-//                let coloredAppearance = UINavigationBarAppearance()
-//                // prevent Nav Bar color change on scroll view push behind NavBar
-//                coloredAppearance.configureWithOpaqueBackground()
-//                //coloredAppearance.backgroundColor = UIColor(named: "background")
-//                coloredAppearance.backgroundColor = UIColor.clear
-//
-//                UINavigationBar.appearance().standardAppearance = coloredAppearance
-//                UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
-//            }
         }
         .navigationViewStyle(.stack)
     }
