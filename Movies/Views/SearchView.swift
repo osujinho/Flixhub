@@ -98,7 +98,7 @@ struct SearchView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     HStack(alignment: .lastTextBaseline, spacing: 10) {
-                        Text("Search Movies")
+                        Text("Search")
                             .movieFont(style: .bold, size: navTitleSize)
                             .foregroundColor(.primary)
                     }
@@ -106,7 +106,7 @@ struct SearchView: View {
             }
             .alert(isPresented: $viewModel.hasError) {
                 Alert(
-                    title: Text("Movie Search Error"),
+                    title: Text("Search Error"),
                     message: Text(viewModel.errorMessage),
                     primaryButton: .destructive(Text("Retry")) {
                         Task {

@@ -36,7 +36,7 @@ enum FontStyle {
     }
 }
 
-let navTitleSize: CGFloat = 35
+let navTitleSize: CGFloat = 30
 let movieAndShowTitleSize: CGFloat = 22
 let personNameSize: CGFloat = 20
 let labelSize: CGFloat = 15
