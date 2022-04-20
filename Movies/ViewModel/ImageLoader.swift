@@ -15,12 +15,14 @@ final class ImageLoader: ObservableObject {
     @Published var data: Data?
     @Published var isLoading: Bool = true
 
-    init(_ path: String?) {
+    init(_ path: String?, forThumbnail: Bool) {
         self.isLoading = true
         
         guard let path = path else { return }
         let urlString = imageBaseUrl.appending(path)
-        guard let url = URL(string: urlString) else { return }
+        let thumbnailUrlString = "https://img.youtube.com/vi/\(path)/hqdefault.jpg"
+        
+        guard let url = URL(string: forThumbnail ? thumbnailUrlString : urlString) else { return }
         
         task = URLSession.shared.dataTask(with: url) { data, _, _ in
             if let data = data, let imageToCache = UIImage(data: data) {

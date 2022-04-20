@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct TrailerOverlayView: View {
-    let backdrop: String?
+    let thumbnail: String?
+    let clipHeightMultiplier: Double
     
     /// For the Gradient
     private let gradient = LinearGradient(
@@ -21,11 +22,15 @@ struct TrailerOverlayView: View {
     )
     
     var body: some View {
-        UrlImageView(path: backdrop, defaultImage: .backdrop)
+        let clipHeight = UIScreen.main.bounds.height * clipHeightMultiplier
+        
+        UrlImageView(path: thumbnail, defaultImage: .backdrop, forThumbnail: true)
+            .frame(width: 1.65 * clipHeight , height: clipHeight)
             .clipped()
             .overlay(
                 ZStack(alignment: .bottom) {
-                    UrlImageView(path: backdrop, defaultImage: .backdrop)
+                    UrlImageView(path: thumbnail, defaultImage: .backdrop, forThumbnail: true)
+                        .frame(width: 1.65 * clipHeight , height: clipHeight)
                         .blur(radius: 20)
                         .padding(-20)
                         .clipped()
@@ -35,5 +40,6 @@ struct TrailerOverlayView: View {
                     
                 } /// End of overlay Zstack
             ) /// End of Overlay
+            .cornerRadius(12)
     }
 }

@@ -6,42 +6,44 @@
 //
 
 import SwiftUI
-import WebKit
 import YouTubePlayerKit
 
 struct TrailerPlayer: View {
-    @Binding var playTrailer: Bool
+    @State private var playTrailer: Bool = false
     let videoID: String
-    let backdrop: String?
+    let clipHeightMultiplier: Double
     
     var body: some View {
+        let clipHeight = UIScreen.main.bounds.height * clipHeightMultiplier
+        
         Group {
+            
             if playTrailer == false {
                 ZStack {
-                    TrailerOverlayView(backdrop: backdrop)
-                    
+                    TrailerOverlayView(thumbnail: videoID, clipHeightMultiplier: clipHeightMultiplier)
                     Button(action: {
                         withAnimation {
                             playTrailer = true
                         }
                     }) {
-                        Image(systemName: "play.fill")
+                        PlayButton()
                     }
-                    .font(.system(size: 35, weight: .bold))
-                    .foregroundColor(.red)
                 } /// End of ZStack
-                .frame(height: screen.height * 0.35)
+                
             } else {
                 VStack {
                     YouTubePlayerView(
-                        YouTubePlayer(
+                        .init(
                             source: .video(id: videoID),
                             configuration: .init(
-                                autoPlay: true,
-                                playInline: true
+                                isUserInteractionEnabled: true,
+                                autoPlay: true
                             )
                         )
                     )
+                    .frame(width: 1.65 * clipHeight , height: clipHeight)
+                    .background(Color(.systemBackground))
+                    .cornerRadius(12)
                     .overlay(alignment: .bottomLeading) {
                         Button(action: {     // To Stop the trailer
                             withAnimation {
@@ -60,14 +62,13 @@ struct TrailerPlayer: View {
     }
 }
 
-//struct VideoView: UIViewRepresentable {
-//    let videoID: String
-//
-//    func makeUIView(context: Context) -> WKWebView {
-//        return WKWebView()
-//    }
-//
-//    func updateUIView(_ uiView: WKWebView, context: Context) {
-//        <#code#>
-//    }
-//}
+struct PlayButton: View {
+    var body: some View {
+        Image(systemName: "play.fill")
+            .font(.system(size: 30, weight: .bold))
+            .foregroundColor(.red)
+            .padding()
+            .background(Color.black)
+            .clipShape(Circle())
+    }
+}

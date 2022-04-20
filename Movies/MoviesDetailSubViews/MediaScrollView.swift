@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
-import YouTubePlayerKit
 
 struct MediaScrollView: View {
     let posters: [String?]
     let videos: [VideoResults]
     let backdrops: [String?]
-    let clipHeight: CGFloat = UIScreen.main.bounds.height * 0.25
+    let clipHeightMultiplier: Double = 0.25
     
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {
@@ -39,17 +38,7 @@ struct MediaScrollView: View {
                             ForEach(videos, id: \.self) { clip in
                                 
                                 VStack(alignment: .leading) {
-                                    YouTubePlayerView(
-                                        .init(
-                                            source: .video(id: clip.key),
-                                            configuration: .init(
-                                                isUserInteractionEnabled: true
-                                            )
-                                        )
-                                    )
-                                    .frame(width: 1.65 * clipHeight , height: clipHeight)
-                                    .background(Color(.systemBackground))
-                                    .cornerRadius(12)
+                                    TrailerPlayer(videoID: clip.key, clipHeightMultiplier: clipHeightMultiplier)
                                     if let name = clip.name {
                                         Text(name)
                                             .movieFont(style: .bold, size: labelSize)

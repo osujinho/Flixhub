@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import YouTubePlayerKit
 
 struct VideoGallery: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let videos: [VideoResults]
-    let clipWidth: CGFloat = UIScreen.main.bounds.width * 0.9
+    let clipHeightMultiplier: Double = 0.26
     
     var body: some View {
         ZStack {
@@ -21,17 +20,8 @@ struct VideoGallery: View {
                 LazyVStack(alignment: .leading) {
                     ForEach(videos, id: \.self) { clip in
                         VStack(alignment: .leading) {
-                            YouTubePlayerView(
-                                .init(
-                                    source: .video(id: clip.key),
-                                    configuration: .init(
-                                        isUserInteractionEnabled: true
-                                    )
-                                )
-                            )
-                            .frame(width: clipWidth , height: clipWidth * 0.61)
-                            .background(Color(.systemBackground))
-                            .cornerRadius(12)
+                            TrailerPlayer(videoID: clip.key, clipHeightMultiplier: clipHeightMultiplier)
+                            
                             if let name = clip.name {
                                 Text(name)
                                     .movieFont(style: .bold, size: labelSize)

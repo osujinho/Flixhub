@@ -11,21 +11,14 @@ struct UrlImageView: View {
     @ObservedObject private var imageLoader: ImageLoader
     private let path: String?
     private let defaultImage: DefaultImage
+    private let forThumbnail: Bool
     private let cache = CacheManager.cacheManager
     
-    init(path: String?, defaultImage: DefaultImage) {
+    init(path: String?, defaultImage: DefaultImage, forThumbnail: Bool = false) {
         self.path = path
         self.defaultImage = defaultImage
-        self.imageLoader = ImageLoader(path)
-    }
-    
-    var image: UIImage? {
-        /// Image exists in the cache so we return it
-        if let imageFromCache = cache.get(name: path ?? "") {
-            return imageFromCache
-        }
-        /// Image is not in the cache so we do a network call to get ot
-        return imageLoader.data.flatMap(UIImage.init)
+        self.forThumbnail = forThumbnail
+        self.imageLoader = ImageLoader(path, forThumbnail: forThumbnail)
     }
     
     var body: some View {

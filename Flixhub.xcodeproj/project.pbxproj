@@ -247,6 +247,16 @@
 			path = TabViews;
 			sourceTree = "<group>";
 		};
+		B3811E1628108488008EED76 /* VideoViews */ = {
+			isa = PBXGroup;
+			children = (
+				B36A5B5627C85DAA00332610 /* TrailerOverlayView.swift */,
+				B368F61127D2D8D000E03E4D /* TrailerPlayer.swift */,
+				B3AD41D227FB6C4200BF71F8 /* VideoGallery.swift */,
+			);
+			path = VideoViews;
+			sourceTree = "<group>";
+		};
 		B3AD41C427F7549F00BF71F8 /* ShowDetailSubViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,8 +344,6 @@
 				B33A341527BC877A00EB05D9 /* PosterView.swift */,
 				B3AD41BE27F5FBC500BF71F8 /* CastAndCrewView.swift */,
 				B3C9CA9227C5BA4E00BC9DA9 /* ResultRowView.swift */,
-				B36A5B5627C85DAA00332610 /* TrailerOverlayView.swift */,
-				B368F61127D2D8D000E03E4D /* TrailerPlayer.swift */,
 				B368F61727D2D96200E03E4D /* LoadingView.swift */,
 				B368F62327D6932D00E03E4D /* UrlImageView.swift */,
 				B368F62B27D90D1E00E03E4D /* SpashView.swift */,
@@ -346,7 +354,6 @@
 				B30F133927E8EDDB00FE7641 /* ImageGallery.swift */,
 				B30F134627F0D86A00FE7641 /* ImageFullView.swift */,
 				B3AD41CD27F791AE00BF71F8 /* CompanyAndCountry.swift */,
-				B3AD41D227FB6C4200BF71F8 /* VideoGallery.swift */,
 				B3AD41E027FD0F1D00BF71F8 /* ImageBackgroundView.swift */,
 				B3811E08280F9E31008EED76 /* GridViewToggleView.swift */,
 			);
@@ -373,6 +380,7 @@
 		B3CF1B9F27A99C11004CD7F2 /* Movies */ = {
 			isa = PBXGroup;
 			children = (
+				B3811E1628108488008EED76 /* VideoViews */,
 				B3811E0C2810666E008EED76 /* TabViews */,
 				B33A340E27BC637600EB05D9 /* Modifiers */,
 				B3B0A67527B2E0D800810587 /* Extensions */,
