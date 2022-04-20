@@ -64,7 +64,7 @@ struct MovieDetailView: View {
                                     case .media:
                                         MediaScrollView(
                                             posters: viewModel.tmdbDetail.images.posters.map{ $0.path },
-                                            videos: viewModel.tmdbDetail.videos.results,
+                                            videos: viewModel.videoClips,
                                             backdrops: viewModel.tmdbDetail.images.backdrops.map{ $0.path })
                                     case .recommended:
                                         RecommendAndSimilarView(

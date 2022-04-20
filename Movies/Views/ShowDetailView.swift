@@ -67,7 +67,7 @@ struct ShowDetailView: View {
                                     case .media:
                                         MediaScrollView(
                                             posters: viewModel.showDetail.images.posters.map{ $0.path },
-                                            videos: viewModel.showDetail.videos.results,
+                                            videos: viewModel.videoClips,
                                             backdrops: viewModel.showDetail.images.backdrops.map{ $0.path })
                                     case .seasons:
                                         ShowSeasonsView(seasons: viewModel.showDetail.seasons)

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WebKit
 import YouTubePlayerKit
 
 struct TrailerPlayer: View {
@@ -58,3 +59,15 @@ struct TrailerPlayer: View {
         }
     }
 }
+
+//struct VideoView: UIViewRepresentable {
+//    let videoID: String
+//
+//    func makeUIView(context: Context) -> WKWebView {
+//        return WKWebView()
+//    }
+//
+//    func updateUIView(_ uiView: WKWebView, context: Context) {
+//        <#code#>
+//    }
+//}

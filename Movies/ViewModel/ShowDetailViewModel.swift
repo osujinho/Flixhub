@@ -41,6 +41,10 @@ import SwiftUI
         return crews
     }
     
+    var videoClips: [VideoResults] {
+        showDetail.videos.results.filter { $0.site.lowercased() == "youtube" }
+    }
+    
     var runtimes: String {
         guard let showRuntimes = showDetail.runtime else { return "N/A" }
         

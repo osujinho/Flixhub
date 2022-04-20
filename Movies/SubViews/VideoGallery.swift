@@ -11,6 +11,7 @@ import YouTubePlayerKit
 struct VideoGallery: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let videos: [VideoResults]
+    let clipWidth: CGFloat = UIScreen.main.bounds.width * 0.9
     
     var body: some View {
         ZStack {
@@ -18,22 +19,27 @@ struct VideoGallery: View {
             
             ScrollView {
                 LazyVStack(alignment: .leading) {
-                    ForEach(videos.filter{ $0.site.lowercased() == "youtube" }, id: \.self) { video in
+                    ForEach(videos, id: \.self) { clip in
                         VStack(alignment: .leading) {
                             YouTubePlayerView(
-                                YouTubePlayer(
-                                    source: .video(id: video.key),
+                                .init(
+                                    source: .video(id: clip.key),
                                     configuration: .init(
-                                        autoPlay: false,
-                                        playInline: true
+                                        isUserInteractionEnabled: true
                                     )
                                 )
                             )
-                            if let name = video.name {
+                            .frame(width: clipWidth , height: clipWidth * 0.61)
+                            .background(Color(.systemBackground))
+                            .cornerRadius(12)
+                            if let name = clip.name {
                                 Text(name)
                                     .movieFont(style: .bold, size: labelSize)
+                                    .padding(.bottom, 10)
                             }
                         }
+                        .padding(.top, 10)
+                        .padding(.horizontal)
                     }
                 }
             }

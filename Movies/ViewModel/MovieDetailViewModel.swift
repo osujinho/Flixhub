@@ -27,6 +27,10 @@ import SwiftUI  /// Need for animation
         return ""
     }
     
+    var videoClips: [VideoResults] {
+        tmdbDetail.videos.results.filter { $0.site.lowercased() == "youtube" }
+    }
+    
     var featuredCrews: [String : (id: Int, profile: String?, job: String)] {
         var crews: [String : (id: Int, profile: String?, job: String)] = [:]
         
@@ -96,17 +100,3 @@ import SwiftUI  /// Need for animation
         }
     }
 }
-
-//enum CriticsRating: Identifiable, CustomStringConvertible {
-//    case imdb, rottenTomatoes, metacritic
-//
-//    var id: CriticsRating { self }
-//
-//    var description: String {
-//        switch self {
-//        case .imdb: return "Internet Movie Database"
-//        case .rottenTomatoes: return "Rotten Tomatoes"
-//        case .metacritic: return "Metacritic"
-//        }
-//    }
-//}

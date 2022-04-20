@@ -7,6 +7,8 @@
 
 import Foundation
 
+typealias Pickable = CaseIterable & Identifiable & Hashable & CustomStringConvertible
+
 enum CreditsOption: Pickable {
     case casts, crews
     

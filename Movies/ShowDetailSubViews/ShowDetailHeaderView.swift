@@ -14,17 +14,25 @@ struct ShowDetailHeaderView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            TabView {
-                ForEach(detail.images.backdrops, id: \.self){ image in
-                    UrlImageView(path: image.path, defaultImage: .backdrop)
+            if !detail.images.backdrops.isEmpty {
+                TabView {
+                    ForEach(detail.images.backdrops, id: \.self){ image in
+                        UrlImageView(path: image.path, defaultImage: .backdrop)
+                    }
                 }
+                .frame(height: 250)
+                .clipped()
+                .cornerRadius(5)
+                .padding(.top, -topPaddingSize)
+                .tabViewStyle(PageTabViewStyle())
+                .animation(.easeInOut, value: 1)
+            } else {
+                Rectangle()
+                    .fill(Color("pickerColor"))
+                    .frame(width: UIScreen.main.bounds.width, height: 250)
+                    .padding(.top, -topPaddingSize)
             }
-            .frame(height: 250)
-            .clipped()
-            .cornerRadius(5)
-            .padding(.top, -topPaddingSize)
-            .tabViewStyle(PageTabViewStyle())
-            .animation(.easeInOut, value: 1)
+            
             
             HStack(alignment: .lastTextBaseline, spacing: 20) {
                 UrlImageView(path: detail.poster, defaultImage: .poster)

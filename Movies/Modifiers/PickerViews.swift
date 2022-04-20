@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-typealias Pickable = CaseIterable & Identifiable & Hashable & CustomStringConvertible
-
 struct CustomPickerView<Enum: Pickable>: View {
     @Binding private var selection: Enum
     let backgroundColor: String
+    @Namespace private var animation
     
     init(selection: Binding<Enum>, backgroundColor: String) {
         self._selection = selection
@@ -32,15 +31,27 @@ struct CustomPickerView<Enum: Pickable>: View {
                         .padding(.bottom, 10)
                         .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .gray)
                         .overlay(
-                            Rectangle()
-                                .frame(width: 0.9 * width, height: 3)
-                                .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .clear),
-                            alignment: .bottom
+                            ZStack {
+                                SelectedPickerLine()
+                                    .fill(Color.clear)
+                                    .frame(width: 0.9 * width, height: 3)
+                                
+                                if selection == value{
+                                    
+                                    SelectedPickerLine()
+                                        .fill(.blue.opacity(0.7))
+                                        .frame(width: 0.9 * width, height: 3)
+                                        .matchedGeometryEffect(id: "Tab_Change", in: animation)
+                                }
+                            }
+                            
+                            ,alignment: .bottom
                         )
                         .onTapGesture {
-                            self.selection = value
+                            withAnimation {
+                                self.selection = value
+                            }
                         }
-                        .animation(Animation.easeInOut(duration: 0.3), value: selection)
                 }
             }
             .padding(.horizontal)
@@ -52,23 +63,12 @@ struct CustomPickerView<Enum: Pickable>: View {
     }
 }
 
-struct GridViewToggle: View {
-    @Binding var showGridView: Bool
+struct SelectedPickerLine: Shape {
     
-    var body: some View {
-        HStack{
-            Spacer()
-            
-            Button(action: {
-                withAnimation {
-                    showGridView.toggle()
-                }
-            }, label: {
-                Image(systemName: showGridView ? "list.bullet.circle.fill" : "circle.grid.3x3.circle.fill")
-                    .renderingMode(.template)
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.primary) /// Fix after implementing Both dark and light mode
-            })
-        }
+    func path(in rect: CGRect) -> Path {
+        
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [.bottomLeft,.bottomRight], cornerRadii: CGSize(width: 10, height: 10))
+        
+        return Path(path.cgPath)
     }
 }

@@ -47,7 +47,7 @@ struct ImageBackgroundView: View {
         } else {
             Rectangle()
                 .fill(gradient)
-                .frame(width: backdropWidth, height: backdropHeight)
+                .frame(width: backdropWidth, height: backdropHeight + 60)
         }
     }
 }
