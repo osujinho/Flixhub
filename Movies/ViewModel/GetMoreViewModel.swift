@@ -52,19 +52,19 @@ import Foundation
             do {
                 switch movieType {
                 case .upcoming:
-                    let upcoming: Upcoming = try await networkManager.makeCall(url: url)
+                    let upcoming: MovieBrowseData = try await networkManager.makeCall(url: url)
                     movies.append(contentsOf: upcoming.results)
                 case .nowPlaying:
-                    let nowPlaying: NowPlaying = try await networkManager.makeCall(url: url)
+                    let nowPlaying: MovieBrowseData = try await networkManager.makeCall(url: url)
                     movies.append(contentsOf: nowPlaying.results)
                 case .popular:
-                    let popular: Popular = try await networkManager.makeCall(url: url)
+                    let popular: MovieBrowseData = try await networkManager.makeCall(url: url)
                     movies.append(contentsOf: popular.results)
                 case .topRated:
-                    let topRated: TopRated = try await networkManager.makeCall(url: url)
+                    let topRated: MovieBrowseData = try await networkManager.makeCall(url: url)
                     movies.append(contentsOf: topRated.results)
                 case .recommendMovies, .similarMovie:
-                    let recommendAndSimilar: RecommendAndSimilar = try await networkManager.makeCall(url: url)
+                    let recommendAndSimilar: MovieBrowseData = try await networkManager.makeCall(url: url)
                     movies.append(contentsOf: recommendAndSimilar.results)
                     
                 default:

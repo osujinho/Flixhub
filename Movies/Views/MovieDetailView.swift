@@ -60,14 +60,14 @@ struct MovieDetailView: View {
                                 RecommendAndSimilarView(
                                     viewModel: GetMoreViewModel(),
                                     movieType: .recommendMovies,
-                                    totalPages: viewModel.recommendedMovies.pages,
+                                    totalPages: viewModel.recommendedMovies.total_pages,
                                     results: viewModel.recommendedMovies.results
                                 )
                             case .similar:
                                 RecommendAndSimilarView(
                                     viewModel: GetMoreViewModel(),
                                     movieType: .similarMovie,
-                                    totalPages: viewModel.similarMovies.pages,
+                                    totalPages: viewModel.similarMovies.total_pages,
                                     results: viewModel.similarMovies.results
                                 )
                             }

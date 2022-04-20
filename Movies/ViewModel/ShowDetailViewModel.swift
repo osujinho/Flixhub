@@ -10,8 +10,8 @@ import SwiftUI
 @MainActor class ShowDetailViewModel: ObservableObject {
     @Published private(set) var errorMessage: String = ""
     @Published private(set) var showDetail = ShowDetail(id: 0, name: "", originalName: "", firstAirDate: nil, lastAirDate: nil, inProduction: nil, runtime: nil, creators: [], genres: [], backdrop: nil, lastEpisode: nil, nextEpisode: nil, poster: nil, totalEpisodes: nil, totalSeasons: nil, networks: [], companies: [], countries: [], spokenLanguages: [], synopsis: nil, status: nil, type: nil, originalLanguage: nil, seasons: [], videos: Video(results: []), credits: Credit(cast: [], crew: []), images: MovieImages(backdrops: [], posters: []), rating: nil)
-    @Published private(set) var similarShows = RecommendAndSimilarShow(results: [], total_pages: 0)
-    @Published private(set) var recommendShows = RecommendAndSimilarShow(results: [], total_pages: 0)
+    @Published private(set) var similarShows = ShowBrowseData(results: [], total_pages: 0)
+    @Published private(set) var recommendShows = ShowBrowseData(results: [], total_pages: 0)
     @Published private(set) var showRatings = ShowRatings(results: [])
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true

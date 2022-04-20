@@ -23,8 +23,9 @@ struct MoreShowRowView: View {
                 )
             
             VStack(alignment: .leading, spacing: 5) {
-                Text(show.name.uppercased())
+                Text(show.name)
                     .movieFont(style: .bold, size: listRowTitleSize)
+                    .multilineTextAlignment(.leading)
                 
                 Text(getDate(date: show.date ,forYear: false))
                     .movieFont(style: .regular, size: labelSize)

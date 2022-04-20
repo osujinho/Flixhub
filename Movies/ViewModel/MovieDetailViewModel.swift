@@ -11,8 +11,8 @@ import SwiftUI  /// Need for animation
     @Published private(set) var errorMessage: String = ""
     @Published private(set) var omdbDetail = OMDBDetail(rated: "", awards: nil, boxOffice: nil, dvd: nil, ratings: [])
     @Published private(set) var tmdbDetail = TMDBDetail(backdrop: nil, poster: nil, releaseDate: nil, tmdbID: 0, title: "", originalTitle: nil, originalLanguage: nil, genres: [], plot: nil, runtime: 0, imdbID: "", status: nil, rating: nil, budget: nil, revenue: nil, countries: [], companies: [], spokenLanguages: [], credits: Credit(cast: [], crew: []), videos: Video(results: []), images: MovieImages(backdrops: [], posters: []))
-    @Published private(set) var recommendedMovies = RecommendAndSimilar(pages: 0, results: [])
-    @Published private(set) var similarMovies = RecommendAndSimilar(pages: 0, results: [])
+    @Published private(set) var recommendedMovies = MovieBrowseData(results: [], total_pages: 0)
+    @Published private(set) var similarMovies = MovieBrowseData(results: [], total_pages: 0)
     @Published var hasError: Bool = false
     @Published private(set) var isLoading: Bool = true
     @Published var playTrailer: Bool = false

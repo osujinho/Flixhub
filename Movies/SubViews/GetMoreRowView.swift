@@ -23,7 +23,7 @@ struct GetMoreRowView: View {
                 )
             
             VStack(alignment: .leading, spacing: 5) {
-                Text(movie.title.uppercased())
+                Text(movie.title)
                     .multilineTextAlignment(.leading)
                     .movieFont(style: .bold, size: listRowTitleSize)
                 

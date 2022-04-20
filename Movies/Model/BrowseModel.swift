@@ -26,27 +26,7 @@ struct TMDBResult: Hashable, Decodable {
     }
 }
 
-struct Upcoming: Hashable, Decodable {
-    let results: [TMDBResult]
-    let total_pages: Int
-}
-
-struct NowPlaying: Hashable, Decodable {
-    let results: [TMDBResult]
-    let total_pages: Int
-}
-
-struct TMDBSearch: Hashable, Decodable {
-    let results: [TMDBResult]
-    let total_pages: Int
-}
-
-struct TopRated: Hashable, Decodable {
-    let results: [TMDBResult]
-    let total_pages: Int
-}
-
-struct Popular: Hashable, Decodable {
+struct MovieBrowseData: Hashable, Decodable {
     let results: [TMDBResult]
     let total_pages: Int
 }

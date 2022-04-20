@@ -1,5 +1,5 @@
 //
-//  RecommendAndSimilarShow.swift
+//  RecommendAndSimilarShowView.swift
 //  Flixhub
 //
 //  Created by Michael Osuji on 4/4/22.

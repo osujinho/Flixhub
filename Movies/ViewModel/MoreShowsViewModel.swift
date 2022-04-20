@@ -52,7 +52,7 @@ import Foundation
             do {
                 switch showType {
                 case .recommendShow, .similarShow:
-                    let recommendAndSimilar: RecommendAndSimilarShow = try await networkManager.makeCall(url: url)
+                    let recommendAndSimilar: ShowBrowseData = try await networkManager.makeCall(url: url)
                     shows.append(contentsOf: recommendAndSimilar.results)
                 default:
                     self.isLoading = false

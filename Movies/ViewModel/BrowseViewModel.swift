@@ -8,10 +8,10 @@
 import Foundation
 
 @MainActor class BrowseViewModel: ObservableObject {
-    @Published private(set) var upcoming = Upcoming(results: [TMDBResult](), total_pages: 0)
-    @Published private(set) var popular = Popular(results: [TMDBResult](), total_pages: 0)
-    @Published private(set) var nowPlaying = NowPlaying(results: [TMDBResult](), total_pages: 0)
-    @Published private(set) var topRated = TopRated(results: [TMDBResult](), total_pages: 0)
+    @Published private(set) var upcoming = MovieBrowseData(results: [], total_pages: 0)
+    @Published private(set) var popular = MovieBrowseData(results: [], total_pages: 0)
+    @Published private(set) var nowPlaying = MovieBrowseData(results: [], total_pages: 0)
+    @Published private(set) var topRated = MovieBrowseData(results: [], total_pages: 0)
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true
     @Published private(set) var errorMessage: String = ""

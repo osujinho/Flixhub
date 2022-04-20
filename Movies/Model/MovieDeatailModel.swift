@@ -137,16 +137,6 @@ struct Ratings: Hashable, Decodable {
     }
 }
 
-struct RecommendAndSimilar: Hashable, Decodable {
-    let pages: Int
-    let results: [TMDBResult]
-    
-    private enum CodingKeys: String, CodingKey {
-        case pages = "total_pages"
-        case results
-    }
-}
-
 struct SpokenLanguage: Hashable, Decodable {
     let name: String?
     let code: String?
