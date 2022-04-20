@@ -7,19 +7,6 @@
 
 import SwiftUI
 
-/// To round only certain corners
-struct RoundedCornersShape: Shape {
-    let corners: UIRectCorner
-    let radius: CGFloat
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect,
-                                byRoundingCorners: corners,
-                                cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
-
 struct DetailLabelAndInfoView: View {
     let label: String
     let info: String
@@ -76,4 +63,12 @@ struct RowLabelAndInfoView: View {
     }
 }
 
-
+struct CustomShape: Shape {
+    
+    func path(in rect: CGRect) -> Path {
+        
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [.bottomLeft,.bottomRight], cornerRadii: CGSize(width: 10, height: 10))
+        
+        return Path(path.cgPath)
+    }
+}

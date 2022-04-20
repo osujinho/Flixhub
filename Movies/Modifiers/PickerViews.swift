@@ -32,13 +32,13 @@ struct CustomPickerView<Enum: Pickable>: View {
                         .foregroundColor(self.selection == value ? .blue.opacity(0.7) : .gray)
                         .overlay(
                             ZStack {
-                                SelectedPickerLine()
+                                CustomShape()
                                     .fill(Color.clear)
                                     .frame(width: 0.9 * width, height: 3)
                                 
                                 if selection == value{
                                     
-                                    SelectedPickerLine()
+                                    CustomShape()
                                         .fill(.blue.opacity(0.7))
                                         .frame(width: 0.9 * width, height: 3)
                                         .matchedGeometryEffect(id: "Tab_Change", in: animation)
@@ -63,12 +63,4 @@ struct CustomPickerView<Enum: Pickable>: View {
     }
 }
 
-struct SelectedPickerLine: Shape {
-    
-    func path(in rect: CGRect) -> Path {
-        
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [.bottomLeft,.bottomRight], cornerRadii: CGSize(width: 10, height: 10))
-        
-        return Path(path.cgPath)
-    }
-}
+

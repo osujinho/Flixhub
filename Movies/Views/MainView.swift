@@ -9,6 +9,9 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject private var viewModel: BrowseViewModel
+    @State var selectedTab: Tab = .movies
+    var edges = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }?.safeAreaInsets
+    @Namespace var animation
     
     init() {
         self._viewModel = StateObject(wrappedValue: BrowseViewModel())
@@ -18,22 +21,40 @@ struct MainView: View {
     }
     
     var body: some View {
+        
         VStack {
             if viewModel.isLoading {
                 SpashView()
             } else {
-                TabView {
-                    BrowseView(viewModel: viewModel)
-                        .tabItem {
-                            Label("Browse", systemImage: "list.dash")
+                GeometryReader { _ in
+                    ZStack {
+                        BrowseView(viewModel: viewModel)
+                            .opacity(selectedTab == .movies ? 1 : 0)
+                        
+                        SearchView()
+                            .opacity(selectedTab == .search ? 1 : 0)
+                    } /// End of ZStack
+                } /// end of Geometry reader
+                
+                HStack(spacing: 0){
+                    
+                    ForEach(Tab.allCases) {tab in
+                        
+                        TabButtonView(tab: tab, selectedTab: $selectedTab, animation: animation)
+                        
+                        if tab != .search {
+                            Spacer(minLength: 0)
                         }
-                    SearchView()
-                        .tabItem {
-                            Label("Search", systemImage: "magnifyingglass")
-                        }
+                    }
                 }
-            }
-        }
+                .padding(.horizontal,30)
+                // for iphone like 8 and SE
+                .padding(.bottom,edges!.bottom == 0 ? 15 : edges!.bottom)
+                .background(Color("tabColor"))
+            } /// End of else block
+        } /// End of Mother VStack
+        .ignoresSafeArea(.all, edges: .bottom)
+        .background(Color("background").ignoresSafeArea(.all, edges: .all))
         .task {
             await viewModel.fetchMovies(type: .upcoming, value: "1")
             await viewModel.fetchMovies(type: .nowPlaying, value: "1")

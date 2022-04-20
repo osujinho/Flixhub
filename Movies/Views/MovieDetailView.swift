@@ -26,71 +26,60 @@ struct MovieDetailView: View {
         ZStack {
             Color("background").edgesIgnoringSafeArea(.all)
             
-            Group {
-                if viewModel.isLoading {
-                    LoadingView(
-                        heading: "Loading details on \(movieTitle)",
-                        poster: imagePath
-                    )
-                    .transition(.scale)
-                } else {
-                    GeometryReader{ proxy in
-                        ScrollView {
-                            LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
-                                // top View
-                                MovieDetailTopView(
-                                    playTrailer: $viewModel.playTrailer,
-                                    videoID: viewModel.youtubeKey,
-                                    detail: viewModel.tmdbDetail,
-                                    rated: viewModel.omdbDetail.rated,
-                                    topSafeArea: proxy.safeAreaInsets.top
+            GeometryReader{ proxy in
+                ScrollView {
+                    LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
+                        // top View
+                        MovieDetailTopView(
+                            playTrailer: $viewModel.playTrailer,
+                            videoID: viewModel.youtubeKey,
+                            detail: viewModel.tmdbDetail,
+                            rated: viewModel.omdbDetail.rated,
+                            topSafeArea: proxy.safeAreaInsets.top
+                        )
+                        
+                        // header
+                        Section(header:
+                                    CustomPickerView(selection: $viewModel.mediaOptions, backgroundColor: "pickerColor")
+                            .padding(.bottom)
+                        ) {
+                            switch viewModel.mediaOptions {
+                            case .about:
+                                MovieAboutView(
+                                    tmdbDetail: viewModel.tmdbDetail,
+                                    ombdDetail: viewModel.omdbDetail,
+                                    spokenLanguages: viewModel.spokenLanguages)
+                            case .casts:
+                                CastView(casts: viewModel.tmdbDetail.credits.cast)
+                            case .crew:
+                                FeaturedCrewView(crews: viewModel.featuredCrews)
+                            case .media:
+                                MediaScrollView(
+                                    posters: viewModel.tmdbDetail.images.posters.map{ $0.path },
+                                    videos: viewModel.videoClips,
+                                    backdrops: viewModel.tmdbDetail.images.backdrops.map{ $0.path })
+                            case .recommended:
+                                RecommendAndSimilarView(
+                                    viewModel: GetMoreViewModel(),
+                                    movieType: .recommendMovies,
+                                    totalPages: viewModel.recommendedMovies.pages,
+                                    results: viewModel.recommendedMovies.results
                                 )
-                                
-                                // header
-                                Section(header:
-                                            CustomPickerView(selection: $viewModel.mediaOptions, backgroundColor: "pickerColor")
-                                    .padding(.bottom)
-                                ) {
-                                    switch viewModel.mediaOptions {
-                                    case .about:
-                                        MovieAboutView(
-                                            tmdbDetail: viewModel.tmdbDetail,
-                                            ombdDetail: viewModel.omdbDetail,
-                                            spokenLanguages: viewModel.spokenLanguages)
-                                    case .casts:
-                                        CastView(casts: viewModel.tmdbDetail.credits.cast)
-                                    case .crew:
-                                        FeaturedCrewView(crews: viewModel.featuredCrews)
-                                    case .media:
-                                        MediaScrollView(
-                                            posters: viewModel.tmdbDetail.images.posters.map{ $0.path },
-                                            videos: viewModel.videoClips,
-                                            backdrops: viewModel.tmdbDetail.images.backdrops.map{ $0.path })
-                                    case .recommended:
-                                        RecommendAndSimilarView(
-                                            viewModel: GetMoreViewModel(),
-                                            movieType: .recommendMovies,
-                                            totalPages: viewModel.recommendedMovies.pages,
-                                            results: viewModel.recommendedMovies.results
-                                        )
-                                    case .similar:
-                                        RecommendAndSimilarView(
-                                            viewModel: GetMoreViewModel(),
-                                            movieType: .similarMovie,
-                                            totalPages: viewModel.similarMovies.pages,
-                                            results: viewModel.similarMovies.results
-                                        )
-                                    }
-                                }
-                                .frame(alignment: .leading)
+                            case .similar:
+                                RecommendAndSimilarView(
+                                    viewModel: GetMoreViewModel(),
+                                    movieType: .similarMovie,
+                                    totalPages: viewModel.similarMovies.pages,
+                                    results: viewModel.similarMovies.results
+                                )
                             }
                         }
+                        .frame(alignment: .leading)
                     }
-                    .transition(.slide)
                 }
             }
+            .transition(.slide)
         }
-        .background(Color("background"))
         .task {
             await viewModel.getMovieDetail(id: movieID)
         }
