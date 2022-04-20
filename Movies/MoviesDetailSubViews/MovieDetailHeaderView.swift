@@ -1,15 +1,15 @@
 //
-//  ShowDetailHeaderView.swift
+//  MovieDetailHeaderView.swift
 //  Flixhub
 //
-//  Created by Michael Osuji on 4/1/22.
+//  Created by Michael Osuji on 4/20/22.
 //
 
 import SwiftUI
 
-struct ShowDetailHeaderView: View {
+struct MovieDetailHeaderView: View {
     @Environment(\.colorScheme) var colorScheme
-    let detail: ShowDetail
+    let detail: TMDBDetail
     let topPaddingSize: CGFloat
     
     var body: some View {
@@ -44,14 +44,14 @@ struct ShowDetailHeaderView: View {
                     .padding(.top, -50)
                 
                 VStack(alignment: .leading) {
-                    Text(detail.name.capitalized)
+                    Text(detail.title)
                         .movieFont(style: .bold, size: movieAndShowTitleSize)
                         .multilineTextAlignment(.leading)
                     HStack {
-                        Text(getDate(date: detail.firstAirDate,forYear: true))
+                        Text(getDate(date: detail.releaseDate,forYear: true))
                         Text("•")
                             .font(.system(size: 30))
-                        Text(detail.status?.capitalized ?? "No Status")
+                        Text(stringToTime(strTime: detail.runtime))
                     }
                     .foregroundColor(.secondary)
                     .movieFont(style: .regular, size: personDetailHeaderSize)
