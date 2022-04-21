@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PersonCrewMovieView: View {
     @State private var showGridView = false
-    let columns = [GridItem(.adaptive(minimum: 110, maximum: 130))]
     let movies: [(commonData: CrewForPerson.CommonData, movieData: PersonMovieData)]
     
     var body: some View {

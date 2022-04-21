@@ -16,8 +16,6 @@ struct GetMoreView: View {
     let movies: [TMDBResult]
     let totalPages: Int
     
-    let columns = [GridItem(.adaptive(minimum: 110, maximum: 130))]
-    
     init(header: String, movieType: MovieType, movies: [TMDBResult], totalPages: Int) {
         self._viewModel = StateObject(wrappedValue: GetMoreViewModel())
         self.header = header

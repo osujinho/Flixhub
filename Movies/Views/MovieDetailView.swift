@@ -57,11 +57,10 @@ struct MovieDetailView: View {
                                     videos: viewModel.videoClips,
                                     backdrops: viewModel.tmdbDetail.images.backdrops.map{ $0.path })
                             case .recommended:
-                                RecommendAndSimilarView(
-                                    viewModel: GetMoreViewModel(),
-                                    movieType: .recommendMovies,
+                                RecommendMoviesView(
                                     totalPages: viewModel.recommendedMovies.total_pages,
-                                    results: viewModel.recommendedMovies.results
+                                    results: viewModel.recommendedMovies.results,
+                                    movieID: movieID
                                 )
                             case .similar:
                                 RecommendAndSimilarView(

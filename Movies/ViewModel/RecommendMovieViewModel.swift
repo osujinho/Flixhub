@@ -1,13 +1,13 @@
 //
-//  GetMoreViewModel.swift
-//  Movies
+//  RecommendMovieViewModel.swift
+//  Flixhub
 //
-//  Created by Michael Osuji on 3/18/22.
+//  Created by Michael Osuji on 4/20/22.
 //
 
 import Foundation
 
-@MainActor class GetMoreViewModel: ObservableObject {
+@MainActor class RecommendMovieViewModel: ObservableObject {
     @Published var movies: [TMDBResult] = []
     @Published private(set) var errorMessage: String = ""
     @Published var hasError: Bool = false
@@ -20,11 +20,11 @@ import Foundation
     
     private var currentPage: Int = 2
     private var fetchTask: Task<Void, Never>?
-    var movieType: MovieType = .upcoming
     var totalPages: Int = 1
+    var movieID: String = ""
     var currentMovie: TMDBResult?
     
-    var canLoadMore: Bool {
+    private var canLoadMore: Bool {
         currentPage <= totalPages ? true : false
     }
     
@@ -47,30 +47,12 @@ import Foundation
             self.hasError = false
             self.isLoading = true
             
-            let url = urlManager.buildURL(movieType: movieType, value: String( currentPage ))
+            let url = urlManager.buildURL(movieType: .recommendMovies, id: movieID ,value: String( currentPage ))
+            print(url)
             
             do {
-                switch movieType {
-                case .upcoming:
-                    let upcoming: MovieBrowseData = try await networkManager.makeCall(url: url)
-                    getUniqueResults(results: upcoming.results)
-                case .nowPlaying:
-                    let nowPlaying: MovieBrowseData = try await networkManager.makeCall(url: url)
-                    getUniqueResults(results: nowPlaying.results)
-                case .popular:
-                    let popular: MovieBrowseData = try await networkManager.makeCall(url: url)
-                    getUniqueResults(results: popular.results)
-                case .topRated:
-                    let topRated: MovieBrowseData = try await networkManager.makeCall(url: url)
-                    getUniqueResults(results: topRated.results)
-                case .recommendMovies, .similarMovie:
-                    let recommendAndSimilar: MovieBrowseData = try await networkManager.makeCall(url: url)
-                    movies.append(contentsOf: recommendAndSimilar.results)
-                    
-                default:
-                    self.isLoading = false
-                    return
-                }
+                let recommend: MovieBrowseData = try await networkManager.makeCall(url: url)
+                getUniqueResults(results: recommend.results)
                 currentPage += 1
             } catch {
                 errorMessage = error.localizedDescription
@@ -91,4 +73,3 @@ import Foundation
         movies.append(contentsOf: uniqueResults)
     }
 }
-

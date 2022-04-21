@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PersonCastShowView: View {
     @State private var showGridView = false
-    let columns = [GridItem(.adaptive(minimum: 110, maximum: 130))]
     let shows: [(commonData: CastForPerson.CommonData, showData: PersonShowData)]
     
     var body: some View {

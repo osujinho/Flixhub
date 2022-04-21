@@ -16,8 +16,6 @@ struct MoreShowsView: View {
     let shows: [ShowResult]
     let totalPages: Int
     
-    let columns = [GridItem(.adaptive(minimum: 110, maximum: 130))]
-    
     init(header: String, showType: MovieType, shows: [ShowResult], totalPages: Int) {
         self._viewModel = StateObject(wrappedValue: MoreShowsViewModel())
         self.header = header

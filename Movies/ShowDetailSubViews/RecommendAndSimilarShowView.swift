@@ -14,8 +14,6 @@ struct RecommendAndSimilarShowView: View {
     let totalPages: Int
     let shows: [ShowResult]
     
-    let columns = [GridItem(.adaptive(minimum: 110, maximum: 130))]
-    
     var body: some View {
         Group {
             if viewModel.presentGridView {
