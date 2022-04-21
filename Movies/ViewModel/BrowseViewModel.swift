@@ -19,29 +19,20 @@ import Foundation
     private let urlManager = URLManager.urlManager
     private let networkManager = NetworkManager.networkManager
     
-    func fetchMovies(type: MovieType, value: String) async {
+    func fetchMovies() async {
         self.hasError = false
         self.isLoading = true
         
-        let url = urlManager.buildURL(movieType: type, value: value)
+        let upcomingURL = urlManager.buildURL(movieType: .upcoming, value: "1")
+        let nowPlayingURL = urlManager.buildURL(movieType: .nowPlaying, value: "1")
+        let topRatedURL = urlManager.buildURL(movieType: .topRated, value: "1")
+        let popularURL = urlManager.buildURL(movieType: .popular, value: "1")
         
         do {
-            // load JSON Object
-            switch type {
-                
-            case .upcoming:
-                upcoming = try await networkManager.makeCall(url: url)
-            case .nowPlaying:
-                nowPlaying = try await networkManager.makeCall(url: url)
-            case .topRated:
-                topRated = try await networkManager.makeCall(url: url)
-            case .popular:
-                popular = try await networkManager.makeCall(url: url)
-            default:
-                self.isLoading = false
-                return
-            }
-            
+            upcoming = try await networkManager.makeCall(url: upcomingURL)
+            nowPlaying = try await networkManager.makeCall(url: nowPlayingURL)
+            topRated = try await networkManager.makeCall(url: topRatedURL)
+            popular = try await networkManager.makeCall(url: popularURL)
         } catch {
             // Error in case data could not be loaded
             errorMessage = error.localizedDescription

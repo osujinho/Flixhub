@@ -53,10 +53,7 @@ struct MainView: View {
         .ignoresSafeArea(.all, edges: .bottom)
         .background(Color("background").ignoresSafeArea(.all, edges: .all))
         .task {
-            await viewModel.fetchMovies(type: .upcoming, value: "1")
-            await viewModel.fetchMovies(type: .nowPlaying, value: "1")
-            await viewModel.fetchMovies(type: .topRated, value: "1")
-            await viewModel.fetchMovies(type: .popular, value: "1")
+            await viewModel.fetchMovies()
         }
         .alert(isPresented: $viewModel.hasError) {
             Alert(
@@ -64,10 +61,7 @@ struct MainView: View {
                 message: Text(viewModel.errorMessage),
                 dismissButton: .destructive(Text("Retry")) {
                     Task {
-                        await viewModel.fetchMovies(type: .upcoming, value: "1")
-                        await viewModel.fetchMovies(type: .nowPlaying, value: "1")
-                        await viewModel.fetchMovies(type: .topRated, value: "1")
-                        await viewModel.fetchMovies(type: .popular, value: "1")
+                        await viewModel.fetchMovies()
                     }
                 }
             )
