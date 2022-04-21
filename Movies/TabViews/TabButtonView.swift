@@ -46,7 +46,8 @@ struct TabButtonView : View {
                 Text(tab.description)
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundColor(Color.black.opacity(selectedTab == tab ? 0.6 : 0.2))
+                    //.foregroundColor(Color.black.opacity(selectedTab == tab ? 0.6 : 0.2))
+                    .foregroundColor(selectedTab == tab ? .primary : .secondary)
             }
         }
     }
