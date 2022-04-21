@@ -11,16 +11,23 @@ struct ImageFullView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let path: String?
     let defaultImage: DefaultImage
+    let width = screen.width * 0.9
     
     var body: some View {
         ZStack {
             Color("background").edgesIgnoringSafeArea([.all])
             
-            UrlImageView(path: path, defaultImage: defaultImage)
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
-                .cornerRadius(5)
-                .padding(.horizontal, 10)
+            ScrollView(.vertical) {
+                UrlImageView(path: path, defaultImage: defaultImage)
+                    .scaledToFit()
+                    .frame(
+                        width: width,
+                        height: defaultImage == .backdrop ? (width / 1.78) : ( width * 1.5 )
+                    )
+                    .cornerRadius(5)
+                    .padding(.horizontal, 10)
+            }
+            .background(Color("background"))
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
