@@ -20,12 +20,12 @@ import Foundation
     
     private var currentPage: Int = 2
     private var fetchTask: Task<Void, Never>?
-    var showType: MovieType = .recommendShow
+    var showType: MovieType = .airingToday
     var totalPages: Int = 1
     var currentShow: ShowResult?
     
     var canLoadMore: Bool {
-        currentPage < totalPages ? true : false
+        currentPage <= totalPages ? true : false
     }
     
     func loadMoreShowIfNeeded(currentShow show: ShowResult?) async {
@@ -51,9 +51,9 @@ import Foundation
             
             do {
                 switch showType {
-                case .recommendShow, .similarShow:
-                    let recommendAndSimilar: ShowBrowseData = try await networkManager.makeCall(url: url)
-                    shows.append(contentsOf: recommendAndSimilar.results)
+                case .airingToday, .onTheAir, .popularShows, .topRatedShows:
+                    let loadedData: ShowBrowseData = try await networkManager.makeCall(url: url)
+                    getUniqueResults(results: loadedData.results)
                 default:
                     self.isLoading = false
                     return
@@ -68,5 +68,13 @@ import Foundation
                 self.isLoading = false
             }
         }
+    }
+    
+    private func getUniqueResults(results: [ShowResult]) {
+        let currentShows = Set(shows)
+        let newShows = Set(results)
+        
+        let uniqueResults = Array(newShows.subtracting(currentShows))
+        shows.append(contentsOf: uniqueResults)
     }
 }

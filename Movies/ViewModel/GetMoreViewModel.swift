@@ -51,18 +51,9 @@ import Foundation
             
             do {
                 switch movieType {
-                case .upcoming:
-                    let upcoming: MovieBrowseData = try await networkManager.makeCall(url: url)
-                    getUniqueResults(results: upcoming.results)
-                case .nowPlaying:
-                    let nowPlaying: MovieBrowseData = try await networkManager.makeCall(url: url)
-                    getUniqueResults(results: nowPlaying.results)
-                case .popular:
-                    let popular: MovieBrowseData = try await networkManager.makeCall(url: url)
-                    getUniqueResults(results: popular.results)
-                case .topRated:
-                    let topRated: MovieBrowseData = try await networkManager.makeCall(url: url)
-                    getUniqueResults(results: topRated.results)
+                case .upcoming, .nowPlaying, .popular, .topRated:
+                    let loadedData: MovieBrowseData = try await networkManager.makeCall(url: url)
+                    getUniqueResults(results: loadedData.results)
                 
                 default:
                     self.isLoading = false

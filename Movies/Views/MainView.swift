@@ -9,12 +9,14 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject private var viewModel: BrowseViewModel
+    @StateObject private var showBrowseViewModel: ShowBrowseViewModel
     @State var selectedTab: Tab = .movies
     var edges = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }?.safeAreaInsets
     @Namespace var animation
     
     init() {
         self._viewModel = StateObject(wrappedValue: BrowseViewModel())
+        self._showBrowseViewModel = StateObject(wrappedValue: ShowBrowseViewModel())
     }
     
     var body: some View {
@@ -28,10 +30,18 @@ struct MainView: View {
                         BrowseView(viewModel: viewModel)
                             .opacity(selectedTab == .movies ? 1 : 0)
                         
+                        ShowBrowseView(viewModel: showBrowseViewModel)
+                            .opacity(selectedTab == .shows ? 1 : 0)
+                        
                         SearchView()
                             .opacity(selectedTab == .search ? 1 : 0)
                     } /// End of ZStack
                 } /// end of Geometry reader
+                .onChange(of: selectedTab) { newTab in
+                    if selectedTab == .shows {
+                        Task { await showBrowseViewModel.fetchShows() }
+                    }
+                }
                 
                 HStack(spacing: 0){
                     

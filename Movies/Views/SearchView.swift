@@ -103,11 +103,9 @@ struct SearchView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    HStack(alignment: .lastTextBaseline, spacing: 10) {
-                        Text("Search")
-                            .movieFont(style: .bold, size: navTitleSize)
-                            .foregroundColor(.primary)
-                    }
+                    Text("Search")
+                        .movieFont(style: .bold, size: navTitleSize)
+                        .foregroundColor(.primary)
                 }
             }
             .alert(isPresented: $viewModel.hasError) {
