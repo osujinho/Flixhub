@@ -10,7 +10,7 @@ import SwiftUI  /// Need for animation
 @MainActor class MovieDetailViewModel: ObservableObject {
     @Published private(set) var errorMessage: String = ""
     @Published private(set) var omdbDetail = OMDBDetail(rated: nil, awards: nil, boxOffice: nil, dvd: nil, ratings: nil)
-    @Published private(set) var tmdbDetail = TMDBDetail(backdrop: nil, poster: nil, releaseDate: nil, tmdbID: 0, title: "", originalTitle: nil, originalLanguage: nil, genres: [], plot: nil, runtime: 0, imdbID: "", status: nil, rating: nil, budget: nil, revenue: nil, countries: [], companies: [], spokenLanguages: [], credits: Credit(cast: [], crew: []), videos: Video(results: []), images: MovieImages(backdrops: [], posters: []))
+    @Published private(set) var tmdbDetail = TMDBDetail(backdrop: nil, poster: nil, releaseDate: nil, tmdbID: 0, title: "", originalTitle: nil, originalLanguage: nil, genres: [], plot: nil, runtime: nil, imdbID: nil, status: nil, rating: nil, budget: nil, revenue: nil, countries: [], companies: [], spokenLanguages: [], credits: Credit(cast: [], crew: []), videos: Video(results: []), images: MovieImages(backdrops: [], posters: []))
     @Published private(set) var recommendedMovies = MovieBrowseData(results: [], total_pages: 0)
     @Published private(set) var similarMovies = MovieBrowseData(results: [], total_pages: 0)
     @Published private var releaseDetail = MovieReleaseDates(results: [])
@@ -96,8 +96,11 @@ import SwiftUI  /// Need for animation
             /// load JSON Object
             
             tmdbDetail = try await networkManager.makeCall(url: url)
-            let ombdURL = urlManager.buildURL(movieType: .omdb, value: tmdbDetail.imdbID)
-            omdbDetail = try await networkManager.makeCall(url: ombdURL)
+            
+            if let imdbID = tmdbDetail.imdbID {
+                let ombdURL = urlManager.buildURL(movieType: .omdb, value: imdbID)
+                omdbDetail = try await networkManager.makeCall(url: ombdURL)
+            }
             releaseDetail = try await networkManager.makeCall(url: releaseURL)
             recommendedMovies = try await networkManager.makeCall(url: recommendURL)
             similarMovies = try await networkManager.makeCall(url: similarURL)

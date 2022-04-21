@@ -19,7 +19,7 @@ struct TMDBDetail: Hashable, Decodable {
     let genres: [Genre]
     let plot: String?
     let runtime: Int?
-    let imdbID: String
+    let imdbID: String?
     let status: String?
     let rating: Double?
     let budget: Int?
