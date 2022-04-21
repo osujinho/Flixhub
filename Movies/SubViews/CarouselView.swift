@@ -22,7 +22,7 @@ struct CarouselView: View {
                 Spacer()
                 
                 NavigationLink(destination:
-                                GetMoreView(
+                                GetMoreMovieView(
                                     header: categoryName,
                                     movieType: movieType,
                                     movies: movies,

@@ -25,5 +25,6 @@ struct GridViewToggle: View {
                     .foregroundColor(.primary) /// Fix after implementing Both dark and light mode
             })
         }
+        .padding(.horizontal)
     }
 }
