@@ -7,11 +7,6 @@
 
 import Foundation
 
-//@MainActor class AppViewModel: ObservableObject {
-//    @Published private(set) var showBrowseViewModel = ShowBrowseViewModel()
-//    
-//}
-
 // string to date
 func getDate(date: String?, forYear: Bool) -> String {
     guard let date = date else { return "N/A" }
