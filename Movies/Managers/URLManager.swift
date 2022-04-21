@@ -13,7 +13,7 @@ struct UrlItem {
 }
 
 enum MovieType: CaseIterable {
-    case upcoming, nowPlaying, topRated, popular, movieDetail, omdb, search, personDetail, showDetail, similarMovie, recommendMovies, showRatings, similarShow, recommendShow, taggedImages, movieRelease
+    case upcoming, nowPlaying, topRated, popular, movieDetail, omdb, search, personDetail, showDetail, similarMovie, recommendMovies, showRatings, similarShow, recommendShow, taggedImages, movieRelease, airingToday, onTheAir, popularShows, topRatedShows
 }
 
 class URLManager {
@@ -47,12 +47,16 @@ class URLManager {
         case .recommendShow: return baseURL.appending("tv/\(id)/recommendations")
         case .taggedImages: return baseURL.appending("person/\(id)/tagged_images")
         case .movieRelease: return baseURL.appending("movie/\(id)/release_dates")
+        case .airingToday: return baseURL.appending("tv/airing_today")
+        case .onTheAir: return baseURL.appending("tv/on_the_air")
+        case .popularShows: return baseURL.appending("tv/popular")
+        case .topRatedShows: return baseURL.appending("tv/top_rated")
         }
     }
     
     private func getUrlItems(movieType: MovieType, value: String = "") -> [UrlItem] {
         switch movieType {
-        case .upcoming, .nowPlaying, .topRated, .popular, .recommendMovies, .similarMovie, .similarShow, .recommendShow, .taggedImages:
+        case .upcoming, .nowPlaying, .topRated, .popular, .recommendMovies, .similarMovie, .similarShow, .recommendShow, .taggedImages, .airingToday, .onTheAir, .popularShows, .topRatedShows:
             return [tmdbKey, language, UrlItem(key: "page", value: value)]
         case .movieDetail: return [tmdbKey, videoAndCredits, getImages]
         case .omdb: return [omdpKey, UrlItem(key: "i", value: value)]

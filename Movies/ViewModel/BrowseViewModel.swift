@@ -18,7 +18,6 @@ import Foundation
     
     private let urlManager = URLManager.urlManager
     private let networkManager = NetworkManager.networkManager
-    let genreManager = GenreManager.genreManager
     
     func fetchMovies(type: MovieType, value: String) async {
         self.hasError = false
