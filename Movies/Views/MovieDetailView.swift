@@ -33,7 +33,8 @@ struct MovieDetailView: View {
                         
                         MovieDetailHeaderView(
                             detail: viewModel.tmdbDetail,
-                            topPaddingSize: proxy.safeAreaInsets.top
+                            topPaddingSize: proxy.safeAreaInsets.top,
+                            rated: viewModel.certifications
                         )
                         
                         // header

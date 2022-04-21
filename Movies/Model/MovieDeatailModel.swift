@@ -93,11 +93,11 @@ struct VideoResults: Hashable, Decodable {
 
 /// For getting OMDB Api
 struct OMDBDetail: Hashable, Decodable {
-    let rated: String
+    let rated: String?
     let awards: String?
     let boxOffice: String?
     let dvd: String?
-    let ratings: [Ratings]
+    let ratings: [Ratings]?
     
     enum CodingKeys: String, CodingKey {
         case rated = "Rated"
@@ -145,4 +145,22 @@ struct SpokenLanguage: Hashable, Decodable {
         case name = "english_name"
         case code = "iso_639_1"
     }
+}
+
+struct MovieReleaseDates: Hashable, Decodable {
+    let results: [ReleaseResult]
+}
+
+struct ReleaseResult: Hashable, Decodable {
+    let from: String?
+    let releaseDate: [ReleaseDetail]
+    
+    private enum CodingKeys: String, CodingKey {
+        case from = "iso_3166_1"
+        case releaseDate = "release_dates"
+    }
+}
+
+struct ReleaseDetail: Hashable, Decodable {
+    let certification: String?
 }

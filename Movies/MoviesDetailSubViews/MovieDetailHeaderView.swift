@@ -11,6 +11,7 @@ struct MovieDetailHeaderView: View {
     @Environment(\.colorScheme) var colorScheme
     let detail: TMDBDetail
     let topPaddingSize: CGFloat
+    let rated: String
     
     var body: some View {
         VStack(spacing: 0) {
@@ -47,6 +48,12 @@ struct MovieDetailHeaderView: View {
                     Text(detail.title)
                         .movieFont(style: .bold, size: movieAndShowTitleSize)
                         .multilineTextAlignment(.leading)
+                        .padding(.bottom, 5)
+                    
+                    Text(rated)
+                        .foregroundColor(.secondary)
+                        .movieFont(style: .regular, size: personDetailHeaderSize)
+                    
                     HStack {
                         Text(getDate(date: detail.releaseDate,forYear: true))
                         Text("•")
@@ -65,3 +72,4 @@ struct MovieDetailHeaderView: View {
         }
     }
 }
+

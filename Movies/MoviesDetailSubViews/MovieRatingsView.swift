@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CriticsRatingView: View {
-    let ratings: [Ratings]
+    let ratings: [Ratings]?
     let outerWidth: Double = 0.5
     let imdb = "Internet Movie Database"
     let rt = "Rotten Tomatoes"
@@ -71,6 +71,8 @@ struct CriticsRatingView: View {
     }
     
     private func getRating(critic: CriticsRating) -> String {
+        guard let ratings = ratings else { return "NR" }
+
         switch critic {
         case .imdb:
             for rating in ratings {

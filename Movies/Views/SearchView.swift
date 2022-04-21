@@ -12,6 +12,12 @@ struct SearchView: View {
     
     init() {
         self._viewModel = StateObject(wrappedValue: SearchViewModel())
+        
+        //let navigationAppearance = UINavigationBarAppearance()
+        //navigationAppearance.configureWithOpaqueBackground()
+       // navigationAppearance.backgroundColor = UIColor(named: "background")
+        //UINavigationBar.appearance().isTranslucent = false
+        //UINavigationBar.appearance().scrollEdgeAppearance = navigationAppearance
     }
     
     var body: some View {

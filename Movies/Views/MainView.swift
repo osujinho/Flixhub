@@ -15,9 +15,6 @@ struct MainView: View {
     
     init() {
         self._viewModel = StateObject(wrappedValue: BrowseViewModel())
-        
-        // Fix tab color here
-        UITabBar.appearance().backgroundColor = UIColor(named: "tabColor")
     }
     
     var body: some View {
