@@ -22,9 +22,10 @@ struct GridViewToggle: View {
                 Image(systemName: showGridView ? "list.bullet.circle.fill" : "circle.grid.3x3.circle.fill")
                     .renderingMode(.template)
                     .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.primary) /// Fix after implementing Both dark and light mode
+                    .foregroundColor(.primary)
             })
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
+        .background(Color("background"))
     }
 }
