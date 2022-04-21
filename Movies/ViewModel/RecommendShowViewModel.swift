@@ -1,5 +1,5 @@
 //
-//  RecommendMovieViewModel.swift
+//  RecommendShowViewModel.swift
 //  Flixhub
 //
 //  Created by Michael Osuji on 4/20/22.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-@MainActor class RecommendMovieViewModel: ObservableObject {
-    @Published var movies: [TMDBResult] = []
+@MainActor class RecommendShowViewModel: ObservableObject {
+    @Published var shows: [ShowResult] = []
     @Published private(set) var errorMessage: String = ""
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = false
@@ -21,24 +21,24 @@ import Foundation
     private var currentPage: Int = 2
     private var fetchTask: Task<Void, Never>?
     var totalPages: Int = 1
-    var movieID: String = ""
-    var currentMovie: TMDBResult?
+    var showID: String = ""
+    var currentShow: ShowResult?
     
     private var canLoadMore: Bool {
         currentPage <= totalPages ? true : false
     }
     
-    func loadMoreMovieIfNeeded(currentMovie movie: TMDBResult?) async {
-        guard let movie = movie else { return }
+    func loadMoreShowIfNeeded(currentShow show: ShowResult?) async {
+        guard let show = show else { return }
         
-        let thresholdIndex = movies.index(movies.endIndex, offsetBy: -5)
+        let thresholdIndex = shows.index(shows.endIndex, offsetBy: -5)
         
-        if movies.firstIndex(where: { $0.tmdbID == movie.tmdbID }) == thresholdIndex {
-            await self.loadMoreMovies()
+        if shows.firstIndex(where: { $0.id == show.id }) == thresholdIndex {
+            await self.loadMoreShows()
         }
     }
     
-    private func loadMoreMovies() async {
+    private func loadMoreShows() async {
         guard !isLoading && canLoadMore else { return }
         
         self.fetchTask?.cancel()
@@ -47,10 +47,10 @@ import Foundation
             self.hasError = false
             self.isLoading = true
             
-            let url = urlManager.buildURL(movieType: .recommendMovies, id: movieID ,value: String( currentPage ))
+            let url = urlManager.buildURL(movieType: .recommendShow, id: showID ,value: String( currentPage ))
             
             do {
-                let recommend: MovieBrowseData = try await networkManager.makeCall(url: url)
+                let recommend: ShowBrowseData = try await networkManager.makeCall(url: url)
                 getUniqueResults(results: recommend.results)
                 currentPage += 1
             } catch {
@@ -64,11 +64,11 @@ import Foundation
         }
     }
     
-    private func getUniqueResults(results: [TMDBResult]) {
-        let currentMovies = Set(movies)
-        let newMovies = Set(results)
+    private func getUniqueResults(results: [ShowResult]) {
+        let currentShow = Set(shows)
+        let newShow = Set(results)
         
-        let uniqueResults = Array(newMovies.subtracting(currentMovies))
-        movies.append(contentsOf: uniqueResults)
+        let uniqueResults = Array(newShow.subtracting(currentShow))
+        shows.append(contentsOf: uniqueResults)
     }
 }

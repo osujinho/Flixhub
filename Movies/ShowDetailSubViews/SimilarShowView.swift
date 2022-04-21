@@ -1,18 +1,24 @@
 //
-//  RecommendAndSimilarShowView.swift
+//  SimilarShowView.swift
 //  Flixhub
 //
-//  Created by Michael Osuji on 4/4/22.
+//  Created by Michael Osuji on 4/20/22.
 //
 
 import SwiftUI
 
-struct RecommendAndSimilarShowView: View {
-    @StateObject var viewModel: MoreShowsViewModel
-    
-    let showType: MovieType
+struct SimilarShowView: View {
+    @StateObject private var viewModel: SimilarShowViewModel
     let totalPages: Int
-    let shows: [ShowResult]
+    let results: [ShowResult]
+    let showID: String
+    
+    init(totalPages: Int, results: [ShowResult], showID: String) {
+        self._viewModel = StateObject(wrappedValue: SimilarShowViewModel())
+        self.totalPages = totalPages
+        self.results = results
+        self.showID = showID
+    }
     
     var body: some View {
         Group {
@@ -78,10 +84,22 @@ struct RecommendAndSimilarShowView: View {
                 .transition(.move(edge: .bottom))
             }
         }
+        .padding(.bottom)
         .onAppear{
-            viewModel.shows = shows
+            viewModel.shows = results
             viewModel.totalPages = totalPages
-            viewModel.showType = showType
+            viewModel.showID = showID
+        }
+        .alert(isPresented: $viewModel.hasError) {
+            Alert(
+                title: Text("Error Loading more movies"),
+                message: Text(viewModel.errorMessage),
+                dismissButton: .destructive(Text("Retry")) {
+                    Task {
+                        await viewModel.loadMoreShowIfNeeded(currentShow: viewModel.currentShow)
+                    }
+                }
+            )
         }
     }
 }

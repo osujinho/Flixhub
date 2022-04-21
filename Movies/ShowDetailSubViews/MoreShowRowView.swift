@@ -26,6 +26,7 @@ struct MoreShowRowView: View {
                 Text(show.name)
                     .movieFont(style: .bold, size: listRowTitleSize)
                     .multilineTextAlignment(.leading)
+                    .padding(.bottom, 10)
                 
                 Text(getDate(date: show.date ,forYear: false))
                     .movieFont(style: .regular, size: labelSize)
@@ -39,5 +40,6 @@ struct MoreShowRowView: View {
             .foregroundColor(.primary)
         }
         .padding(.horizontal)
+        .padding(.bottom, 10)
     }
 }

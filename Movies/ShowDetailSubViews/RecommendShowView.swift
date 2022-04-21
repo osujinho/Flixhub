@@ -1,5 +1,5 @@
 //
-//  RecommendMoviesView.swift
+//  RecommendShowView.swift
 //  Flixhub
 //
 //  Created by Michael Osuji on 4/20/22.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct RecommendMoviesView: View {
-    @StateObject private var viewModel: RecommendMovieViewModel
+struct RecommendShowView: View {
+    @StateObject private var viewModel: RecommendShowViewModel
     let totalPages: Int
-    let results: [TMDBResult]
-    let movieID: String
+    let results: [ShowResult]
+    let showID: String
     
-    init(totalPages: Int, results: [TMDBResult], movieID: String) {
-        self._viewModel = StateObject(wrappedValue: RecommendMovieViewModel())
+    init(totalPages: Int, results: [ShowResult], showID: String) {
+        self._viewModel = StateObject(wrappedValue: RecommendShowViewModel())
         self.totalPages = totalPages
         self.results = results
-        self.movieID = movieID
+        self.showID = showID
     }
     
     var body: some View {
@@ -25,23 +25,23 @@ struct RecommendMoviesView: View {
             if viewModel.presentGridView {
                 LazyVGrid(columns: columns, alignment: .center, spacing: 5, pinnedViews: .sectionHeaders) {
                     Section(header: GridViewToggle(showGridView: $viewModel.presentGridView)) {
-                        ForEach(viewModel.movies, id: \.self) { movie in
+                        ForEach(viewModel.shows, id: \.self) { show in
                             NavigationLink(destination:
-                                            MovieDetailView(
-                                                movieID: String( movie.tmdbID ),
-                                                movieTitle: movie.title,
-                                                imagePath: movie.poster
+                                            ShowDetailView(
+                                                showId: String( show.id ),
+                                                showName: show.name,
+                                                imagePath: show.poster
                                             )
                             ) {
                                 PosterView(
-                                    imagePath: movie.poster,
-                                    title: movie.title,
-                                    rating: movie.tmdbRating
+                                    imagePath: show.poster,
+                                    title: show.name,
+                                    rating: show.rating
                                 )
                             }
                             .task {
-                                viewModel.currentMovie = movie
-                                await viewModel.loadMoreMovieIfNeeded(currentMovie: movie)
+                                viewModel.currentShow = show
+                                await viewModel.loadMoreShowIfNeeded(currentShow: show)
                             }
                         }
                         if viewModel.isLoading {
@@ -60,19 +60,19 @@ struct RecommendMoviesView: View {
             } else {
                 LazyVStack(alignment: .leading, pinnedViews: .sectionHeaders) {
                     Section(header: GridViewToggle(showGridView: $viewModel.presentGridView)) {
-                        ForEach(viewModel.movies, id: \.self) { movie in
+                        ForEach(viewModel.shows, id: \.self) { show in
                             NavigationLink(destination:
-                                            MovieDetailView(
-                                                movieID: String( movie.tmdbID ),
-                                                movieTitle: movie.title,
-                                                imagePath: movie.poster
+                                            ShowDetailView(
+                                                showId: String( show.id ),
+                                                showName: show.name,
+                                                imagePath: show.poster
                                             )
                             ) {
-                                GetMoreRowView(movie: movie)
+                                MoreShowRowView(show: show)
                             }
                             .task {
-                                viewModel.currentMovie = movie
-                                await viewModel.loadMoreMovieIfNeeded(currentMovie: movie)
+                                viewModel.currentShow = show
+                                await viewModel.loadMoreShowIfNeeded(currentShow: show)
                             }
                         }
                         if viewModel.isLoading {
@@ -86,9 +86,9 @@ struct RecommendMoviesView: View {
         }
         .padding(.bottom)
         .onAppear{
-            viewModel.movies = results
+            viewModel.shows = results
             viewModel.totalPages = totalPages
-            viewModel.movieID = movieID
+            viewModel.showID = showID
         }
         .alert(isPresented: $viewModel.hasError) {
             Alert(
@@ -96,7 +96,7 @@ struct RecommendMoviesView: View {
                 message: Text(viewModel.errorMessage),
                 dismissButton: .destructive(Text("Retry")) {
                     Task {
-                        await viewModel.loadMoreMovieIfNeeded(currentMovie: viewModel.currentMovie)
+                        await viewModel.loadMoreShowIfNeeded(currentShow: viewModel.currentShow)
                     }
                 }
             )

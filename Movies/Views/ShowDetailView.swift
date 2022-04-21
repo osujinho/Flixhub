@@ -64,20 +64,17 @@ struct ShowDetailView: View {
                             case .seasons:
                                 ShowSeasonsView(seasons: viewModel.showDetail.seasons)
                             case .recommended:
-                                RecommendAndSimilarShowView(
-                                    viewModel: MoreShowsViewModel(),
-                                    showType: .recommendShow,
+                                RecommendShowView(
                                     totalPages: viewModel.recommendShows.total_pages,
-                                    shows: viewModel.recommendShows.results
+                                    results: viewModel.recommendShows.results,
+                                    showID: showId
                                 )
                             case .similar:
-                                RecommendAndSimilarShowView(
-                                    viewModel: MoreShowsViewModel(),
-                                    showType: .similarShow,
+                                SimilarShowView(
                                     totalPages: viewModel.similarShows.total_pages,
-                                    shows: viewModel.similarShows.results
+                                    results: viewModel.similarShows.results,
+                                    showID: showId
                                 )
-                                
                             }
                         }
                         .frame(alignment: .leading)

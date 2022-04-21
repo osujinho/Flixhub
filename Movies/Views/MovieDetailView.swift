@@ -63,11 +63,10 @@ struct MovieDetailView: View {
                                     movieID: movieID
                                 )
                             case .similar:
-                                RecommendAndSimilarView(
-                                    viewModel: GetMoreViewModel(),
-                                    movieType: .similarMovie,
+                                SimilarMovieView(
                                     totalPages: viewModel.similarMovies.total_pages,
-                                    results: viewModel.similarMovies.results
+                                    results: viewModel.similarMovies.results,
+                                    movieID: movieID
                                 )
                             }
                         }
