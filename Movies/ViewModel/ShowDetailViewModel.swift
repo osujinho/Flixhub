@@ -75,6 +75,10 @@ import SwiftUI
     var rated: String {
         let usRating = showRatings.results.filter{ $0.countryCode.lowercased() == "us" }
         
+        if usRating.isEmpty {
+            return "Unrated"
+        }
+        
         return usRating.compactMap{ $0.rating }.joined(separator: ", ")
     }
     

@@ -11,6 +11,7 @@ struct ShowDetailHeaderView: View {
     @Environment(\.colorScheme) var colorScheme
     let detail: ShowDetail
     let topPaddingSize: CGFloat
+    let rated: String
     
     var body: some View {
         VStack(spacing: 0) {
@@ -47,6 +48,12 @@ struct ShowDetailHeaderView: View {
                     Text(detail.name.capitalized)
                         .movieFont(style: .bold, size: movieAndShowTitleSize)
                         .multilineTextAlignment(.leading)
+                        .padding(.bottom, 5)
+                    
+                    Text(rated)
+                        .foregroundColor(.secondary)
+                        .movieFont(style: .regular, size: personDetailHeaderSize)
+                    
                     HStack {
                         Text(getDate(date: detail.firstAirDate,forYear: true))
                         Text("•")

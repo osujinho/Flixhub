@@ -10,7 +10,6 @@ import SwiftUI
 struct ShowAboutView: View {
     @State private var isExpanded: Bool = false
     let detail: ShowDetail
-    let rated: String
     let runtime: String
     let spokenLanguage: String
     let inProduction: String
@@ -29,8 +28,6 @@ struct ShowAboutView: View {
                 DetailLabelAndInfoView(label: "genres", info: genres)
                 
                 DetailLabelAndInfoView(label: "runtime", info: runtime)
-                
-                DetailLabelAndInfoView(label: "rated", info: rated)
                 
                 DetailLabelAndInfoView(label: "original language", info: getLanguage(code: detail.originalLanguage))
                 

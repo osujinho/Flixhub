@@ -32,7 +32,8 @@ struct ShowDetailView: View {
                         // Top View
                         ShowDetailHeaderView(
                             detail: viewModel.showDetail,
-                            topPaddingSize: proxy.safeAreaInsets.top
+                            topPaddingSize: proxy.safeAreaInsets.top,
+                            rated: viewModel.rated
                         )
                         
                         // Sticky header
@@ -47,7 +48,6 @@ struct ShowDetailView: View {
                             case .about:
                                 ShowAboutView(
                                     detail: viewModel.showDetail,
-                                    rated: viewModel.rated,
                                     runtime: viewModel.runtimes,
                                     spokenLanguage: viewModel.spokenLanguages,
                                     inProduction: viewModel.inProduction
