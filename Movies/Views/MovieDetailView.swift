@@ -33,12 +33,6 @@ struct MovieDetailView: View {
                         MovieDetailHeaderView(playTrailer: $viewModel.playTrailer, noTrailerAlertOpacity: viewModel.noTrailerAlertOpacity, detail: viewModel.tmdbDetail, topPaddingSize: proxy.safeAreaInsets.top, rated: viewModel.certifications, trailerID: viewModel.trailerID, checkForTrailer: viewModel.checkForTrailer
                         )
                         
-//                        MovieDetailHeaderView(
-//                            detail: viewModel.tmdbDetail,
-//                            topPaddingSize: proxy.safeAreaInsets.top,
-//                            rated: viewModel.certifications
-//                        )
-                        
                         // header
                         Section(header:
                                     CustomPickerView(selection: $viewModel.mediaOptions, backgroundColor: "pickerColor")
