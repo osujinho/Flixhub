@@ -17,22 +17,30 @@ struct ImageFullView: View {
         ZStack {
             Color("background").edgesIgnoringSafeArea([.all])
             
-            ScrollView(.vertical) {
-                UrlImageView(path: path, defaultImage: defaultImage)
-                    .scaledToFit()
-                    .frame(
-                        width: width,
-                        height: defaultImage == .backdrop ? (width / 1.78) : ( width * 1.5 )
-                    )
-                    .cornerRadius(5)
-                    .padding(.horizontal, 10)
-            }
-            .background(Color("background"))
+//            ScrollView(.vertical) {
+//                UrlImageView(path: path, defaultImage: defaultImage)
+//                    .scaledToFit()
+//                    .frame(
+//                        width: width,
+//                        height: defaultImage == .backdrop ? (width / 1.78) : ( width * 1.5 )
+//                    )
+//                    .cornerRadius(5)
+//                    .padding(.horizontal, 10)
+//            }
+//            .background(Color("background"))
+            UrlImageView(path: path, defaultImage: defaultImage)
+                //.scaledToFit()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .cornerRadius(5)
+                .padding(.horizontal, 10)
+                .edgesIgnoringSafeArea(.all)
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
+                    UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+                    AppDelegate.orientationLock = .all
                     self.presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Image(systemName: "chevron.left.circle.fill")
@@ -40,6 +48,12 @@ struct ImageFullView: View {
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.black) /// Fix after implementing Both dark and light mode
                 })
+            }
+        }
+        .onAppear {
+            if defaultImage == .backdrop {
+                UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation") // Forcing the rotation to landscape
+                AppDelegate.orientationLock = .landscape // And making sure it stays that way
             }
         }
     }
