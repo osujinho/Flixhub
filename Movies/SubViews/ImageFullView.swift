@@ -16,20 +16,7 @@ struct ImageFullView: View {
     var body: some View {
         ZStack {
             Color("background").edgesIgnoringSafeArea([.all])
-            
-//            ScrollView(.vertical) {
-//                UrlImageView(path: path, defaultImage: defaultImage)
-//                    .scaledToFit()
-//                    .frame(
-//                        width: width,
-//                        height: defaultImage == .backdrop ? (width / 1.78) : ( width * 1.5 )
-//                    )
-//                    .cornerRadius(5)
-//                    .padding(.horizontal, 10)
-//            }
-//            .background(Color("background"))
             UrlImageView(path: path, defaultImage: defaultImage)
-                //.scaledToFit()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cornerRadius(5)
                 .padding(.horizontal, 10)
