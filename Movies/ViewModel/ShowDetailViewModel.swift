@@ -16,6 +16,8 @@ import SwiftUI
     @Published var hasError: Bool = false
     @Published var isLoading: Bool = true
     @Published var playTrailer: Bool = false
+    @Published var trailerID: String = ""
+    @Published private(set) var noTrailerAlertOpacity: CGFloat = 0
     @Published var showDetailOption: ShowDetailOption = .about
     
     var mainCrew: [String : (id: Int, profile: String?, job: String)] {
@@ -39,6 +41,15 @@ import SwiftUI
             }
         }
         return crews
+    }
+    
+    var youtubeKey: String? {
+        if let video = showDetail.videos.results.first(where: {
+            $0.site.lowercased() == "youtube" && $0.type.lowercased() == "trailer"
+        }) {
+            return video.key
+        }
+        return nil
     }
     
     var videoClips: [VideoResults] {
@@ -110,6 +121,19 @@ import SwiftUI
             errorMessage = error.localizedDescription
             print(error)
             self.hasError = true
+        }
+    }
+    
+    func checkForTrailer() {
+        if let videoKey = youtubeKey {
+            self.trailerID = videoKey
+            self.playTrailer = true
+        } else {
+            noTrailerAlertOpacity = 1.0
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+                self.noTrailerAlertOpacity = 0.0
+            })
         }
     }
 }
