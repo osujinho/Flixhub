@@ -30,12 +30,14 @@ struct MovieDetailView: View {
                 ScrollView {
                     LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
                         // top View
-                        
-                        MovieDetailHeaderView(
-                            detail: viewModel.tmdbDetail,
-                            topPaddingSize: proxy.safeAreaInsets.top,
-                            rated: viewModel.certifications
+                        MovieDetailHeaderView(playTrailer: $viewModel.playTrailer, noTrailerAlertOpacity: viewModel.noTrailerAlertOpacity, detail: viewModel.tmdbDetail, topPaddingSize: proxy.safeAreaInsets.top, rated: viewModel.certifications, trailerID: viewModel.trailerID, checkForTrailer: viewModel.checkForTrailer
                         )
+                        
+//                        MovieDetailHeaderView(
+//                            detail: viewModel.tmdbDetail,
+//                            topPaddingSize: proxy.safeAreaInsets.top,
+//                            rated: viewModel.certifications
+//                        )
                         
                         // header
                         Section(header:

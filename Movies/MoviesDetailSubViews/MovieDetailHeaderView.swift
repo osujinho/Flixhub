@@ -9,9 +9,13 @@ import SwiftUI
 
 struct MovieDetailHeaderView: View {
     @Environment(\.colorScheme) var colorScheme
+    @Binding var playTrailer: Bool
+    let noTrailerAlertOpacity: CGFloat
     let detail: TMDBDetail
     let topPaddingSize: CGFloat
     let rated: String
+    let trailerID: String
+    let checkForTrailer: @MainActor () -> ()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -35,14 +39,20 @@ struct MovieDetailHeaderView: View {
             }
             
             HStack(alignment: .lastTextBaseline, spacing: 20) {
-                UrlImageView(path: detail.poster, defaultImage: .poster)
-                    .frame(width: 100, height: 150)
-                    .cornerRadius(5)
-                    .overlay(
-                        RatingView(rating: detail.rating, frameSize: 30)
-                            .offset(x: 50, y: -25)
-                    )
-                    .padding(.top, -50)
+                NavigationLink(destination: VideoPlayerView(videoID: trailerID), isActive: $playTrailer) {
+                    
+                    UrlImageView(path: detail.poster, defaultImage: .poster)
+                        .frame(width: 100, height: 150)
+                        .cornerRadius(5)
+                        .overlay(
+                            RatingView(rating: detail.rating, frameSize: 30)
+                                .offset(x: 50, y: -25)
+                        )
+                        .padding(.top, -50)
+                        .onTapGesture {
+                            checkForTrailer()
+                        }
+                }
                 
                 VStack(alignment: .leading) {
                     Text(detail.title)
@@ -69,6 +79,12 @@ struct MovieDetailHeaderView: View {
             .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
             .padding(.horizontal, 10)
             .background(Color("pickerColor"))
+            .overlay(
+                Text("No Trailer Available!")
+                    .movieFont(style: .regular, size: labelSize)
+                    .foregroundColor(.secondary)
+                    .opacity(noTrailerAlertOpacity)
+            )
         }
     }
 }
