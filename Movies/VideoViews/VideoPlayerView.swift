@@ -31,8 +31,9 @@ struct VideoPlayerView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
+                    AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
                     UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-                    AppDelegate.orientationLock = .all
+                    UIViewController.attemptRotationToDeviceOrientation()
                     self.presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Image(systemName: "chevron.left.circle.fill")
@@ -43,8 +44,9 @@ struct VideoPlayerView: View {
             }
         }
         .onAppear {
-            UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation") // Forcing the rotation to landscape
-            AppDelegate.orientationLock = .landscape // And making sure it stays that way
+            AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeLeft
+            UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+            UIViewController.attemptRotationToDeviceOrientation()
         }
     }
 }
