@@ -26,8 +26,9 @@ struct ImageFullView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
+                    AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
                     UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-                    AppDelegate.orientationLock = .all
+                    UIViewController.attemptRotationToDeviceOrientation()
                     self.presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Image(systemName: "chevron.left.circle.fill")
