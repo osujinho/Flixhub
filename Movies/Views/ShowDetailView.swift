@@ -31,9 +31,13 @@ struct ShowDetailView: View {
                     LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
                         // Top View
                         ShowDetailHeaderView(
+                            playTrailer: $viewModel.playTrailer,
                             detail: viewModel.showDetail,
                             topPaddingSize: proxy.safeAreaInsets.top,
-                            rated: viewModel.rated
+                            rated: viewModel.rated,
+                            noTrailerAlertOpacity: viewModel.noTrailerAlertOpacity,
+                            trailerID: viewModel.trailerID,
+                            checkForTrailer: viewModel.checkForTrailer
                         )
                         
                         // Sticky header

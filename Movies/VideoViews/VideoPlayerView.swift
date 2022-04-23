@@ -20,10 +20,17 @@ struct VideoPlayerView: View {
                     source: .video(id: videoID),
                     configuration: .init(
                         isUserInteractionEnabled: true,
-                        autoPlay: true
+                        autoPlay: true,
+                        playInline: false
                     )
                 )
             )
+        }
+        .onAppear {
+            UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation") // Forcing the rotation to portrait
+            AppDelegate.orientationLock = .landscape // And making sure it stays that way
+        }.onDisappear {
+            AppDelegate.orientationLock = .all // Unlocking the rotation when leaving the view
         }
     }
 }

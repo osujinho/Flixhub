@@ -353,7 +353,6 @@
 				B3B0A67327B2E0BE00810587 /* NetworkManager.swift */,
 				B368F61F27D6926E00E03E4D /* CacheManager.swift */,
 				B3ED333427E504A9001A6DCF /* GenreManager.swift */,
-				B3AD41E427FD304500BF71F8 /* AppDelegate.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -417,6 +416,7 @@
 				B3B0A67227B2E09E00810587 /* Managers */,
 				B3B0A62727AC9AEB00810587 /* Info.plist */,
 				B3CF1BA027A99C11004CD7F2 /* MoviesApp.swift */,
+				B3AD41E427FD304500BF71F8 /* AppDelegate.swift */,
 				B3CF1BA227A99C11004CD7F2 /* ContentView.swift */,
 				B3CF1BA427A99C14004CD7F2 /* Assets.xcassets */,
 				B3CF1BA627A99C14004CD7F2 /* Preview Content */,

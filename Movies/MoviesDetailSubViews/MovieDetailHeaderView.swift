@@ -80,10 +80,15 @@ struct MovieDetailHeaderView: View {
             .padding(.horizontal, 10)
             .background(Color("pickerColor"))
             .overlay(
-                Text("No Trailer Available!")
-                    .movieFont(style: .regular, size: labelSize)
-                    .foregroundColor(.secondary)
-                    .opacity(noTrailerAlertOpacity)
+                HStack {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(Font.system(size: 20, weight: .bold))
+                    Text("No Trailer Available!")
+                        .movieFont(style: .bold, size: labelSize)
+                }
+                .foregroundColor(.orange)
+                .opacity(noTrailerAlertOpacity)
+                .offset(y: -150)
             )
         }
     }
