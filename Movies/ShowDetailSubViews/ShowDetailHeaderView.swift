@@ -27,7 +27,10 @@ struct ShowDetailHeaderView: View {
                 }
                 .frame(height: 250)
                 .clipped()
-                .cornerRadius(5)
+                .background(
+                    RoundedCornersShape(corners: [.bottomLeft, .bottomRight], radius: 5)
+                        .fill(.clear)
+                )
                 .padding(.top, -topPaddingSize)
                 .tabViewStyle(PageTabViewStyle())
                 .animation(.easeInOut, value: 1)
