@@ -40,8 +40,9 @@ struct ImageFullView: View {
         }
         .onAppear {
             if defaultImage == .backdrop {
-                UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation") // Forcing the rotation to landscape
-                AppDelegate.orientationLock = .landscape // And making sure it stays that way
+                AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeLeft
+                UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+                UIViewController.attemptRotationToDeviceOrientation()
             }
         }
     }
