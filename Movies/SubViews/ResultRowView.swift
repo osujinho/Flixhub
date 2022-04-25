@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Results in search view
 struct ResultRowView: View {
     let poster: String?
     let resultType: SearchMediaType
