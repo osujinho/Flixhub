@@ -10,6 +10,7 @@ import SwiftUI
 struct MainView: View {
     @StateObject private var viewModel: BrowseViewModel
     @StateObject private var showBrowseViewModel: ShowBrowseViewModel
+    @EnvironmentObject var appViewModel: AppViewModel
     @State var selectedTab: Tab = .movies
     var edges = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }?.safeAreaInsets
     @Namespace var animation
@@ -43,21 +44,23 @@ struct MainView: View {
                     }
                 }
                 
-                HStack(spacing: 0){
-                    
-                    ForEach(Tab.allCases) {tab in
+                if !appViewModel.showFullImageView {
+                    HStack(spacing: 0){
                         
-                        TabButtonView(tab: tab, selectedTab: $selectedTab, animation: animation)
-                        
-                        if tab != .search {
-                            Spacer(minLength: 0)
+                        ForEach(Tab.allCases) {tab in
+                            
+                            TabButtonView(tab: tab, selectedTab: $selectedTab, animation: animation)
+                            
+                            if tab != .search {
+                                Spacer(minLength: 0)
+                            }
                         }
                     }
+                    .padding(.horizontal,30)
+                    // for iphone like 8 and SE
+                    .padding(.bottom,edges!.bottom == 0 ? 15 : edges!.bottom)
+                    .background(Color("tabColor"))
                 }
-                .padding(.horizontal,30)
-                // for iphone like 8 and SE
-                .padding(.bottom,edges!.bottom == 0 ? 15 : edges!.bottom)
-                .background(Color("tabColor"))
             } /// End of else block
         } /// End of Mother VStack
         .ignoresSafeArea(.all, edges: .bottom)

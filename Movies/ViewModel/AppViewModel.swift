@@ -7,6 +7,12 @@
 
 import Foundation
 
+class AppViewModel: ObservableObject {
+    @Published var showFullImageView: Bool = false
+    @Published var imagePath: String? = nil
+    @Published var defaultImage: DefaultImage = .profile
+}
+
 // string to date
 func getDate(date: String?, forYear: Bool) -> String {
     guard let date = date else { return "N/A" }

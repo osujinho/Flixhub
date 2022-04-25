@@ -10,6 +10,7 @@ import YouTubePlayerKit
 
 struct VideoPlayerView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var appViewModel: AppViewModel
     let videoID: String
         
     var body: some View {
@@ -31,10 +32,11 @@ struct VideoPlayerView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
                     AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
                     UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
                     UIViewController.attemptRotationToDeviceOrientation()
-                    self.presentationMode.wrappedValue.dismiss()
+                    appViewModel.showFullImageView.toggle()
                 }, label: {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
@@ -44,6 +46,7 @@ struct VideoPlayerView: View {
             }
         }
         .onAppear {
+            appViewModel.showFullImageView.toggle()
             AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeLeft
             UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
             UIViewController.attemptRotationToDeviceOrientation()

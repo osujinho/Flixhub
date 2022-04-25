@@ -9,27 +9,30 @@ import SwiftUI
 
 struct ImageFullView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var appViewModel: AppViewModel
     let path: String?
     let defaultImage: DefaultImage
-    let width = screen.width * 0.9
     
     var body: some View {
         ZStack {
             Color("background").edgesIgnoringSafeArea([.all])
+            
             UrlImageView(path: path, defaultImage: defaultImage)
+                .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .cornerRadius(5)
-                .padding(.horizontal, 10)
                 .edgesIgnoringSafeArea(.all)
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
-                    UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-                    UIViewController.attemptRotationToDeviceOrientation()
                     self.presentationMode.wrappedValue.dismiss()
+                    if defaultImage == .backdrop {
+                        AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
+                        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+                        UIViewController.attemptRotationToDeviceOrientation()
+                    }
+                    appViewModel.showFullImageView.toggle()
                 }, label: {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
@@ -39,6 +42,7 @@ struct ImageFullView: View {
             }
         }
         .onAppear {
+            appViewModel.showFullImageView.toggle()
             if defaultImage == .backdrop {
                 AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeLeft
                 UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")

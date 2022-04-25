@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var searchText = ""
-    @State private var isEditing = false
+    @EnvironmentObject var appViewModel: AppViewModel
     
     var body: some View {
         MainView()

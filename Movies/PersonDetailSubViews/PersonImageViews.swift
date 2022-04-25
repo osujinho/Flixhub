@@ -87,5 +87,4 @@ struct PersonBackdropScrollView: View {
             }
         }
     }
-    
 }
