@@ -20,24 +20,28 @@ import SwiftUI
     @Published private(set) var noTrailerAlertOpacity: CGFloat = 0
     @Published var showDetailOption: ShowDetailOption = .about
     
-    var mainCrew: [String : (id: Int, profile: String?, job: String)] {
-        var crews: [String : (id: Int, profile: String?, job: String)] = [:]
+    /// Key maps to crew ID,
+    /// MainCrew maps to crew
+    ///  - name
+    ///  - profile path for the profile image
+    ///  - crew job
+    var mainCrew: [Int : MainCrew] {
+        var crews: [Int : MainCrew] = [:]
         let desiredCrew: Set = ["producer", "screenplay", "story", "director"]
         
         let selectedCrews =  showDetail.credits.crew.filter{ desiredCrew.contains( $0.job.lowercased() ) }
         
         for creator in showDetail.creators {
-            crews.updateValue((creator.id, creator.profile, "Creator"), forKey: creator.name)
+            crews.updateValue(MainCrew(name: creator.name, profile: creator.profile, job: "Creator"), forKey: creator.id)
         }
         
         for crew in selectedCrews {
-            if crews[crew.name] != nil {
-                if let value = crews[crew.name] {
-                    let job = value.job.appending(", \(crew.job.capitalized)")
-                    crews.updateValue((value.id, value.profile, job), forKey: crew.name)
-                }
+            if let value = crews[crew.id] {
+                let job = value.job.appending(", \(crew.job.capitalized)")
+                crews.updateValue(MainCrew(name: crew.name, profile: crew.profile_path, job: job), forKey: crew.id)
+                
             } else {
-                crews[crew.name] = (crew.id, crew.profile_path, crew.job)
+                crews[crew.id] = MainCrew(name: crew.name, profile: crew.profile_path, job: crew.job)
             }
         }
         return crews

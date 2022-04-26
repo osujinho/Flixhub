@@ -33,7 +33,7 @@ struct CastView: View {
 }
 
 struct FeaturedCrewView: View {
-    let crews: [String : (id: Int, profile: String?, job: String)]
+    let crews: [Int: MainCrew]
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -41,13 +41,13 @@ struct FeaturedCrewView: View {
                 if let value = crews[key] {
                     NavigationLink(destination:
                                     PersonDetailView(
-                                        personID: String( value.id ),
-                                        name: key,
+                                        personID: String( key ),
+                                        name: value.name,
                                         profile: value.profile
                                     )
                     ) {
                         CastProfileView(
-                            name: key,
+                            name: value.name,
                             role: value.job,
                             profile: value.profile
                         )

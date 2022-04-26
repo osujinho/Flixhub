@@ -36,18 +36,22 @@ import SwiftUI  /// Need for animation
     
     private let desiredCrewJobs: Set = ["producer", "director", "story", "executive producer", "storyboard", "screenplay", "co-producer"]
     
-    /// Key value map where the key is the name of the person
-    var featuredCrews: [String : (id: Int, profile: String?, job: String)] {
-        var crews: [String : (id: Int, profile: String?, job: String)] = [:]
+    /// Key maps to crew ID,
+    /// MainCrew maps to crew
+    ///  - name
+    ///  - profile path for the profile image
+    ///  - crew job
+    var featuredCrews: [Int : MainCrew] {
+        var crews: [Int : MainCrew] = [:]
         
         let desiredCrews = tmdbDetail.credits.crew.filter { desiredCrewJobs.contains($0.job.lowercased()) }
         
         for crew in desiredCrews {
-            if let value = crews[crew.name] {
+            if let value = crews[crew.id] {
                 let job = value.job.appending(", \(crew.job.capitalized)")
-                crews.updateValue((value.id, value.profile, job), forKey: crew.name)
+                crews.updateValue(MainCrew(name: crew.name, profile: crew.profile_path, job: job), forKey: crew.id)
             } else {
-                crews[crew.name] = (crew.id, crew.profile_path, crew.job)
+                crews[crew.id] = MainCrew(name: crew.name, profile: crew.profile_path, job: crew.job)
             }
         }
         return crews

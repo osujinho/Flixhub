@@ -40,7 +40,7 @@ struct TabButtonView : View {
                 Image(systemName: tab.image)
                     .renderingMode(.template)
                     .resizable()
-                    .foregroundColor(selectedTab == tab ? .blue : Color.black.opacity(0.2))
+                    .foregroundColor(selectedTab == tab ? .blue : .secondary)
                     .frame(width: 24, height: 24)
                 
                 Text(tab.description)
