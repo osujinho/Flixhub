@@ -16,7 +16,7 @@ struct RatingView: View {
             if rating == 0 {
                 return "NR"
             }
-            return String(Int(rating * 10))
+            return String(Int(rating * 10)).appending("%")
         }
         return "NR"
     }
@@ -65,7 +65,7 @@ struct RatingView: View {
             
             Text(ratingString)
                 .foregroundColor(.white)
-                .movieFont(style: .bold, size: posterRatingSize)
+                .movieFont(style: .bold, size: petiteSize)
         }
         .frame(width: CGFloat( frameSize ), height: CGFloat( frameSize ))
         .padding(4)

@@ -40,7 +40,6 @@ let navTitleSize: CGFloat = 25
 let movieAndShowTitleSize: CGFloat = 22
 let labelSize: CGFloat = 15
 let bodySize: CGFloat = 12
-let posterRatingSize: CGFloat = 12
 let browseLabelSize: CGFloat = 13
 let inlineNavSize: CGFloat = 20
 let petiteSize: CGFloat = 10
