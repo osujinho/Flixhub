@@ -9,17 +9,17 @@ import SwiftUI
 
 struct CriticsRatingView: View {
     let ratings: [Ratings]?
-    let outerWidth: Double = 0.5
     let imdb = "Internet Movie Database"
     let rt = "Rotten Tomatoes"
     let meta = "Metacritic"
     
     
     var body: some View {
-        HStack(alignment: .top, spacing: getSpacing(label: "Ratings")) {
+        HStack(alignment: .top) {
             Text("Ratings")
-                .movieFont(style: .bold, size: labelSize)
-                .foregroundColor(.secondary)
+                .detailLabelViewModifier()
+            
+            Spacer()
             
             VStack(alignment: .leading, spacing: 5) {
                 
@@ -61,13 +61,9 @@ struct CriticsRatingView: View {
                     CriticValueView(value: value, color: color)
                 }
             }
+            .frame(width: screen.width * 0.4, alignment: .leading)
         }
         .padding(.horizontal)
-    }
-    
-    private func getSpacing(label: String) -> CGFloat {
-        let width = label.widthOfString(usingFont: UIFont.systemFont(ofSize: 17))
-        return (screen.width * outerWidth) - width
     }
     
     private func getRating(critic: CriticsRating) -> String {
