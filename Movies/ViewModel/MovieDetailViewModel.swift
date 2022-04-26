@@ -34,19 +34,18 @@ import SwiftUI  /// Need for animation
         tmdbDetail.videos.results.filter { $0.site.lowercased() == "youtube" }
     }
     
+    private let desiredCrewJobs: Set = ["producer", "director", "story", "executive producer", "storyboard", "screenplay", "co-producer"]
+    
+    /// Key value map where the key is the name of the person
     var featuredCrews: [String : (id: Int, profile: String?, job: String)] {
         var crews: [String : (id: Int, profile: String?, job: String)] = [:]
-        
-        let desiredCrewJobs: Set = ["producer", "director", "story", "executive producer", "storyboard", "screenplay", "co-producer"]
         
         let desiredCrews = tmdbDetail.credits.crew.filter { desiredCrewJobs.contains($0.job.lowercased()) }
         
         for crew in desiredCrews {
-            if crews[crew.name] != nil {
-                if let value = crews[crew.name] {
-                    let job = value.job.appending(", \(crew.job.capitalized)")
-                    crews.updateValue((value.id, value.profile, job), forKey: crew.name)
-                }
+            if let value = crews[crew.name] {
+                let job = value.job.appending(", \(crew.job.capitalized)")
+                crews.updateValue((value.id, value.profile, job), forKey: crew.name)
             } else {
                 crews[crew.name] = (crew.id, crew.profile_path, crew.job)
             }
@@ -70,7 +69,10 @@ import SwiftUI  /// Need for animation
     
     var certifications: String {
         
-        let allCertifications = releaseDetail.results.filter { $0.from?.lowercased() == "us" }.flatMap { $0.releaseDate }.compactMap { $0.certification }
+        let allCertifications = releaseDetail.results
+            .filter { $0.from?.lowercased() == "us" }
+            .flatMap { $0.releaseDate }
+            .compactMap { $0.certification }
         
         let uniqueCertifications = Set(allCertifications).filter { $0 != "" }
         
@@ -128,9 +130,12 @@ import SwiftUI  /// Need for animation
         } else {
             noTrailerAlertOpacity = 1.0
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-                self.noTrailerAlertOpacity = 0.0
-            })
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + .seconds(2),
+                execute: {
+                    self.noTrailerAlertOpacity = 0.0
+                }
+            )
         }
     }
 }

@@ -61,7 +61,9 @@ import Foundation
     
     var taggedImages: [String?] {
         var paths: [String?] = []
-        let images = moreImages.results.map{ $0.media }.map{ $0.backdrop }
+        let images = moreImages.results
+            .map{ $0.media }
+            .map{ $0.backdrop }
         
         for image in images {
             if !paths.contains(image) {

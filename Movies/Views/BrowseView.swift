@@ -15,50 +15,66 @@ struct BrowseView: View {
             ZStack {
                 Color("background").edgesIgnoringSafeArea(.all)
                 
-                ScrollView {
-                    // Now Playing
-                    LazyVStack {
-                        CarouselView(
-                            categoryName: "Now Showing",
-                            movieType: .nowPlaying,
-                            movies: viewModel.nowPlaying.results,
-                            totalPages: viewModel.nowPlaying.total_pages
-                        )
+                GeometryReader { proxy in
+                    ScrollView {
                         
-                        // Upcoming
-                        CarouselView(
-                            categoryName: "Upcoming",
-                            movieType: .upcoming,
-                            movies: viewModel.upcoming.results,
-                            totalPages: viewModel.upcoming.total_pages
-                        )
-                        
-                        // Popular
-                        CarouselView(
-                            categoryName: "Popular",
-                            movieType: .popular,
-                            movies: viewModel.popular.results,
-                            totalPages: viewModel.popular.total_pages
-                        )
-                        
-                        // Top Rated
-                        CarouselView(
-                            categoryName: "Top Rated",
-                            movieType: .topRated,
-                            movies: viewModel.topRated.results,
-                            totalPages: viewModel.topRated.total_pages
-                        )
+                        LazyVStack {
+                            
+                            // Icon
+                            Image("icon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30)
+                                .cornerRadius(10)
+                            
+                            // Now Playing
+                            CarouselView(
+                                categoryName: "Now Showing",
+                                movieType: .nowPlaying,
+                                movies: viewModel.nowPlaying.results,
+                                totalPages: viewModel.nowPlaying.total_pages
+                            )
+                            
+                            // Upcoming
+                            CarouselView(
+                                categoryName: "Upcoming",
+                                movieType: .upcoming,
+                                movies: viewModel.upcoming.results,
+                                totalPages: viewModel.upcoming.total_pages
+                            )
+                            
+                            // Popular
+                            CarouselView(
+                                categoryName: "Popular",
+                                movieType: .popular,
+                                movies: viewModel.popular.results,
+                                totalPages: viewModel.popular.total_pages
+                            )
+                            
+                            // Top Rated
+                            CarouselView(
+                                categoryName: "Top Rated",
+                                movieType: .topRated,
+                                movies: viewModel.topRated.results,
+                                totalPages: viewModel.topRated.total_pages
+                            )
+                        }
                     }
+                    .padding(.top, (-proxy.safeAreaInsets.top + 50))
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Image("icon")
-                        .resizable()
-                        .scaledToFit()
-                        .cornerRadius(10)
-                }
-            }
+//            .onAppear {
+//                let appearance = UINavigationBarAppearance()
+//
+//                appearance.configureWithOpaqueBackground()
+//                UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+//                UINavigationBar.appearance().shadowImage = UIImage()
+////
+////                appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+////                appearance.backgroundColor = UIColor(named: "pickerColor")
+////                UINavigationBar.appearance().standardAppearance = appearance
+////                UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//            }
         }
         .navigationViewStyle(.stack)
     }
