@@ -116,16 +116,16 @@ struct MoreShowView: View {
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
                 }, label: {
-                    Image(systemName: "chevron.left.circle.fill")
-                        .renderingMode(.template)
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.primary) /// Fix after implementing Both dark and light mode
+                    HStack(spacing: 10) {
+                        Image(systemName: "chevron.left.circle.fill")
+                            .renderingMode(.template)
+                            .font(.system(size: 20, weight: .bold))
+                        
+                        Text(header)
+                            .movieFont(style: .bold, size: inlineNavSize)
+                    }
+                    .foregroundColor(.primary)
                 })
-            }
-            
-            ToolbarItem(placement: .principal) {
-                Text(header)
-                    .movieFont(style: .bold, size: inlineNavSize)
             }
         }
         .alert(isPresented: $viewModel.hasError) {
