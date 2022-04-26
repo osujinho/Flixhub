@@ -12,14 +12,12 @@ struct CompanyAndCountry: View {
     let items: [Name]
     
     var body: some View {
-        let width = label.widthOfString(usingFont: UIFont.systemFont(ofSize: 16, weight: .bold))
-        let screenWidth = screen.width
-        let spacingSize = (screenWidth * 0.5) - width
         
-        HStack(alignment: .top, spacing: spacingSize) {
+        HStack(alignment: .top) {
             Text(label.capitalized)
-                .movieFont(style: .bold, size: labelSize)
-                .foregroundColor(.secondary)
+                .detailLabelViewModifier()
+            
+            Spacer()
             
             VStack(alignment: .leading, spacing: 5) {
                 if items.isEmpty {
@@ -36,6 +34,7 @@ struct CompanyAndCountry: View {
             }
             .movieFont(style: .regular, size: bodySize)
             .multilineTextAlignment(.leading)
+            .frame(width: screen.width * 0.4, alignment: .leading)
         }
         .padding(.horizontal)
     }

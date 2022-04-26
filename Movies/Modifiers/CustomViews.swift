@@ -7,32 +7,26 @@
 
 import SwiftUI
 
+/// For Inside movie and show DetailView - about section
 struct DetailLabelAndInfoView: View {
     let label: String
     let info: String
-    let widthPercent: Double = 0.5
-    
-    init(label: String, info: String) {
-        self.label = label
-        self.info = info
-    }
     
     var body: some View {
-        let labelWidth = label.widthOfString(usingFont: UIFont.systemFont(ofSize: 16, weight: .bold))
-        let spacingSize = (screen.width * widthPercent) - labelWidth
-        
-        HStack(alignment: .top, spacing: spacingSize) {
+        HStack(alignment: .top) {
             Text(label.capitalized)
-                .movieFont(style: .bold, size: labelSize)
-                .foregroundColor(.secondary)
+                .detailLabelViewModifier()
+            
+            Spacer()
+            
             Text(info)
-                .movieFont(style: .regular, size: bodySize)
-                .multilineTextAlignment(.leading)
+                .detailInfoViewModifier()
         }
         .padding(.horizontal)
     }
 }
 
+/// For inside a list Row in getMore or result row in searchView
 struct RowLabelAndInfoView: View {
     let label: String
     let info: String

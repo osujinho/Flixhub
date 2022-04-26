@@ -38,21 +38,15 @@ enum FontStyle {
 
 let navTitleSize: CGFloat = 25
 let movieAndShowTitleSize: CGFloat = 22
-let personNameSize: CGFloat = 20
 let labelSize: CGFloat = 15
 let bodySize: CGFloat = 12
-let stackHeaderSize: CGFloat = 22
 let posterRatingSize: CGFloat = 12
-let posterTitleSize: CGFloat = 12
-let detailPosterRatingSize: CGFloat = 12
-let genreSize: CGFloat = 9
 let browseLabelSize: CGFloat = 13
-let pickerFontSize: CGFloat = 12
 let inlineNavSize: CGFloat = 20
 let petiteSize: CGFloat = 10
 let listRowTitleSize: CGFloat = 18
 let personDetailNameSize: CGFloat = 16
 let personDetailHeaderSize: CGFloat = 13
-
+let detailLabelFontSize: CGFloat = 14
 
 
