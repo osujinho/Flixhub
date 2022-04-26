@@ -9,6 +9,7 @@ import SwiftUI
 
 // Results in search view
 struct ResultRowView: View {
+    @State private var vstackWidth: CGFloat = 0
     let poster: String?
     let resultType: SearchMediaType
     let title: String
@@ -35,18 +36,25 @@ struct ResultRowView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text(title.uppercased())
                     .movieFont(style: .bold, size: listRowTitleSize)
+                    .multilineTextAlignment(.leading)
                 
                 // For Showingg the date or department
                 switch resultType {
-                case .movie: RowLabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
-                case .show: RowLabelAndInfoView(label: "aired", info: getDate(date: date,forYear: false))
-                case .person: RowLabelAndInfoView(label: "known for", info: knownFor ?? "N/A")
+                case .movie: RowLabelAndInfoView(label: "released", info: getDate(date: date, forYear: false), width: vstackWidth)
+                case .show: RowLabelAndInfoView(label: "aired", info: getDate(date: date,forYear: false), width: vstackWidth)
+                case .person: RowLabelAndInfoView(label: "known for", info: knownFor ?? "N/A", width: vstackWidth)
                 }
                 
-                RowLabelAndInfoView(label: "media", info: resultType.listRowLabel.uppercased())
+                RowLabelAndInfoView(label: "media", info: resultType.listRowLabel.uppercased(), width: vstackWidth)
             }
-            .multilineTextAlignment(.leading)
-            Spacer()
+            .overlay(
+                GeometryReader { proxy in
+                    Color.clear.onAppear {
+                        self.vstackWidth = proxy.size.width
+                    }
+                }
+            )
+            
         }
     }
 }

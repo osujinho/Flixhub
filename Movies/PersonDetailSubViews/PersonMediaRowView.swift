@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PersonMediaRowView: View {
+    @State private var vstackWidth: CGFloat = 0
     let poster: String?
     let mediaType: PersonCreditsOption
     let titleOrName: String
@@ -36,20 +37,20 @@ struct PersonMediaRowView: View {
                 
                 switch mediaType {
                 case .castMovies:
-                    RowLabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
-                    RowLabelAndInfoView(label: "character", info: charcterOrJob ?? "N/A")
+                    RowLabelAndInfoView(label: "released", info: getDate(date: date, forYear: false), width: vstackWidth)
+                    RowLabelAndInfoView(label: "character", info: charcterOrJob ?? "N/A", width: vstackWidth)
                 case .castShows:
-                    RowLabelAndInfoView(label: "First Aired", info: getDate(date: date, forYear: false))
+                    RowLabelAndInfoView(label: "First Aired", info: getDate(date: date, forYear: false), width: vstackWidth)
                     
-                    RowLabelAndInfoView(label: "character", info: charcterOrJob ?? "N/A")
+                    RowLabelAndInfoView(label: "character", info: charcterOrJob ?? "N/A", width: vstackWidth)
                 case .crewMovies:
-                    RowLabelAndInfoView(label: "released", info: getDate(date: date, forYear: false))
+                    RowLabelAndInfoView(label: "released", info: getDate(date: date, forYear: false), width: vstackWidth)
                     
-                    RowLabelAndInfoView(label: "job", info: charcterOrJob ?? "N/A")
+                    RowLabelAndInfoView(label: "job", info: charcterOrJob ?? "N/A", width: vstackWidth)
                 case .crewShows:
-                    RowLabelAndInfoView(label: "First Aired", info: getDate(date: date, forYear: false))
+                    RowLabelAndInfoView(label: "First Aired", info: getDate(date: date, forYear: false), width: vstackWidth)
                    
-                    RowLabelAndInfoView(label: "job", info: charcterOrJob ?? "N/A")
+                    RowLabelAndInfoView(label: "job", info: charcterOrJob ?? "N/A", width: vstackWidth)
                 } /// End of switch
                 
                 /// For genres
@@ -57,8 +58,15 @@ struct PersonMediaRowView: View {
                     Text(genreManager.getGenre(genreID: genres).joined(separator: ", "))
                         .movieFont(style: .regular, size: bodySize)
                 }
-            }
+            } /// end of VStack
             .foregroundColor(.primary)
+            .overlay(
+                GeometryReader { proxy in
+                    Color.clear.onAppear {
+                        self.vstackWidth = proxy.size.width
+                    }
+                }
+            )
         } /// End of HStack
         .padding(.bottom, 10)
     }
