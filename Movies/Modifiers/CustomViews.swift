@@ -51,7 +51,11 @@ struct CustomShape: Shape {
     
     func path(in rect: CGRect) -> Path {
         
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [.bottomLeft,.bottomRight], cornerRadii: CGSize(width: 10, height: 10))
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: [.bottomLeft,.bottomRight],
+            cornerRadii: CGSize(width: 10, height: 10)
+        )
         
         return Path(path.cgPath)
     }
@@ -62,9 +66,11 @@ struct RoundedCornersShape: Shape {
     let radius: CGFloat
     
     func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect,
-                                byRoundingCorners: corners,
-                                cornerRadii: CGSize(width: radius, height: radius))
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
         return Path(path.cgPath)
     }
 }

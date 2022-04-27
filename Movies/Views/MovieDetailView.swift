@@ -50,7 +50,8 @@ struct MovieDetailView: View {
                                 MovieAboutView(
                                     tmdbDetail: viewModel.tmdbDetail,
                                     ombdDetail: viewModel.omdbDetail,
-                                    spokenLanguages: viewModel.spokenLanguages)
+                                    spokenLanguages: viewModel.spokenLanguages
+                                )
                             case .casts:
                                 CastView(casts: viewModel.tmdbDetail.credits.cast)
                             case .crew:
@@ -59,7 +60,8 @@ struct MovieDetailView: View {
                                 MediaScrollView(
                                     posters: viewModel.tmdbDetail.images.posters.map{ $0.path },
                                     videos: viewModel.videoClips,
-                                    backdrops: viewModel.tmdbDetail.images.backdrops.map{ $0.path })
+                                    backdrops: viewModel.tmdbDetail.images.backdrops.map{ $0.path }
+                                )
                             case .recommended:
                                 RecommendMoviesView(
                                     totalPages: viewModel.recommendedMovies.total_pages,

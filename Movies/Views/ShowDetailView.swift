@@ -64,7 +64,8 @@ struct ShowDetailView: View {
                                 MediaScrollView(
                                     posters: viewModel.showDetail.images.posters.map{ $0.path },
                                     videos: viewModel.videoClips,
-                                    backdrops: viewModel.showDetail.images.backdrops.map{ $0.path })
+                                    backdrops: viewModel.showDetail.images.backdrops.map{ $0.path }
+                                )
                             case .seasons:
                                 ShowSeasonsView(seasons: viewModel.showDetail.seasons)
                             case .recommended:

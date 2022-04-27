@@ -12,12 +12,6 @@ struct SearchView: View {
     
     init() {
         self._viewModel = StateObject(wrappedValue: SearchViewModel())
-        
-        //let navigationAppearance = UINavigationBarAppearance()
-        //navigationAppearance.configureWithOpaqueBackground()
-       // navigationAppearance.backgroundColor = UIColor(named: "background")
-        //UINavigationBar.appearance().isTranslucent = false
-        //UINavigationBar.appearance().scrollEdgeAppearance = navigationAppearance
     }
     
     var body: some View {
@@ -27,7 +21,9 @@ struct SearchView: View {
                 
                 VStack {
                     SearchBarView(searchText: $viewModel.searchText)
-                        .onReceive(viewModel.$searchText.debounce(for: 0.8, scheduler: RunLoop.main)) { searchText in
+                        .onReceive(
+                            viewModel.$searchText.debounce(for: 0.8, scheduler: RunLoop.main)
+                        ) { searchText in
                           Task {
                             await viewModel.searchMovie()
                           }

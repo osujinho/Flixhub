@@ -20,7 +20,10 @@ struct VideoGallery: View {
                 LazyVStack(alignment: .leading) {
                     ForEach(videos, id: \.self) { clip in
                         VStack(alignment: .leading) {
-                            TrailerPlayer(videoID: clip.key, clipHeightMultiplier: clipHeightMultiplier)
+                            TrailerPlayer(
+                                videoID: clip.key,
+                                clipHeightMultiplier: clipHeightMultiplier
+                            )
                             
                             if let name = clip.name {
                                 Text(name)

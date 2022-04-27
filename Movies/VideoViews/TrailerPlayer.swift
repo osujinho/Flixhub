@@ -20,7 +20,11 @@ struct TrailerPlayer: View {
             
             if playTrailer == false {
                 ZStack {
-                    TrailerOverlayView(thumbnail: videoID, clipHeightMultiplier: clipHeightMultiplier)
+                    TrailerOverlayView(
+                        thumbnail: videoID,
+                        clipHeightMultiplier: clipHeightMultiplier
+                    )
+                    
                     Button(action: {
                         withAnimation {
                             playTrailer = true

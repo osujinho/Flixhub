@@ -9,8 +9,36 @@ import SwiftUI  /// Need for animation
 
 @MainActor class MovieDetailViewModel: ObservableObject {
     @Published private(set) var errorMessage: String = ""
-    @Published private(set) var omdbDetail = OMDBDetail(rated: nil, awards: nil, boxOffice: nil, dvd: nil, ratings: nil)
-    @Published private(set) var tmdbDetail = TMDBDetail(backdrop: nil, poster: nil, releaseDate: nil, tmdbID: 0, title: "", originalTitle: nil, originalLanguage: nil, genres: [], plot: nil, runtime: nil, imdbID: nil, status: nil, rating: nil, budget: nil, revenue: nil, countries: [], companies: [], spokenLanguages: [], credits: Credit(cast: [], crew: []), videos: Video(results: []), images: MovieImages(backdrops: [], posters: []))
+    @Published private(set) var omdbDetail = OMDBDetail(
+        rated: nil,
+        awards: nil,
+        boxOffice: nil,
+        dvd: nil,
+        ratings: nil
+    )
+    @Published private(set) var tmdbDetail = TMDBDetail(
+        backdrop: nil,
+        poster: nil,
+        releaseDate: nil,
+        tmdbID: 0,
+        title: "",
+        originalTitle: nil,
+        originalLanguage: nil,
+        genres: [],
+        plot: nil,
+        runtime: nil,
+        imdbID: nil,
+        status: nil,
+        rating: nil,
+        budget: nil,
+        revenue: nil,
+        countries: [],
+        companies: [],
+        spokenLanguages: [],
+        credits: Credit(cast: [], crew: []),
+        videos: Video(results: []),
+        images: MovieImages(backdrops: [], posters: [])
+    )
     @Published private(set) var recommendedMovies = MovieBrowseData(results: [], total_pages: 0)
     @Published private(set) var similarMovies = MovieBrowseData(results: [], total_pages: 0)
     @Published private var releaseDetail = MovieReleaseDates(results: [])

@@ -15,9 +15,6 @@ struct CustomPickerView<Enum: Pickable>: View {
     init(selection: Binding<Enum>, backgroundColor: String) {
         self._selection = selection
         self.backgroundColor = backgroundColor
-        
-        UITableViewCell.appearance().backgroundColor = UIColor(named: backgroundColor)
-        UITableView.appearance().backgroundColor = UIColor(named: backgroundColor)
     }
     
     var body: some View {
