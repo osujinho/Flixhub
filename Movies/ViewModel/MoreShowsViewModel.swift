@@ -39,7 +39,7 @@ import Foundation
     }
     
     private func loadMoreShows() async {
-        guard isLoading && canLoadMore else { return }
+        guard !isLoading && canLoadMore else { return }
         
         self.fetchTask?.cancel()
         
@@ -51,7 +51,7 @@ import Foundation
             
             do {
                 switch showType {
-                case .airingToday, .onTheAir, .popularShows, .topRatedShows:
+                case .airingToday, .onTheAir, .popularShows, .topRatedShows, .trendingShows:
                     let loadedData: ShowBrowseData = try await networkManager.makeCall(url: url)
                     getUniqueResults(results: loadedData.results)
                 default:

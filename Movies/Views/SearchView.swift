@@ -78,11 +78,12 @@ struct SearchView: View {
                                                         profile: person.1.profile
                                                     )
                                     ) {
-                                        ResultRowView(
-                                            poster: person.1.profile,
-                                            mediaType: .person,
-                                            title: person.1.name,
-                                            knownFor: person.1.knownFor)
+                                        PersonRowView(name: person.1.name, gender: person.1.gender, department: person.1.knownFor, profile: person.1.profile)
+//                                        ResultRowView(
+//                                            poster: person.1.profile,
+//                                            mediaType: .person,
+//                                            title: person.1.name,
+//                                            knownFor: person.1.knownFor)
                                     }
                                     .listRowBackground(Color.clear)
                                 }

@@ -52,13 +52,14 @@ enum SearchResult: Hashable, Decodable {
     
     struct PersonData: Hashable, Decodable {
         let name: String
+        let gender: Int?
         let profile: String?
         let knownFor: String?
         
         enum CodingKeys: String, CodingKey {
             case profile = "profile_path"
             case knownFor = "known_for_department"
-            case name
+            case name, gender
         }
     }
 }

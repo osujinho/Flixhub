@@ -10,12 +10,12 @@ import SwiftUI
 struct GetMoreRowView: View {
     let movie: TMDBResult
     let genreManager = GenreManager.genreManager
-    let posterWidth: Double = 100
+    let posterWidth: CGFloat = 100
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 20) {
             UrlImageView(path: movie.poster, defaultImage: .poster)
-                .frame(width: CGFloat(posterWidth), height: CGFloat(posterWidth * 1.5))
+                .frame(width: posterWidth, height: posterWidth * 1.5)
                 .cornerRadius(10)
                 .overlay(
                     RatingView(rating: movie.tmdbRating, frameSize: 30)

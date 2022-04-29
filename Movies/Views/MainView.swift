@@ -8,27 +8,32 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var viewModel: BrowseViewModel
+    @StateObject private var browseMoviesViewModel: BrowseViewModel
     @StateObject private var showBrowseViewModel: ShowBrowseViewModel
+    @StateObject private var trendingViewModel: TrendingViewModel
     @EnvironmentObject var appViewModel: AppViewModel
-    @State var selectedTab: Tab = .movies
+    @State var selectedTab: Tab = .trending
     var edges = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }?.safeAreaInsets
     @Namespace var animation
     
     init() {
-        self._viewModel = StateObject(wrappedValue: BrowseViewModel())
+        self._browseMoviesViewModel = StateObject(wrappedValue: BrowseViewModel())
         self._showBrowseViewModel = StateObject(wrappedValue: ShowBrowseViewModel())
+        self._trendingViewModel = StateObject(wrappedValue: TrendingViewModel())
     }
     
     var body: some View {
         
         VStack {
-            if viewModel.isLoading {
+            if trendingViewModel.isLoading {
                 SpashView()
             } else {
                 GeometryReader { _ in
                     ZStack {
-                        BrowseView(viewModel: viewModel)
+                        TrendingView(viewModel: trendingViewModel)
+                            .opacity(selectedTab == .trending ? 1 : 0)
+                        
+                        BrowseView(viewModel: browseMoviesViewModel)
                             .opacity(selectedTab == .movies ? 1 : 0)
                         
                         ShowBrowseView(viewModel: showBrowseViewModel)
@@ -39,8 +44,12 @@ struct MainView: View {
                     } /// End of ZStack
                 } /// end of Geometry reader
                 .onChange(of: selectedTab) { newTab in
-                    if selectedTab == .shows {
+                    switch selectedTab {
+                    case .movies:
+                        Task { await browseMoviesViewModel.fetchMovies() }
+                    case .shows:
                         Task { await showBrowseViewModel.fetchShows() }
+                    default: ()
                     }
                 }
                 
@@ -66,15 +75,15 @@ struct MainView: View {
         .ignoresSafeArea(.all, edges: .bottom)
         .background(Color("background").ignoresSafeArea(.all, edges: .all))
         .task {
-            await viewModel.fetchMovies()
+            await trendingViewModel.fetchTrending()
         }
-        .alert(isPresented: $viewModel.hasError) {
+        .alert(isPresented: $trendingViewModel.hasError) {
             Alert(
                 title: Text("Error Loading Movies"),
-                message: Text(viewModel.errorMessage),
+                message: Text(trendingViewModel.errorMessage),
                 dismissButton: .destructive(Text("Retry")) {
                     Task {
-                        await viewModel.fetchMovies()
+                        await trendingViewModel.fetchTrending()
                     }
                 }
             )

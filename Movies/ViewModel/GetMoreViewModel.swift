@@ -51,7 +51,7 @@ import Foundation
             
             do {
                 switch movieType {
-                case .upcoming, .nowPlaying, .popular, .topRated:
+                case .upcoming, .nowPlaying, .popular, .topRated, .trendingMovies:
                     let loadedData: MovieBrowseData = try await networkManager.makeCall(url: url)
                     getUniqueResults(results: loadedData.results)
                 

@@ -13,7 +13,7 @@ struct UrlItem {
 }
 
 enum MovieType: CaseIterable {
-    case upcoming, nowPlaying, topRated, popular, movieDetail, omdb, search, personDetail, showDetail, similarMovie, recommendMovies, showRatings, similarShow, recommendShow, taggedImages, movieRelease, airingToday, onTheAir, popularShows, topRatedShows
+    case upcoming, nowPlaying, topRated, popular, movieDetail, omdb, search, personDetail, showDetail, similarMovie, recommendMovies, showRatings, similarShow, recommendShow, taggedImages, movieRelease, airingToday, onTheAir, popularShows, topRatedShows, trendingMovies, trendingShows, trendingPeople
 }
 
 class URLManager {
@@ -52,6 +52,9 @@ class URLManager {
         case .onTheAir: return baseURL.appending("tv/on_the_air")
         case .popularShows: return baseURL.appending("tv/popular")
         case .topRatedShows: return baseURL.appending("tv/top_rated")
+        case .trendingMovies: return baseURL.appending("trending/movie/week")
+        case .trendingShows: return baseURL.appending("trending/tv/week")
+        case .trendingPeople: return baseURL.appending("trending/person/week")
         }
     }
     
@@ -67,6 +70,7 @@ class URLManager {
         case .showDetail: return [tmdbKey, language, videoAndCredits, getImages]
         case .showRatings: return [tmdbKey, language]
         case .movieRelease: return [tmdbKey]
+        case .trendingMovies, .trendingPeople, .trendingShows: return [tmdbKey, UrlItem(key: "page", value: value)]
         }
     }
     

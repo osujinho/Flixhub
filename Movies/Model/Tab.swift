@@ -8,12 +8,13 @@
 import Foundation
 
 enum Tab: Pickable {
-    case movies, shows, search
+    case trending, movies, shows, search
     
     var id: Tab { self }
     
     var description: String {
         switch self {
+        case .trending: return "Trending"
         case .movies: return "Movies"
         case .shows: return "TV Shows"
         case .search: return "Search"
@@ -22,6 +23,7 @@ enum Tab: Pickable {
     
     var image: String {
         switch self {
+        case .trending: return "chart.line.uptrend.xyaxis"
         case .movies: return "list.and.film"
         case .shows: return "tv.circle"
         case .search: return "magnifyingglass"

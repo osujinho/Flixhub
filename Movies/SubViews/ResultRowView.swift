@@ -34,7 +34,7 @@ struct ResultRowView: View {
                 .cornerRadius(10)
             
             VStack(alignment: .leading, spacing: 5) {
-                Text(title.uppercased())
+                Text(title)
                     .movieFont(style: .bold, size: listRowTitleSize)
                     .multilineTextAlignment(.leading)
                 
@@ -54,7 +54,6 @@ struct ResultRowView: View {
                     }
                 }
             )
-            
         }
     }
 }
