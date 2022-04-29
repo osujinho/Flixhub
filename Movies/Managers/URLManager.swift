@@ -27,6 +27,7 @@ class URLManager {
     private let language = UrlItem(key: "language", value: "en-US")
     private let videoAndCredits = UrlItem(key: "append_to_response", value: "credits,videos,images")
     private let combinedCredits = UrlItem(key: "append_to_response", value: "combined_credits,images")
+    private let region = UrlItem(key: "region", value: "us")
     private let getImages = UrlItem(key: "include_image_language", value: "en,null")
     
     private func getURL(type: MovieType, id: String = "") -> String {
@@ -56,8 +57,9 @@ class URLManager {
     
     private func getUrlItems(movieType: MovieType, value: String = "") -> [UrlItem] {
         switch movieType {
-        case .upcoming, .nowPlaying, .topRated, .popular, .recommendMovies, .similarMovie, .similarShow, .recommendShow, .taggedImages, .airingToday, .onTheAir, .popularShows, .topRatedShows:
+        case .recommendMovies, .similarMovie, .similarShow, .recommendShow, .taggedImages, .airingToday, .onTheAir, .popularShows, .topRatedShows:
             return [tmdbKey, language, UrlItem(key: "page", value: value)]
+        case .upcoming, .nowPlaying, .popular, .topRated: return [tmdbKey, language, region, UrlItem(key: "page", value: value)]
         case .movieDetail: return [tmdbKey, videoAndCredits, getImages]
         case .omdb: return [omdpKey, UrlItem(key: "i", value: value)]
         case .personDetail: return [tmdbKey, language, combinedCredits, getImages]
