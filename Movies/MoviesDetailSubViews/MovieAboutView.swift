@@ -21,6 +21,8 @@ struct MovieAboutView: View {
             VStack(alignment: .leading, spacing: 20) {
                 DetailLabelAndInfoView(label: "original title", info: tmdbDetail.originalTitle ?? "N/A")
                 
+                DetailLabelAndInfoView(label: "Release Date", info: getDate(date: tmdbDetail.releaseDate, forYear: false))
+                
                 let genres = tmdbDetail.genres.compactMap { $0.name.capitalized }.joined(separator: ", ")
                 DetailLabelAndInfoView(label: "genres", info: genres)
                 
