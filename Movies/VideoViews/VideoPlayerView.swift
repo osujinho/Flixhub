@@ -48,7 +48,7 @@ struct VideoPlayerView: View {
         .onAppear {
             appViewModel.showFullImageView.toggle()
             AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeLeft
-            UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+            UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
             UIViewController.attemptRotationToDeviceOrientation()
         }
     }

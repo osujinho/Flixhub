@@ -45,7 +45,7 @@ struct ImageFullView: View {
             appViewModel.showFullImageView.toggle()
             if defaultImage == .backdrop {
                 AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeLeft
-                UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+                UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
                 UIViewController.attemptRotationToDeviceOrientation()
             }
         }

@@ -61,9 +61,9 @@ struct BrowseView: View {
                 }
             }
 //            .onAppear {
-//                let appearance = UINavigationBarAppearance()
-//
-//                appearance.configureWithOpaqueBackground()
+////                let appearance = UINavigationBarAppearance()
+////
+////                appearance.configureWithOpaqueBackground()
 //                UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
 //                UINavigationBar.appearance().shadowImage = UIImage()
 ////
