@@ -12,14 +12,17 @@ struct ImageFullView: View {
     @EnvironmentObject var appViewModel: AppViewModel
     let path: String?
     let defaultImage: DefaultImage
+    let posterMaxWidth = screen.width * 0.98
+    let backdropMaxWidth = screen.height * 0.98
     
     var body: some View {
         ZStack {
             Color("background").edgesIgnoringSafeArea([.all])
             
             UrlImageView(path: path, defaultImage: defaultImage)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .edgesIgnoringSafeArea(.all)
+                .scaledToFit()
+                .frame(maxWidth: defaultImage == .backdrop ? backdropMaxWidth : posterMaxWidth)
+                .cornerRadius(5)
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
