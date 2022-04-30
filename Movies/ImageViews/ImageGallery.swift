@@ -1,26 +1,37 @@
 //
-//  ImageFullView.swift
+//  DetailOptionsView.swift
 //  Flixhub
 //
-//  Created by Michael Osuji on 3/27/22.
+//  Created by Michael Osuji on 3/21/22.
 //
 
 import SwiftUI
 
-struct ImageFullView: View {
+struct ImageGallery: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appViewModel: AppViewModel
-    let path: String?
+    let images: [String?]
     let defaultImage: DefaultImage
+    let posterMaxWidth = 0.9 * screen.width
+    let backdropMaxWidth = 0.9 * screen.height
     
     var body: some View {
         ZStack {
             Color("background").edgesIgnoringSafeArea([.all])
             
-            UrlImageView(path: path, defaultImage: defaultImage)
-                .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .edgesIgnoringSafeArea(.all)
+            TabView{
+                ForEach(images, id: \.self){ image in
+                    NavigationLink(destination: ImageFullView(path: image, defaultImage: defaultImage)) {
+                        
+                        UrlImageView(path: image, defaultImage: defaultImage)
+                            .scaledToFit()
+                            .frame(maxWidth: defaultImage == .backdrop ? backdropMaxWidth : posterMaxWidth)
+                            .cornerRadius(5)
+                            .edgesIgnoringSafeArea(.all)
+                    }
+                }
+            }
+            .tabViewStyle(PageTabViewStyle())
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -44,7 +55,7 @@ struct ImageFullView: View {
         .onAppear {
             appViewModel.showFullImageView = true
             if defaultImage == .backdrop {
-                AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeLeft
+                AppDelegate.orientationLock = UIInterfaceOrientationMask.landscape
                 UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
                 UIViewController.attemptRotationToDeviceOrientation()
             }

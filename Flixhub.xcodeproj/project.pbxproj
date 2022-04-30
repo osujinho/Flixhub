@@ -295,6 +295,19 @@
 			path = VideoViews;
 			sourceTree = "<group>";
 		};
+		B38BBCB4281CE38800A3DD0E /* ImageViews */ = {
+			isa = PBXGroup;
+			children = (
+				B33A341527BC877A00EB05D9 /* PosterView.swift */,
+				B368F62327D6932D00E03E4D /* UrlImageView.swift */,
+				B30F133927E8EDDB00FE7641 /* ImageGallery.swift */,
+				B30F134627F0D86A00FE7641 /* ImageFullView.swift */,
+				B3AD41E027FD0F1D00BF71F8 /* ImageBackgroundView.swift */,
+				B38BBCA8281C3F7B00A3DD0E /* PersonPosterView.swift */,
+			);
+			path = ImageViews;
+			sourceTree = "<group>";
+		};
 		B3AD41C427F7549F00BF71F8 /* ShowDetailSubViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -391,22 +404,16 @@
 			isa = PBXGroup;
 			children = (
 				B33A341727BC87FE00EB05D9 /* CarouselView.swift */,
-				B33A341527BC877A00EB05D9 /* PosterView.swift */,
 				B3AD41BE27F5FBC500BF71F8 /* CastAndCrewView.swift */,
 				B3C9CA9227C5BA4E00BC9DA9 /* ResultRowView.swift */,
-				B368F62327D6932D00E03E4D /* UrlImageView.swift */,
 				B368F62B27D90D1E00E03E4D /* SpashView.swift */,
 				B368F62F27DB005F00E03E4D /* SearchBarView.swift */,
 				B368F64127DFA9F900E03E4D /* CastProfileView.swift */,
 				B3ED333627E52908001A6DCF /* GetMoreRowView.swift */,
 				B3ED333A27E55A82001A6DCF /* RatingView.swift */,
-				B30F133927E8EDDB00FE7641 /* ImageGallery.swift */,
-				B30F134627F0D86A00FE7641 /* ImageFullView.swift */,
 				B3AD41CD27F791AE00BF71F8 /* CompanyAndCountry.swift */,
-				B3AD41E027FD0F1D00BF71F8 /* ImageBackgroundView.swift */,
 				B3811E08280F9E31008EED76 /* GridViewToggleView.swift */,
 				B3811E332811B099008EED76 /* ShowCarouselView.swift */,
-				B38BBCA8281C3F7B00A3DD0E /* PersonPosterView.swift */,
 				B38BBCAE281C4A7300A3DD0E /* PersonRowView.swift */,
 				B38BBCB0281C4E6200A3DD0E /* PeopleCarouselView.swift */,
 			);
@@ -433,6 +440,7 @@
 		B3CF1B9F27A99C11004CD7F2 /* Movies */ = {
 			isa = PBXGroup;
 			children = (
+				B38BBCB4281CE38800A3DD0E /* ImageViews */,
 				B3811E1628108488008EED76 /* VideoViews */,
 				B3811E0C2810666E008EED76 /* TabViews */,
 				B33A340E27BC637600EB05D9 /* Modifiers */,
