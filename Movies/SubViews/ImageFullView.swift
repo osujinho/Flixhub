@@ -32,17 +32,17 @@ struct ImageFullView: View {
                         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
                         UIViewController.attemptRotationToDeviceOrientation()
                     }
-                    appViewModel.showFullImageView.toggle()
+                    appViewModel.showFullImageView = false
                 }, label: {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.black) /// Fix after implementing Both dark and light mode
+                        .foregroundColor(.black)
                 })
             }
         }
         .onAppear {
-            appViewModel.showFullImageView.toggle()
+            appViewModel.showFullImageView = true
             if defaultImage == .backdrop {
                 AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeLeft
                 UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")

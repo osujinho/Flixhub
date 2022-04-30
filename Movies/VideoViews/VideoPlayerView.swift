@@ -36,7 +36,7 @@ struct VideoPlayerView: View {
                     AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
                     UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
                     UIViewController.attemptRotationToDeviceOrientation()
-                    appViewModel.showFullImageView.toggle()
+                    appViewModel.showFullImageView = false
                 }, label: {
                     Image(systemName: "chevron.left.circle.fill")
                         .renderingMode(.original)
@@ -46,7 +46,7 @@ struct VideoPlayerView: View {
             }
         }
         .onAppear {
-            appViewModel.showFullImageView.toggle()
+            appViewModel.showFullImageView = true
             AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeLeft
             UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
             UIViewController.attemptRotationToDeviceOrientation()
