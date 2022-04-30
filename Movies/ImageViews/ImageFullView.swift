@@ -18,7 +18,6 @@ struct ImageFullView: View {
             Color("background").edgesIgnoringSafeArea([.all])
             
             UrlImageView(path: path, defaultImage: defaultImage)
-                .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .edgesIgnoringSafeArea(.all)
         }

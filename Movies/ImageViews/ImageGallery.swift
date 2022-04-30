@@ -30,6 +30,7 @@ struct ImageGallery: View {
                             .edgesIgnoringSafeArea(.all)
                     }
                 }
+                
             }
             .tabViewStyle(PageTabViewStyle())
         }
